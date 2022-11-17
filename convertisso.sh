@@ -20,17 +20,17 @@ echo -e "\e[33m                                                        +-+ +-+ +
 }
 
 
-#commantaire mutliligne CRTL k+c
 clear
 varro=0
 Arch=/etc/pacman.conf
 Debian=/etc/apt/sources.list
 Fedora=/etc/dnf/dnf.conf
 
-is_macos=$(sw_vers) =~ "macOS"
+
 function convertisso-dectection-os {   
 clear
 convertisso
+sleep 2
 clear
 echo -e "Instalation de tous les packets nécésaires pour exécuter script\n"
 sleep 2
@@ -120,7 +120,7 @@ clear                                                                     #insta
     fi;
 }
 echo -e "Instalation de tous les packets nécésaires pour exécuter script\n"
-sleep2
+sleep 2
 convertisso-dectection-os
 
 
@@ -290,8 +290,6 @@ done
     done
     echo "La vidéo que vous avez télécharger, est dans votre dossier courant"
     sleep 2
-
-#youtube-dl --recode-video//--convert-subs FORMAT 
 
     }
 
@@ -786,11 +784,3 @@ sleep 2
                 varro=0
         fi;
 done
-
-# rename -v .ogg .mp3 *.ogg
-# rename -v .mp3 .ogg *.mp3
-
-
-
-#https://superuser.com/questions/71028/batch-converting-png-to-jpg-in-linux
-#https://imagemagick.org/script/download.php#linux
