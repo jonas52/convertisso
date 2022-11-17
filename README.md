@@ -11,7 +11,7 @@
                                             Script to convert files
 </pre>
 
-# 📃・about my project
+# About my project
 ## The script is currently in Bash and is therefore only available for Debian, Arch, Fedora. A Python version is under development.
 ### This script can:
 - Convert your subtitle files (vtt, srt, ass, lrc). 
