@@ -56,6 +56,9 @@ clear
         echo "Installing librsvg2-bins ..."
         sudo apt-get install librsvg2-bin -y > /dev/null 2>&1
         clear
+        echo "Installing libheif-examples ..."
+        sudo apt-get install libheif-examples -y > /dev/null 2>&1
+        clear
         echo "Installings updates ..."
         sudo apt-get update -y > /dev/null 2>&1
         sudo apt-get upgrade -y > /dev/null 2>&1
@@ -82,6 +85,9 @@ clear
         echo "Installing librsvg2-bins ..."
         sudo pacman -S --noconfirm librsvg2-bin > /dev/null 2>&1
         clear
+        echo "Installing libheif-examples ..."
+        sudo pacman -S --noconfirm libheif-examples -y > /dev/null 2>&1
+        clear
         echo "Installings updates ..."
         sudo pacman -Syu --noconfirm > /dev/null 2>&1
         clear
@@ -106,6 +112,9 @@ clear
         clear
         echo "Installing librsvg2-bins ..."
         sudo rpm -Uvh librsvg2-bin > /dev/null 2>&1
+        clear
+        echo "Installing libheif-examples ..."
+        sudo rpm -Uvh libheif-examples -y > /dev/null 2>&1
         clear
         echo "Installings updates ..."
         dnf -y check-update
@@ -308,7 +317,7 @@ done
     echo ' ╠════╬═════════════╬════╬══════════════════════════╣'
     echo ' ║ 6  ║ mp4 to avi  ║ 13 ║       webm to mp4        ║'
     echo ' ╠════╬═════════════╬════╬══════════════════════════╣'
-    echo ' ║ 7  ║ mov to mkv  ║ 14 ║      NON DISPONIBLE      ║'
+    echo ' ║ 7  ║ mov to mkv  ║ 14 ║       HEVC to mp4        ║'
     echo ' ╚════╩═════════════╩════╩══════════════════════════╝'
     echo -e "\n"
     read -p "Choose the corresponding number.   : " rpp # demande a l'utilisateur dans quelle format il veut convertir ses fichiers
@@ -389,11 +398,11 @@ done
             for ff in *.webm; do ffmpeg -i "$ff" -c copy "${ff%.webm}.mp4"> /dev/null 2>&1; done
             encov=mp4
             varo=1    
-        elif [ "$rpp" = "14" ]                                     #mp4 en webm
+        elif [ "$rpp" = "14" ]                                     #HEVC to mp4
         then
-            echo "NON DISPONIBLE"
-            varo=1  
-            sleep 2
+            echo "conversion in progress ..."
+            for kkk in *.hevc; do ffmpeg -i "$kkk" -c copy "${kkk%.hevc}.mp4"> /dev/null 2>&1; done
+            encov=mp4
         else
             echo -e "\nPlease enter a number between 1 and 14\n" # gestion de l'erreur si l'utilisateur utilise une autre lettre ou un autre caratère
             sleep 2
@@ -623,7 +632,7 @@ vor=0
     echo ' ╠════╬══════════════╬════╬══════════════╣'
     echo ' ║ 6  ║  tiff to pdf ║ 13 ║  svg to pdf  ║'
     echo ' ╠════╬══════════════╬════╬══════════════╣'
-    echo ' ║ 7  ║  tiff to gif ║ 14 ║NON DISPONIBLE║'
+    echo ' ║ 7  ║  tiff to gif ║ 14 ║  heic to jpg ║'
     echo ' ╚════╩══════════════╩════╩══════════════╝'
     read -p "Choose the corresponding number.   : " rrrrp # demande a l'utilisateur dans quelle format il veut convertir ses fichiers
 while [ $vor = 0 ];do
@@ -720,7 +729,7 @@ while [ $vor = 0 ];do
             vor=1
         elif [ "$rrrrp" = "14" ]                               
             then
-            echo "NON DISPONIBLE"
+            for ggg in *.heic; do  heif-convert "$ggg" "${ggg%.heic}.jpg" ; done
             sleep 2
             vor=0
         else
