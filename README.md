@@ -8,7 +8,7 @@
     88b  d88P  Y88..88P 888  888  Y8bd8P  Y8b.     888     Y88b.  888      X88      X88 Y88..88P  
     °Y8888P°   °Y88P°   888  888   Y88P   °Y8888  888      °Y888 888  88888P° °88888P°   °Y88P°  
 
-                                            Script to convert files
+                                      Script to convert files
 </pre>
 
 # About my project
