@@ -14,6 +14,7 @@
 [![Codename](https://img.shields.io/badge/Codename-jonas52-informational?style=flat-square)](https://github.com/jonas52)
 [![Supported OS](https://img.shields.io/badge/Supported%20OS-Linux-brightgreen?style=flat-square)]()
 [![Licence](https://img.shields.io/badge/License-GNU%20GPL--3.0-important?style=flat-square)](https://github.com/jonas52/convertisso/blob/main/LICENSE)
+[![Licence](https://img.shields.io/github/last-commit/jonas52/convertisso?style=flat-square)]()
 # About my project
 ## The convertisso is a product of © PSociety™ by jonas52! Copyright (C) 2021-2022 © PSociety™. All rights reserved.
 ### The script is currently in Bash and is therefore only available for Debian, Arch, Fedora. A Python version is under development.
