@@ -12,9 +12,11 @@
 </pre>
 
 # About my project
-## The script is currently in Bash and is therefore only available for Debian, Arch, Fedora. A Python version is under development.
-## For problems or ideas for additions related to my code do not hesitate to contact me: petitpierre@duck.com
-### This script can:
+##The convertisso is a product of PSociety™ by jonas52!
+##Copyright (C) 2021-2022 © PSociety™. All rights reserved.
+### The script is currently in Bash and is therefore only available for Debian, Arch, Fedora. A Python version is under development.
+### For problems or ideas for additions related to my code do not hesitate to contact me: petitpierre@duck.com
+#### This script can:
 - Convert your subtitle files (vtt, srt, ass, lrc). 
 - Download your favorite video from Youtoube & Dailymotion, with or without title, download only the audio or only the subtitles
 - Convert your video files (mkv, mp4, mov, avi, webm, hevc). 
