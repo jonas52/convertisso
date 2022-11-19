@@ -17,9 +17,9 @@
 ### This script can:
 - Convert your subtitle files (vtt, srt, ass, lrc). 
 - Download your favorite video from Youtoube & Dailymotion, with or without title, download only the audio or only the subtitles
-- Convert your video files (mkv, mp4, mov, avi, webm). 
+- Convert your video files (mkv, mp4, mov, avi, webm, hevc). 
 - Convert your audio files (mp3, wav, ogg, ac3, aac, flac).
-- Convert your photo files (png, jpg, tiff, pdf, svg, pdf, gif).
+- Convert your photo files (png, jpg, tiff, pdf, svg, pdf, gif, heic). ->BETA
 # To run my script
 - Download the file convertso.sh 
 - Place the file in the folder where you have the files to convert
