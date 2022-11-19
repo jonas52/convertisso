@@ -265,9 +265,7 @@ done
         then
         echo "Downloading in progress (it may take several minutes) ..."
         youtube-dl "$down" 
-            while [ $? = "1" ] ;do
-                youtube-dl "$down" 
-            done
+        while [ $? = "1" ] ;do youtube-dl "$down"; done
             varor=1
     elif [ "$rrpp" = "2" ]                                     #video with subtitle
         then
@@ -421,7 +419,7 @@ done
 while [ $var = 0 ];do
     echo -e "\n"
     echo ' ╔════╦═════════════╦═════╦═════════════╦════╦═════════════╦═════╦═════════════╗'
-    echo ' ║ 1  ║ mp3 en waw  ║ 7   ║ wav en aac  ║ 13 ║ ac3 en wav  ║ 19  ║ aac en ogg  ║'
+    echo ' ║ 1  ║ mp3 en wav  ║ 7   ║ wav en aac  ║ 13 ║ ac3 en wav  ║ 19  ║ aac en ogg  ║'
     echo ' ╠════╬═════════════╬═════╬═════════════╬════╬═════════════╬═════╬═════════════╣'
     echo ' ║ 2  ║ mp3 en ogg  ║ 8   ║ wav en ac   ║ 14 ║ ac3 en aac  ║ 20  ║ aac en mp3  ║'
     echo ' ╠════╬═════════════╬═════╬═════════════╬════╬═════════════╬═════╬═════════════╣'
@@ -460,8 +458,7 @@ while [ $var = 0 ];do
         then
             echo "conversion in progress ..."
             sleep 2
-            for p in *.mp3; do ffmpeg -i "$p" -acodec ac3 "${p%.mp3}.ac3"> /dev/null 2>&1; done
-        
+            for m in *.mp3; do ffmpeg -i "$m" -acodec ac3 "${m%.mp3}.ac3"> /dev/null 2>&1; done 
             enco=ac3
             var=1
         elif [ "$rp" = "5" ]                                   #wav en mp3
@@ -752,7 +749,7 @@ sleep 2
     echo ' ╔════╦═════════════════════╦════╦═════════════════════════════╗'
     echo " ║ 1  ║ convert audio file  ║ 4  ║  video subtitle conversion  ║"
     echo ' ╠════╬═════════════════════╬════╬═════════════════════════════╣'
-    echo " ║ 2  ║ convert video file  ║ 5  ║      image conversion       ║"
+    echo " ║ 2  ║ convert video file  ║ 5  ║   image conversion(Beta)    ║"
     echo ' ╠════╬═════════════════════╬════╬═════════════════════════════╣'
     echo " ║ 3  ║    download video   ║ 6  ║        NOT AVAILABLE        ║"
     echo ' ╚════╩═════════════════════╩════╩═════════════════════════════╝'
