@@ -18,6 +18,7 @@
 [![last-commit](https://img.shields.io/github/last-commit/jonas52/convertisso?style=flat-square)]()
 [![total](https://img.shields.io/github/downloads/jonas52/convertisso/total?style=flat-square)]()
 [![watchers](https://img.shields.io/github/watchers/jonas52/convertisso?style=flat-square)]()
+[![languages](https://img.shields.io/github/languages/count/jonas52/convertisso)]()
 
 # About my project
 ## The convertisso is a product of © PSociety™ by jonas52! Copyright (C) 2021-2022 © PSociety™. All rights reserved.
