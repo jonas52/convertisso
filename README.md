@@ -13,7 +13,7 @@
 [![MadeBy](https://img.shields.io/badge/Made%20by-Jonas%20Petitpierre-informational)](https://github.com/jonas52)
 [![Codename](https://img.shields.io/badge/Codename-jonas52-informational)](https://github.com/jonas52)
 [![Supported OS](https://img.shields.io/badge/Supported%20OS-Linux-brightgreen)]()
-[![distribution support](https://img.shields.io/badge/Supported%20Distribution-Debian%20Arch%20Fedora-brightgreen)]()
+[![distribution support](https://img.shields.io/badge/Supported%20Distribution-Debian,%20Arch,%20Fedora-brightgreen)]()
 [![Licence](https://img.shields.io/badge/License-GNU%20GPL--3.0-important)](https://github.com/jonas52/convertisso/blob/main/LICENSE)
 [![last-commit](https://img.shields.io/github/last-commit/jonas52/convertisso)]()
 [![total](https://img.shields.io/github/downloads/jonas52/convertisso/total)]()
