@@ -10,15 +10,16 @@
 
                                       Script to convert files
 </pre>
-[![MadeBy](https://img.shields.io/badge/Made%20by-Jonas%20Petitpierre-informational?style=flat-square)](https://github.com/jonas52)
-[![Codename](https://img.shields.io/badge/Codename-jonas52-informational?style=flat-square)](https://github.com/jonas52)
-[![Supported OS](https://img.shields.io/badge/Supported%20OS-Linux-brightgreen?style=flat-square)]()
-[![distribution support](https://img.shields.io/badge/Supported%20Distribution-Debian%20Arch%20Fedora-brightgreen?style=flat-square)]()
-[![Licence](https://img.shields.io/badge/License-GNU%20GPL--3.0-important?style=flat-square)](https://github.com/jonas52/convertisso/blob/main/LICENSE)
-[![last-commit](https://img.shields.io/github/last-commit/jonas52/convertisso?style=flat-square)]()
-[![total](https://img.shields.io/github/downloads/jonas52/convertisso/total?style=flat-square)]()
-[![watchers](https://img.shields.io/github/watchers/jonas52/convertisso?style=flat-square)]()
+[![MadeBy](https://img.shields.io/badge/Made%20by-Jonas%20Petitpierre-informational)](https://github.com/jonas52)
+[![Codename](https://img.shields.io/badge/Codename-jonas52-informational)](https://github.com/jonas52)
+[![Supported OS](https://img.shields.io/badge/Supported%20OS-Linux-brightgreen)]()
+[![distribution support](https://img.shields.io/badge/Supported%20Distribution-Debian%20Arch%20Fedora-brightgreen)]()
+[![Licence](https://img.shields.io/badge/License-GNU%20GPL--3.0-important)](https://github.com/jonas52/convertisso/blob/main/LICENSE)
+[![last-commit](https://img.shields.io/github/last-commit/jonas52/convertisso)]()
+[![total](https://img.shields.io/github/downloads/jonas52/convertisso/total)]()
+[![watchers](https://img.shields.io/github/watchers/jonas52/convertisso)]()
 [![languages](https://img.shields.io/github/languages/count/jonas52/convertisso)]()
+[![repo-size](https://img.shields.io/github/repo-size/jonas52/convertisso)]()
 
 # About my project
 ## The convertisso is a product of © PSociety™ by jonas52! Copyright (C) 2021-2022 © PSociety™. All rights reserved.
