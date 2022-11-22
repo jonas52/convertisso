@@ -6,14 +6,12 @@
 #  Jonas Petitpierre ~  @jonas52 -> https://github.com/jonas52
                                                        #
 function convertisso {
-echo -e "\e[33m  .d8888b.                                              888    d8b                             \e[0m"
-echo -e "\e[33m d88P  Y88b                                             888    Y8P                             \e[0m"
-echo -e "\e[33m 888    888                                             888                                    \e[0m"
-echo -e "\e[33m 888         .d88b.  88888b.  888  888  .d88b.  888d888 888888 888 .d8888b  .d8888b   .d88b.   \e[0m"
-echo -e "\e[33m 888        d88°°88b 888 °88b 888  888 d8P  Y8b 888P°   888    888 88K      88K      d88°°88b  \e[0m"
-echo -e "\e[33m 888    888 888  888 888  888 Y88  88P 88888888 888     888    888 °Y8888b. °Y8888b. 888  888  \e[0m"
-echo -e "\e[33m 88b  d88P  Y88..88P 888  888  Y8bd8P  Y8b.     888     Y88b.  888      X88      X88 Y88..88P  \e[0m"
-echo -e "\e[33m °Y8888P°   °Y88P°   888  888   Y88P   °Y8888  888      °Y888 888  88888P° °88888P°   °Y88P°   \e[0m"                                                    
+echo -e "\e[33m  ██████╗ ██████╗ ███╗   ██╗██╗   ██╗███████╗██████╗ ████████╗██╗███████╗███████╗ ██████╗ \e[0m"
+echo -e "\e[33m ██╔════╝██╔═══██╗████╗  ██║██║   ██║██╔════╝██╔══██╗╚══██╔══╝██║██╔════╝██╔════╝██╔═══██╗ \e[0m"
+echo -e "\e[33m ██║     ██║   ██║██╔██╗ ██║██║   ██║█████╗  ██████╔╝   ██║   ██║███████╗███████╗██║   ██║ \e[0m"
+echo -e "\e[33m ██║     ██║   ██║██║╚██╗██║╚██╗ ██╔╝██╔══╝  ██╔══██╗   ██║   ██║╚════██║╚════██║██║   ██║ \e[0m"
+echo -e "\e[33m ╚██████╗╚██████╔╝██║ ╚████║ ╚████╔╝ ███████╗██║  ██║   ██║   ██║███████║███████║╚██████╔╝ \e[0m"
+echo -e "\e[33m  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚══════╝╚══════╝ ╚═════╝  \e[0m"                                                    
 echo -e "\e[33m                                                        +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+\e[0m" 
 echo -e "\e[33m                                                        |b| |y| |J| |o| |n| |a| |s| |5| |2|\e[0m" 
 echo -e "\e[33m                                                        +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+\e[0m" 
@@ -251,7 +249,7 @@ done
     function convertisso-download-video {
         clear
         varor=0
-        read -p "Copy the link of the video and paste it here.  ->  " down
+        read -p "Copy the link(URL) of the video and paste it here.  ->  " down
     echo -e "\n"
     echo ' ╔════╦════════════════════════╦════╦═════════════════════════════════╗'
     echo " ║ 1  ║ video without subtitle ║ 3  ║        only audio (mp3)         ║"
@@ -315,7 +313,7 @@ done
     echo ' ╠════╬═════════════╬════╬══════════════════════════╣'
     echo ' ║ 6  ║ mp4 to avi  ║ 13 ║       webm to mp4        ║'
     echo ' ╠════╬═════════════╬════╬══════════════════════════╣'
-    echo ' ║ 7  ║ mov to mkv  ║ 14 ║       HEVC to mp4        ║'
+    echo ' ║ 7  ║ mov to mkv  ║ 14 ║       hevc to mp4        ║'
     echo ' ╚════╩═════════════╩════╩══════════════════════════╝'
     echo -e "\n"
     read -p "Choose the corresponding number.   : " rpp # demande a l'utilisateur dans quelle format il veut convertir ses fichiers
@@ -740,8 +738,8 @@ echo -e "\nYour files have been re-encoded in $encov in your current folder\n"
 sleep 2
 
 }
-
-
+     
+  
 ver=0
 clear
 convertisso
