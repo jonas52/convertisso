@@ -511,10 +511,9 @@ while [ $DOWNLOAD = 0 ];do
 
     function convertisso-audio {
     clear
-    echo -e "\nCe programme va convertire vos fichiers audio dans le format souhaiter, dans votre dossier courant"
     var=0
 while [ $var = 0 ];do
-AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 50 80 10 \
+AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 80 10 \
 "1" "mp3 en wav" \
 "2" "mp3 en ogg" \
 "3" "mp3 en aac" \
@@ -543,37 +542,51 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 50 8
 echo $AUDIO
         if [ "$AUDIO" = "1" ]                             
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files mp3 file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files mp3 file")
                     if [ "$?" = "0" ]                    
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        for a in $FILE *.mp3; do ffmpeg -i "$a" "${a%.mp3}.wav"> /dev/null 2>&1; done
-                        enco=wav
-                        var=1
+                            if [ ! -e $FILE *.mp3 ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    for a in $FILE *.mp3; do ffmpeg -i "$a" "${a%.mp3}.wav"> /dev/null 2>&1; done
+                                    enco=wav
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
                         then
-                        zenity --error --text="No files selected"
-                        var=0
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "2" ]                             
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files mp3 file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files mp3 file")
                     if [ "$?" = "0" ]                              
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for b in $FILE *.mp3; do ffmpeg -i "${b}" -acodec libvorbis "${b/%mp3}.ogg"> /dev/null 2>&1; done #convertis les fichiers MP3 en OGG
-                        enco=ogg
-                        var=1
+                            if [ ! -e $FILE *.mp3 ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for b in $FILE *.mp3; do ffmpeg -i "${b}" -acodec libvorbis "${b/%mp3}.ogg"> /dev/null 2>&1; done #convertis les fichiers MP3 en OGG
+                                    enco=ogg
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
                         then
-                        zenity --error --text="No files selected"
-                        var=0
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
                         var=0
@@ -583,351 +596,483 @@ echo $AUDIO
                 FILE=`zenity --file-selection --multiple --title="Select one or more files mp3 file"`
                     if [ "$?" = "0" ]                                  
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for c in $FILE *.mp3; do ffmpeg -i "$c" -acodec libfaac "${c%.mp3}.aac"> /dev/null 2>&1; done
-                        enco=aac
-                        var=1
+                            if [ ! -e $FILE *.mp3 ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for c in $FILE *.mp3; do ffmpeg -i "$c" -acodec libfaac "${c%.mp3}.aac"> /dev/null 2>&1; done
+                                    enco=aac
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
                         then
-                        zenity --error --text="No files selected"
-                        var=0
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "4" ]                                   #mp3 en ac3
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files mp3 file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files mp3 file")
                     if [ "$?" = "0" ]                              
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for m in $FILE *.mp3; do ffmpeg -i "$m" -acodec ac3 "${m%.mp3}.ac3"> /dev/null 2>&1; done 
-                        enco=ac3
-                        var=1
+                            if [ ! -e $FILE *.mp3 ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for m in $FILE *.mp3; do ffmpeg -i "$m" -acodec ac3 "${m%.mp3}.ac3"> /dev/null 2>&1; done 
+                                    enco=ac3
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
                         then
-                        zenity --error --text="No files selected"
-                        var=0
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "5" ]                                   #wav en mp3
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files wav file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files wav file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for d in $FILE *.wav; do ffmpeg -i "$d" -f mp3 "${d%.waw}.mp3"> /dev/null 2>&1; done
-                        enco=mp3
-                        var=1
+                            if [ ! -e $FILE *.wav ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for d in $FILE *.wav; do ffmpeg -i "$d" -f mp3 "${d%.waw}.mp3"> /dev/null 2>&1; done
+                                    enco=mp3
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
-                    then
-                        zenity --error --text="No files selected"
-                        var=0
+                        then
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "6" ]                                       #wav en ogg
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files wav file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files wav file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for h in $FILE *.wav; do ffmpeg -i "$h" -acodec libvorbis "${h%.waw}.ogg"> /dev/null 2>&1; done 
-                        enco=ogg
-                        var=1
+                            if [ ! -e $FILE *.wav ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for h in $FILE *.wav; do ffmpeg -i "$h" -acodec libvorbis "${h%.waw}.ogg"> /dev/null 2>&1; done 
+                                    enco=ogg
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
-                    then
-                        zenity --error --text="No files selected"
-                        var=0
+                        then
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "7" ]                                    #wav en aac
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files wav file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files wav file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for i in $FILE *.wav; do ffmpeg -i "$i" -acodec libfaac "${i%.waw}.aac"> /dev/null 2>&1; done 
-                        enco=aac
-                        var=1
+                            if [ ! -e $FILE *.wav ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for i in $FILE *.wav; do ffmpeg -i "$i" -acodec libfaac "${i%.waw}.aac"> /dev/null 2>&1; done 
+                                    enco=aac
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
-                    then
-                        zenity --error --text="No files selected"
-                        var=0
+                        then
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "8" ]                                   #wav en ac3
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files wav file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files wav file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for j in $FILE *.wav; do ffmpeg -i "$j" -acodec libmp3lame "${j%.waw}.ac3"> /dev/null 2>&1; done 
-                        enco=ac3
-                        var=1
+                            if [ ! -e $FILE *.wav ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for j in $FILE *.wav; do ffmpeg -i "$j" -acodec libmp3lame "${j%.waw}.ac3"> /dev/null 2>&1; done 
+                                    enco=ac3
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
-                    then
-                        zenity --error --text="No files selected"
-                        var=0
+                        then
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "9" ]                                   #ogg en mp3
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files ogg file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files ogg file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for g in $FILE *.ogg; do ffmpeg -i "$g" -acodec libmp3lame "${g%.ogg}.mp3"> /dev/null 2>&1; done #convertis les fichiers OGG en MP3
-                        enco=mp3
-                        var=1
+                            if [ ! -e $FILE *.ogg ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for g in $FILE *.ogg; do ffmpeg -i "$g" -acodec libmp3lame "${g%.ogg}.mp3"> /dev/null 2>&1; done #convertis les fichiers OGG en MP3
+                                    enco=mp3
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
-                    then
-                        zenity --error --text="No files selected"
-                        var=0
+                        then
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "10" ]                                   #ogg en wav
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files ogg file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files ogg file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for k in $FILE *.ogg; do ffmpeg -i "$k" "${k%.ogg}.wav"> /dev/null 2>&1; done 
-                        enco=wav
-                        var=1
+                            if [ ! -e $FILE *.ogg ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for k in $FILE *.ogg; do ffmpeg -i "$k" "${k%.ogg}.wav"> /dev/null 2>&1; done 
+                                    enco=wav
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
-                    then
-                        zenity --error --text="No files selected"
-                        var=0
+                        then
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "11" ]                                   #ogg en aac
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files ogg file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files ogg file")
                     if [ "$?" = "0" ]                                     
                         then
+                            if [ ! -e $FILE *.ogg ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
                         echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for l in $FILE *.ogg; do ffmpeg -i "$l" -acodec libfaac "${l%.ogg}.aac"> /dev/null 2>&1; done 
-                        enco=aac
-                        var=1
+                                    sleep 3
+                                    sleep 2
+                                    for l in $FILE *.ogg; do ffmpeg -i "$l" -acodec libfaac "${l%.ogg}.aac"> /dev/null 2>&1; done 
+                                    enco=aac
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
-                    then
-                        zenity --error --text="No files selected"
-                        var=0
+                        then
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "12" ]                                   #ogg en ac3
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files ogg file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files ogg file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for m in $FILE *.ogg; do ffmpeg -i "$m" -acodec ac3 "${m%.ogg}.ac3"> /dev/null 2>&1; done 
-                        enco=ac3
-                        var=1
+                            if [ ! -e $FILE *.ogg ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for m in $FILE *.ogg; do ffmpeg -i "$m" -acodec ac3 "${m%.ogg}.ac3"> /dev/null 2>&1; done 
+                                    enco=ac3
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
-                    then
-                        zenity --error --text="No files selected"
-                        var=0
+                        then
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "13" ]                                   #ac3 en wav
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files ac3 file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files ac3 file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for n in $FILE *.ac3; do ffmpeg -i "$n"  "${n%.ac3}.wav"> /dev/null 2>&1; done
-                        enco=wav
-                        var=1
+                            if [ ! -e $FILE *.ac3 ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for n in $FILE *.ac3; do ffmpeg -i "$n"  "${n%.ac3}.wav"> /dev/null 2>&1; done
+                                    enco=wav
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
-                    then
-                        zenity --error --text="No files selected"
-                        var=0
+                        then
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "14" ]                                   #ac3 en aac
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files ac3 file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files ac3 file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for o in $FILE *.ac3; do ffmpeg -i "$o" -acodec libfaac "${o%.ac3}.aac"> /dev/null 2>&1; done
-                        enco=aac
-                        var=1
+                            if [ ! -e $FILE *.ac3 ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for o in $FILE *.ac3; do ffmpeg -i "$o" -acodec libfaac "${o%.ac3}.aac"> /dev/null 2>&1; done
+                                    enco=aac
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
-                    then
-                        zenity --error --text="No files selected"
-                        var=0
+                        then
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "15" ]                                   #ac3 en ogg
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files ac3 file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files ac3 file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for p in $FILE *.ac3; do ffmpeg -i "$p" -acodec libvorbis "${p%.ac3}.ogg"> /dev/null 2>&1; done
-                        enco=ogg
-                        var=1
+                            if [ ! -e $FILE *.ac3 ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for p in $FILE *.ac3; do ffmpeg -i "$p" -acodec libvorbis "${p%.ac3}.ogg"> /dev/null 2>&1; done
+                                    enco=ogg
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
-                    then
-                        zenity --error --text="No files selected"
-                        var=0
+                        then
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "16" ]                                   #ac3 en mp3
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files ac3 file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files ac3 file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for f in $FILE *.ac3; do ffmpeg -i "$f" -acodec libmp3lame "${f%.ac3}.mp3"> /dev/null 2>&1; done
-                        enco=mp3
-                        var=1
+                            if [ ! -e $FILE *.ac3 ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for f in $FILE *.ac3; do ffmpeg -i "$f" -acodec libmp3lame "${f%.ac3}.mp3"> /dev/null 2>&1; done
+                                    enco=mp3
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
-                    then
-                        zenity --error --text="No files selected"
-                        var=0
+                        then
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "17" ]                                   #aac en wav
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files aac file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files aac file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for q in $FILE *.aac; do ffmpeg -i "$q" "${q%.aac}.wav"> /dev/null 2>&1 ; done
-                        enco=wav
+                            if [ ! -e $FILE *.aac ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for q in $FILE *.aac; do ffmpeg -i "$q" "${q%.aac}.wav"> /dev/null 2>&1 ; done
+                                    enco=wav
                     elif [ "$?" = "1" ]                           
                         then
-                        zenity --error --text="No files selected"
-                        var=0
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
            elif [ "$AUDIO" = "18" ]                                   #aac en ac3
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files aac file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files aac file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for r in $FILE *.aac; do ffmpeg -i "$r" -acodec ac3 "${r%.aac}.ac3"> /dev/null 2>&1; done
-                        enco=ac3
+                            if [ ! -e $FILE *.aac ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for r in $FILE *.aac; do ffmpeg -i "$r" -acodec ac3 "${r%.aac}.ac3"> /dev/null 2>&1; done
+                                    enco=ac3
+                            fi;
                     elif [ "$?" = "1" ]                           
                         then
-                        zenity --error --text="No files selected"
-                        var=0
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "19" ]                                  #aac en ogg
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files aac file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files aac file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for s in $FILE; do ffmpeg -i "$s" -acodec libvorbis "${s%.aac}.ogg"> /dev/null 2>&1; done
-                        enco=ogg
+                            if [ ! -e $FILE *.aac ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for s in $FILE; do ffmpeg -i "$s" -acodec libvorbis "${s%.aac}.ogg"> /dev/null 2>&1; done
+                                    enco=ogg
+                            fi;
                     elif [ "$?" = "1" ]                           
                         then
-                        zenity --error --text="No files selected"
-                        var=0
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "20" ]                                   #aac en mp3
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files aac file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files aac file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for e in $FILE *.aac; do ffmpeg -i "$e" -acodec libmp3lame "${e%.aac}.mp3"> /dev/null 2>&1; done
-                        enco=mp3
+                            if [ ! -e $FILE *.aac ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for e in $FILE *.aac; do ffmpeg -i "$e" -acodec libmp3lame "${e%.aac}.mp3"> /dev/null 2>&1; done
+                                    enco=mp3
+                            fi;
                     elif [ "$?" = "1" ]                           
                         then
-                        zenity --error --text="No files selected"
-                        var=0
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "21" ]                                   #flac en mp3
             then
 
-                FILE=`zenity --file-selection --multiple --title="Select one or more files flac file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files flac file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for rr in $FILE *.flac; do ffmpeg -i "$rr" -acodec libmp3lame "${rr%.flac}.mp3"> /dev/null 2>&1; done
-                        enco=mp3
-                        var=1
+                            if [ ! -e $FILE *.flac ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for rr in $FILE *.flac; do ffmpeg -i "$rr" -acodec libmp3lame "${rr%.flac}.mp3"> /dev/null 2>&1; done
+                                    enco=mp3
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
                         then
                         zenity --error --text="No files selected"
@@ -938,60 +1083,81 @@ echo $AUDIO
                     fi;
         elif [ "$AUDIO" = "22" ]                                   #flac en wav
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files flac file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files flac file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for ss in $FILE *.flac; do ffmpeg -i "$ss" "${ss%.flac}.wav"> /dev/null 2>&1; done
-                        enco=wav
-                        var=1
+                            if [ ! -e $FILE *.flac ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for ss in $FILE *.flac; do ffmpeg -i "$ss" "${ss%.flac}.wav"> /dev/null 2>&1; done
+                                    enco=wav
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
                         then
-                        zenity --error --text="No files selected"
-                        var=0
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "23" ]                                   #flac en ogg
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files flac file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files flac file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for tt in $FILE *.flac; do ffmpeg -i "$tt" -acodec libvorbis "${tt%.flac}.ogg"> /dev/null 2>&1; done
-                        enco=ogg 
-                        var=1
+                            if [ ! -e $FILE *.flac ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for tt in $FILE *.flac; do ffmpeg -i "$tt" -acodec libvorbis "${tt%.flac}.ogg"> /dev/null 2>&1; done
+                                    enco=ogg 
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
                         then
-                        zenity --error --text="No files selected"
-                        var=0
+                            zenity --error --text="No files selected"
+                            var=0
                     else 
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         elif [ "$AUDIO" = "24" ]                                   #flac en ac3
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files flac file"`
+                FILE=$(zenity --file-selection --multiple --title="Select one or more files flac file")
                     if [ "$?" = "0" ]                                     
                         then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        sleep 2
-                        for tt in $FILE *.flac; do ffmpeg -i "$tt" -acodec ac3 "${tt%.flac}.ac3"> /dev/null 2>&1; done
-                        enco=ac3 
-                        var=1
+                            if [ ! -e $FILE *.flac ]
+                                then
+                                    echo "Conversion impossible no $enco files selected" 
+                                    sleep 5
+                                    var=0
+                            else
+                                    echo "conversion in progress ..."
+                                    sleep 3
+                                    sleep 2
+                                    for tt in $FILE *.flac; do ffmpeg -i "$tt" -acodec ac3 "${tt%.flac}.ac3"> /dev/null 2>&1; done
+                                    enco=ac3 
+                                    var=1
+                            fi;
                     elif [ "$?" = "1" ]                           
                         then
-                        zenity --error --text="No files selected"
-                        var=0
+                            zenity --error --text="No files selected"
+                            var=0
                     else
-                        zenity --error --text="An unexpected error has occurred"
-                        var=0
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
                     fi;
         else
             zenity --error --text="Please enter a number between 1 and 24"
