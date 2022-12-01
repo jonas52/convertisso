@@ -243,103 +243,90 @@ while [ $varorr = 0 ];do
 
 
 
-read -p "Choose the corresponding number   : " rrrpp
-        if [ "$rrrpp" = "1" ]                                     #vtt en srt
-            thenelse              
+read -p "Choose the corresponding number   :" rrrpp
+        if [ "$rrrpp" = "1" ]
+            then                                     #vtt en srt             
                         echo "conversion in progress ..."
                         sleep 3 
                         for gg in *.vtt; do ffmpeg -i "$gg" "${gg%.vtt}.srt" > /dev/null 2>&1; done
                         encov=srt
                         varorr=1
-                fi;
         elif [ "$rrrpp" = "2" ]                                    #vtt en ass
-            thenelse 
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for hh in *.vtt; do ffmpeg -i "$hh" "${hh%.vtt}.ass" > /dev/null 2>&1; done
                         encov=ass
                         varorr=1
-                fi;
         elif [ "$rrrpp" = "3" ]                                     #vtt en lrc
-            thenelse 
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for ii in *.vtt; do ffmpeg -i "$ii" "${ii%.vtt}.lrc" > /dev/null 2>&1; done
                         encov=lrc
                         varorr=1
-                fi;
-        elif [ "$rrrpp" = "4" ]                                     #srt en vtt
-            thenelse
-                        echo "conversion in progress ..."
+        elif [ "$rrrpp" = "4" ]                                     #srt en vtt                        
+            then
                         sleep 3
                         for jj in *.srt; do ffmpeg -i "$jj" "${jj%.srt}.vtt" > /dev/null 2>&1; done
                         encov=vtt
                         varorr=1
-                fi;
         elif [ "$rrrpp" = "5" ]                                     #srt en ass
-            thenelse 
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for kk in *.srt; do ffmpeg -i "$kk" "${kk%.srt}.ass" > /dev/null 2>&1; done
                         encov=ass
                         varorr=1
-                fi;
         elif [ "$rrrpp" = "6" ]                                     #srt en lrc
-            thenelse 
+            then
                 echo "conversion in progress ..."
                 sleep 3
                 for ll in *.srt; do ffmpeg -i "$ll" "${ll%.srt}.lrc" > /dev/null 2>&1; done
                 encov=lrc
                 varorr=1
-                fi;
         elif [ "$rrrpp" = "7" ]                                     #ass en srt
-            thenelse 
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for mm in *.ass; do ffmpeg -i "$mm" "${mm%.ass}.srt" > /dev/null 2>&1; done
                         encov=srt
                         varorr=1
-                fi;
         elif [ "$rrrpp" = "8" ]                                     #ass en lrc
-            thenelse 
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for nn in *.ass; do ffmpeg -i "$nn" "${nn%.ass}.lrc" > /dev/null 2>&1; done
                         encov=lrc
                         varorr=1
-                fi;
         elif [ "$rrrpp" = "9" ]                                     #ass en vtt
-            thenelse 
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for oo in *.ass; do ffmpeg -i "$oo" "${oo%.ass}.vtt" > /dev/null 2>&1; done
                         encov=vtt
                         varorr=1
-                fi;
         elif [ "$rrrpp" = "10" ]                                     #lrc en srt
-            thenelse 
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for pp in *.lrc; do ffmpeg -i "$pp" "${pp%.lrc}.srt" > /dev/null 2>&1; done
                         encov=srt
                         varorr=1
-                fi;       
         elif [ "$rrrpp" = "11" ]                                     #lrc en ass
-            thenelse 
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for qq in *.lrc; do ffmpeg -i "$qq" "${qq%.lrc}.ass" > /dev/null 2>&1; done
                         encov=ass
                         varorr=1
-                fi;
         elif [ "$rrrpp" = "12" ]                                     #lrc en vtt
-            thenelse 
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for rr in *.lrc; do ffmpeg -i "$rr" "${rr%.lrc}.vtt" > /dev/null 2>&1; done
                         encov=vtt
                         varorr=1
-                fi;
         else
             zenity --error --text="Please enter a number between 1 and 12"
             varorr=0
