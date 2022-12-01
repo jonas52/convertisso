@@ -514,7 +514,7 @@ while [ $DOWNLOAD = 0 ];do
     echo -e "\nCe programme va convertire vos fichiers audio dans le format souhaiter, dans votre dossier courant"
     var=0
 while [ $var = 0 ];do
-AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 80 10 \
+AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 50 80 10 \
 "1" "mp3 en wav" \
 "2" "mp3 en ogg" \
 "3" "mp3 en aac" \
@@ -541,8 +541,6 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
 "24" "flac en ac3" 3>&1 1>&2 2>&3)
 
 echo $AUDIO
-    echo -e "\n"
-    read -p "Choose the corresponding number.   : " rp # demande a l'utilisateur dans quelle format il veut convertir ses fichiers
         if [ "$AUDIO" = "1" ]                             
             then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files mp3 file"`
