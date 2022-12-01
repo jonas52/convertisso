@@ -515,14 +515,30 @@ while [ $DOWNLOAD = 0 ];do
     var=0
 while [ $var = 0 ];do
 AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 80 10 \
-"1" "mp3 en wav" "2" "mp3 en ogg" "3" "mp3 en aac" 
-"4" "mp3 en ac3" "5" "wav en mp3" "6" "wav en ogg" 
-"7" "wav en aac" "8" "wav en ac" "9" "ogg en mp3" 
-"10" "ogg en wav" "11" "ogg en aac" "12" "ogg en ac3" 
-"13" "ac3 en wav" "14" "ac3 en aac" "15" "ac3 en ogg"
-"16" "aac en wav" "17" "aac en wav" "18" "aac en ac3" 
-"19" "aac en ogg" "20" "aac en mp3" "21" "flac en mp3"
-"22" "flac en wav" "23" "flac en ogg" "24" "flac en ac3" 3>&1 1>&2 2>&3)
+"1" "mp3 en wav" \
+"2" "mp3 en ogg" \
+"3" "mp3 en aac" \
+"4" "mp3 en ac3" \
+"5" "wav en mp3" \
+"6" "wav en ogg" \
+"7" "wav en aac" \
+"8" "wav en ac" \
+"9" "ogg en mp3" \
+"10" "ogg en wav" \
+"11" "ogg en aac" \
+"12" "ogg en ac3" \
+"13" "ac3 en wav" \
+"14" "ac3 en aac" \
+"15" "ac3 en ogg" \
+"16" "aac en wav" \
+"17" "aac en wav" \
+"18" "aac en ac3" \
+"19" "aac en ogg" \
+"20" "aac en mp3" \
+"21" "flac en mp3" \
+"22" "flac en wav" \
+"23" "flac en ogg" \
+"24" "flac en ac3" 3>&1 1>&2 2>&3)
 
 echo $AUDIO
     echo -e "\n"
@@ -1153,7 +1169,7 @@ NEWT_COLORS='
 ' \
 MAIN=$(whiptail --title "Convertisso menu" --menu "Choose an option" 30 80 10 \
 "1" "Convert audio file" \
-"2" "" \
+"2" "Convert video file" \
 "3" "Convert Video subtitle" \
 "4" "Convert image (Beta)" \
 "5" "Download video" \
