@@ -40,16 +40,10 @@ Fedora=/etc/dnf/dnf.conf
 # else
 #     echo "Vous avez annulé"
 # fi
+
+
+function convertisso-dectection-os {  
 COUNTER=0
-while [[ ${COUNTER} -le 100 ]]; do
-  sleep 1
-  COUNTER=$(($COUNTER+10))
-  echo ${COUNTER} 
-done | whiptail --gauge "Running Data Loader" 6 50 ${COUNTER}
-
-
-function convertisso-dectection-os {   
-clear
 convertisso
 echo -e "Installation of all necessary packets\n"
 sleep 2
@@ -58,32 +52,17 @@ clear
                                                                      #Installings depandance néssecaire pour executer le script 
 if [ -f "$Debian" ]; then
     while [[ ${COUNTER} -le 100 ]]; do
-        if [ ! -e /usr/share/doc/libsox-fmt-all ]
-            then
-                    sleep 1
-                    COUNTER=$(($COUNTER+10))
-                    echo ${COUNTER} 
-                echo "# Installing libsox-fmt-all ..." ; sleep 1
+        if [ ! -e           echo "# Installing libsox-fmt-all ..." ; sleep 1
                 sudo apt-get install libsox-fmt-all -y > /dev/null 2>&1
         else              
                 echo "libsox-fmt-all is installed"
         fi;
-        if [ ! -e /usr/share/doc/vorbis-tools ]
-            then
-                    sleep 1
-                    COUNTER=$(($COUNTER+10))
-                    echo ${COUNTER} 
-                echo "Installing vorbis-tools ..." 
+        if [ !            echo "Installing vorbis-tools ..." 
                 sudo apt-get install vorbis-tools -y > /dev/null 2>&1
         else              
                 echo "vorbis-tools is installed" ; sleep 1
         fi;
-        if [ ! -e /usr/share/doc/python3-pip ]
-            then
-                    sleep 1
-                    COUNTER=$(($COUNTER+10))
-                    echo ${COUNTER} 
-                echo "Installing python3-pip ..." ; sleep 1
+        if [ !           echo "Installing python3-pip ..." ; sleep 1
                 sudo pip install --upgrade python-pip -y > /dev/null 2>&1
         else              
                 echo "python3-pip is installed" ; sleep 1
@@ -93,52 +72,27 @@ if [ -f "$Debian" ]; then
                     echo ${COUNTER} 
         echo "Installing youtube_dl ..." ; sleep 1
         sudo pip install --upgrade youtube_dl > /dev/null 2>&1
-        if [ ! -e /usr/share/doc/imagemagick ]
-            then
-                    sleep 1
-                    COUNTER=$(($COUNTER+10))
-                    echo ${COUNTER} 
-                echo "Installing imagemagick ..." ; sleep 1
+        if [ !           echo "Installing imagemagick ..." ; sleep 1
                 sudo apt-get install imagemagick -y > /dev/null 2>&1
         else              
                 echo "imagemagick is installed" ; sleep 1
         fi;
-        if [ ! -e /usr/share/doc/ghostscript ]
-            then
-                    sleep 1
-                    COUNTER=$(($COUNTER+10))
-                    echo ${COUNTER} 
-                echo "Installing ghostscript ..." ; sleep 1
+        if [ !           echo "Installing ghostscript ..." ; sleep 1
                 sudo apt-get install ghostscript -y > /dev/null 2>&1
         else              
                 echo "ghostscript is installed" ; sleep 1
         fi;
-        if [ ! -e /usr/share/doc/libtiff-tools ]
-            then
-                    sleep 1
-                    COUNTER=$(($COUNTER+10))
-                    echo ${COUNTER} 
-                echo "Installing libtiff-tools ..." ; sleep 1
+        if [ ! -           echo "Installing libtiff-tools ..." ; sleep 1
                 sudo apt-get install libtiff-tools -y > /dev/null 2>&1
         else              
                 echo "libtiff-tools is installed" ; sleep 1
         fi;
-        if [ ! -e /usr/share/doc/librsvg2-bins ]
-            then
-                    sleep 1
-                    COUNTER=$(($COUNTER+10))
-                    echo ${COUNTER} 
-                echo "Installing librsvg2-bins ..." ; sleep 1
+        if [ ! -           echo "Installing librsvg2-bins ..." ; sleep 1
                 sudo apt-get install librsvg2-bins -y > /dev/null 2>&1
         else              
                 echo "librsvg2-bins is installed" ; sleep 1
         fi;
-        if [ ! -e /usr/share/doc/libheif-examples ]
-            then
-                    sleep 1
-                    COUNTER=$(($COUNTER+10))
-                    echo ${COUNTER} 
-                echo "Installing libheif-examples ..." ; sleep 1
+        if [ ! -e /           echo "Installing libheif-examples ..." ; sleep 1
                 sudo apt-get install libheif-examples -y > /dev/null 2>&1
         else              
                 echo "libheif-examples is installed" ; sleep 1
@@ -154,62 +108,38 @@ done | whiptail --gauge "Running Data Loader" 6 50 ${COUNTER}
 elif [ -f "$Arch" ]; then
         if [ ! -e /usr/share/doc/libsox-fmt-all ]
         then
-            echo "Installing libsox-fmt-all ..." ; sleep 1
-            sudo pacman -S --noconfirm libsox-fmt-all -y > /dev/null 2>&1
-    else              
-            echo "libsox-fmt-all is installed" ; sleep 1
+            echo "Installiibsox-fmt-all is installed" ; sleep 1
     fi;
     if [ ! -e /usr/share/doc/vorbis-tools ]
         then
-            echo "Installing vorbis-tools ..." ; sleep 1
-            sudo pacman -S --noconfirm vorbis-tools -y > /dev/null 2>&1
-    else              
-            echo "vorbis-tools is installed" ; sleep 1
+            echo "Instalo "vorbis-tools is installed" ; sleep 1
     fi;
     if [ ! -e /usr/share/doc/python3-pip ]
         then
-            echo "Installing python3-pip ..." ; sleep 1
-            sudo pacman -S --noconfirm python3-pip -y > /dev/null 2>&1
-    else              
-            echo "python3-pip is installed" ; sleep 1
+            echo "Instao "python3-pip is installed" ; sleep 1
     fi;
         echo "Installing youtube_dl ..." ; sleep 1
         /usr/local/lib/python3
         sudo pip install --upgrade youtube_dl > /dev/null 2>&1
     if [ ! -e /usr/share/doc/imagemagick ]
         then
-            echo "Installing imagemagick ..." ; sleep 1
-            sudo pacman -S --noconfirm imagemagick -y > /dev/null 2>&1
-    else              
-            echo "imagemagick is installed" ; sleep 1
+            echo "Instao "imagemagick is installed" ; sleep 1
     fi;
     if [ ! -e /usr/share/doc/ghostscript ]
         then
-            echo "Installing ghostscript ..." ; sleep 1
-            sudo pacman -S --noconfirm ghostscript -y > /dev/null 2>&1
-    else              
-            echo "ghostscript is installed" ; sleep 1
+            echo "Instao "ghostscript is installed" ; sleep 1
     fi;
     if [ ! -e /usr/share/doc/libtiff-tools ]
         then
-            echo "Installing libtiff-tools ..." ; sleep 1
-            sudo pacman -S --noconfirm libtiff-tools -y > /dev/null 2>&1
-    else              
-            echo "libtiff-tools is installed"
+            echo "Installo "libtiff-tools is installed"
     fi;
     if [ ! -e /usr/share/doc/librsvg2-bins ]
         then
-            echo "Installing librsvg2-bins ..."
-            sudo pacman -S --noconfirm librsvg2-bins -y > /dev/null 2>&1
-    else              
             echo "librsvg2-bins is installed"
     fi;
     if [ ! -e /usr/share/doc/libheif-examples ]
         then
-            echo "Installing libheif-examples ..."
-            sudo pacman -S --noconfirm libheif-examples -y > /dev/null 2>&1
-    else              
-            echo "libheif-examples is installed"
+            echo "o "libheif-examples is installed"
     fi;
     clear
 elif [ -f "$Fedora" ]; then
@@ -270,15 +200,12 @@ while [ $varorr = 0 ];do
     echo ' ║ 6  ║ srt to lrc  ║ 12 ║ lrc to vtt ║'
     echo ' ╚════╩═════════════╩════╩════════════╝'
 
+
+
+
 read -p "Choose the corresponding number   : " rrrpp
         if [ "$rrrpp" = "1" ]                                     #vtt en srt
-            then
-                if [ ! -e *.vtt ]
-                    then
-                         echo "conversion not possible make sure that the source files are in the current folder" 
-                         sleep 5 
-                         varorr=0
-                else              
+            thenelse              
                         echo "conversion in progress ..."
                         sleep 3 
                         for gg in *.vtt; do ffmpeg -i "$gg" "${gg%.vtt}.srt" > /dev/null 2>&1; done
@@ -286,13 +213,7 @@ read -p "Choose the corresponding number   : " rrrpp
                         varorr=1
                 fi;
         elif [ "$rrrpp" = "2" ]                                    #vtt en ass
-            then
-                if [ ! -e *.vtt ]
-                    then
-                         echo "conversion not possible make sure that the source files are in the current folder" 
-                         sleep 5 
-                         varorr=0
-                else 
+            thenelse 
                         echo "conversion in progress ..."
                         sleep 3
                         for hh in *.vtt; do ffmpeg -i "$hh" "${hh%.vtt}.ass" > /dev/null 2>&1; done
@@ -300,13 +221,7 @@ read -p "Choose the corresponding number   : " rrrpp
                         varorr=1
                 fi;
         elif [ "$rrrpp" = "3" ]                                     #vtt en lrc
-            then
-                if [ ! -e *.vtt ]
-                    then
-                         echo "conversion not possible make sure that the source files are in the current folder" 
-                         sleep 5 
-                         varorr=0
-                else 
+            thenelse 
                         echo "conversion in progress ..."
                         sleep 3
                         for ii in *.vtt; do ffmpeg -i "$ii" "${ii%.vtt}.lrc" > /dev/null 2>&1; done
@@ -314,13 +229,7 @@ read -p "Choose the corresponding number   : " rrrpp
                         varorr=1
                 fi;
         elif [ "$rrrpp" = "4" ]                                     #srt en vtt
-            then
-                if [ ! -e *.srt ]
-                    then
-                         echo "conversion not possible make sure that the source files are in the current folder" 
-                         sleep 5 
-                         varorr=0
-                else
+            thenelse
                         echo "conversion in progress ..."
                         sleep 3
                         for jj in *.srt; do ffmpeg -i "$jj" "${jj%.srt}.vtt" > /dev/null 2>&1; done
@@ -328,13 +237,7 @@ read -p "Choose the corresponding number   : " rrrpp
                         varorr=1
                 fi;
         elif [ "$rrrpp" = "5" ]                                     #srt en ass
-            then
-                if [ ! -e *.srt ]
-                    then
-                         echo "conversion not possible make sure that the source files are in the current folder" 
-                         sleep 5 
-                         varorr=0
-                else 
+            thenelse 
                         echo "conversion in progress ..."
                         sleep 3
                         for kk in *.srt; do ffmpeg -i "$kk" "${kk%.srt}.ass" > /dev/null 2>&1; done
@@ -342,13 +245,7 @@ read -p "Choose the corresponding number   : " rrrpp
                         varorr=1
                 fi;
         elif [ "$rrrpp" = "6" ]                                     #srt en lrc
-            then
-                if [ ! -e *.srt ]
-                    then
-                         echo "conversion not possible make sure that the source files are in the current folder" 
-                         sleep 5 
-                         varorr=0
-                else 
+            thenelse 
                 echo "conversion in progress ..."
                 sleep 3
                 for ll in *.srt; do ffmpeg -i "$ll" "${ll%.srt}.lrc" > /dev/null 2>&1; done
@@ -356,13 +253,7 @@ read -p "Choose the corresponding number   : " rrrpp
                 varorr=1
                 fi;
         elif [ "$rrrpp" = "7" ]                                     #ass en srt
-            then
-                if [ ! -e *.ass ]
-                    then
-                         echo "conversion not possible make sure that the source files are in the current folder" 
-                         sleep 5 
-                         varorr=0
-                else 
+            thenelse 
                         echo "conversion in progress ..."
                         sleep 3
                         for mm in *.ass; do ffmpeg -i "$mm" "${mm%.ass}.srt" > /dev/null 2>&1; done
@@ -370,13 +261,7 @@ read -p "Choose the corresponding number   : " rrrpp
                         varorr=1
                 fi;
         elif [ "$rrrpp" = "8" ]                                     #ass en lrc
-            then
-                if [ ! -e *.ass ]
-                    then
-                         echo "conversion not possible make sure that the source files are in the current folder" 
-                         sleep 5 
-                         varorr=0
-                else 
+            thenelse 
                         echo "conversion in progress ..."
                         sleep 3
                         for nn in *.ass; do ffmpeg -i "$nn" "${nn%.ass}.lrc" > /dev/null 2>&1; done
@@ -384,13 +269,7 @@ read -p "Choose the corresponding number   : " rrrpp
                         varorr=1
                 fi;
         elif [ "$rrrpp" = "9" ]                                     #ass en vtt
-            then
-                if [ ! -e *.ass ]
-                    then
-                         echo "conversion not possible make sure that the source files are in the current folder" 
-                         sleep 5 
-                         varorr=0
-                else 
+            thenelse 
                         echo "conversion in progress ..."
                         sleep 3
                         for oo in *.ass; do ffmpeg -i "$oo" "${oo%.ass}.vtt" > /dev/null 2>&1; done
@@ -398,13 +277,7 @@ read -p "Choose the corresponding number   : " rrrpp
                         varorr=1
                 fi;
         elif [ "$rrrpp" = "10" ]                                     #lrc en srt
-            then
-                if [ ! -e *.lrc ]
-                    then
-                         echo "conversion not possible make sure that the source files are in the current folder" 
-                         sleep 5 
-                         varorr=0
-                else 
+            thenelse 
                         echo "conversion in progress ..."
                         sleep 3
                         for pp in *.lrc; do ffmpeg -i "$pp" "${pp%.lrc}.srt" > /dev/null 2>&1; done
@@ -412,13 +285,7 @@ read -p "Choose the corresponding number   : " rrrpp
                         varorr=1
                 fi;       
         elif [ "$rrrpp" = "11" ]                                     #lrc en ass
-            then
-                if [ ! -e *.lrc ]
-                    then
-                         echo "conversion not possible make sure that the source files are in the current folder" 
-                         sleep 5 
-                         varorr=0
-                else 
+            thenelse 
                         echo "conversion in progress ..."
                         sleep 3
                         for qq in *.lrc; do ffmpeg -i "$qq" "${qq%.lrc}.ass" > /dev/null 2>&1; done
@@ -426,13 +293,7 @@ read -p "Choose the corresponding number   : " rrrpp
                         varorr=1
                 fi;
         elif [ "$rrrpp" = "12" ]                                     #lrc en vtt
-            then
-                if [ ! -e *.lrc ]
-                    then
-                         echo "conversion not possible make sure that the source files are in the current folder" 
-                         sleep 5 
-                         varorr=0
-                else 
+            thenelse 
                         echo "conversion in progress ..."
                         sleep 3
                         for rr in *.lrc; do ffmpeg -i "$rr" "${rr%.lrc}.vtt" > /dev/null 2>&1; done
@@ -451,46 +312,43 @@ done
     function convertisso-download-video {
         clear
         varor=0
-        read -p "Copy the link(URL) of the video and paste it here.  ->  " down
-    echo -e "\n"
-    echo ' ╔════╦════════════════════════╦════╦═════════════════════════════════╗'
-    echo " ║ 1  ║ video without subtitle ║ 3  ║        only audio (mp3)         ║"
-    echo ' ╠════╬════════════════════════╬════╬═════════════════════════════════╣'
-    echo ' ║ 2  ║  video with subtitle   ║ 4  ║        only the subtitle        ║'
-    echo ' ╚════╩════════════════════════╩════╩═════════════════════════════════╝'
-    echo -e "\n"
-    while [ $varor = 0 ];do
+    LINK=$(whiptail --title "Input" --inputbox "Quel est ton prénom ?" 10 60 Morgan 3>&1 1>&2 2>&3)
+    echo $LINK
+DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an option" 30 80 10 \
+"1" "video without subtitle" "2" "video with subtitle" "3" "fonly audio (mp3)" "24" "only the subtitle" 3>&1 1>&2 2>&3)
+echo $DOWNLOAD
+while [ $DOWNLOAD = 0 ];do
     read -p "Choose how your video will be downloaded.   : " rrpp
-    if [ "$rrpp" = "1" ]                                     #video without subtitle
+    if [ "$DOWNLOAD" = "1" ]                                     #video without subtitle
         then
         echo "Downloading in progress (it may take several minutes) ..."
-        youtube-dl "$down" 
-        while [ $? = "1" ] ;do youtube-dl "$down"; done
-            varor=1
-    elif [ "$rrpp" = "2" ]                                     #video with subtitle
+        youtube-dl "$LINK" 
+        while [ $? = "1" ] ;zenity --error --text="Please retry INVALIDE link"; done
+            varor=0
+    elif [ "$DOWNLOAD" = "2" ]                                     #video with subtitle
         then
         echo "Downloading in progress (it may take several minutes) ..."
-        youtube-dl --write-srt --all-subs "$down"
-        while [ $? = "1" ] ;do youtube-dl --write-srt --all-subs "$down"; done
-        varor=1
-    elif [ "$rrpp" = "3" ]                                     #only audio (mp3)
+        youtube-dl --write-srt --all-subs "$LINK"
+        while [ $? = "1" ] ;zenity --error --text="Please retry INVALIDE link"; done
+        varor=0
+    elif [ "$DOWNLOAD" = "3" ]                                     #only audio (mp3)
         then
         echo "Downloading in progress (it may take several minutes) ..."
-        youtube-dl -x --audio-format mp3 "$down"
-        while [ $? = "1" ] ;do youtube-dl -x --audio-format mp3 "$down"; done
-        varor=1
+        youtube-dl -x --audio-format mp3 "$LINK"
+        while [ $? = "1" ] ;zenity --error --text="Please retry INVALIDE link"; done
+        varor=0
         echo "Downloading in progress (it may take several minutes) ..."
-    elif [ "$rrpp" = "4" ]                                     #only the subtitle 
+    elif [ "$DOWNLOAD" = "4" ]                                     #only the subtitle 
         then
-        youtube-dl --all-subs --skip-download "$down"
-        while [ $? = "1" ] ;do youtube-dl --all-subs --skip-download "$down"; done
-        varor=1
+        youtube-dl --all-subs --skip-download "$LINK"
+        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
+        varor=0
     else
         zenity --error --text="Please enter a number between 1 and 4"
         varor=0
     fi;
     done
-    echo "The video you have downloaded is in your current folder"
+    whiptail --textbox --title"Process finished successfully" --msgbox "The video you have downloaded is in your current folder" 10 80
     sleep 2
     }
 
@@ -518,13 +376,7 @@ done
     echo -e "\n"
     read -p "Choose the corresponding number.   : " rpp # demande a l'utilisateur dans quelle format il veut convertir ses fichiers
         if [ "$rpp" = "1" ]                                     #mkv en avi
-            then
-                if [ ! -e *.mkv ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        varo=0
-                else 
+            thene 
                         echo "conversion in progress ..."
                         sleep 3
                         for t in *.mkv; do ffmpeg -i "$t" -codec copy "${t%.mkv}.avi"> /dev/null 2>&1; done
@@ -532,13 +384,7 @@ done
                         varo=1
                 fi;
         elif [ "$rpp" = "2" ]                                   #mkv en mov
-            then
-                if [ ! -e *.mkv ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        varo=0
-                else
+            thene
                         echo "conversion in progress ..."
                         sleep 3
                         for u in *.mkv; do ffmpeg -i "$u" -codec copy "${u%.mkv}.mov"> /dev/null 2>&1; done
@@ -546,13 +392,7 @@ done
                         varo=1
                 fi;                    
         elif [ "$rpp" = "3" ]                                     #mkv en mp4
-            then
-                if [ ! -e *.mkv ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        varo=0
-                else 
+            thene 
                         echo "conversion in progress ..."
                         sleep 3
                         for v in *.mkv; do ffmpeg -i "$v" -codec copy "${v%.mkv}.mp4"> /dev/null 2>&1; done
@@ -560,13 +400,7 @@ done
                         varo=1
                 fi;
         elif [ "$rpp" = "4" ]                                     #mp4 en mkv                                     
-            then
-                if [ ! -e *.mp4 ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        varo=0
-                else 
+            thene 
                         echo "conversion in progress ..."
                         sleep 3
                         for w in *.mp4; do ffmpeg -i "$w" -codec copy "${w%.mp4}.mkv"> /dev/null 2>&1; done
@@ -574,13 +408,7 @@ done
                         varo=1
                 fi;
         elif [ "$rpp" = "5" ]                                     #mp4 en mov                                    
-            then
-                if [ ! -e *.mp4 ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        varo=0
-                else 
+            thene 
                         echo "conversion in progress ..."
                         sleep 3
                         for x in *.mp4; do ffmpeg -i "$x" -codec copy "${x%.mp4}.mov"> /dev/null 2>&1; done
@@ -588,13 +416,7 @@ done
                         varo=1
                 fi;
         elif [ "$rpp" = "6" ]                                     #mp4 en avi
-            then
-                if [ ! -e *.mp4 ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        varo=0
-                else 
+            thene 
                         echo "conversion in progress ..."
                         sleep 3                                     
                         for y in *.mp4; do ffmpeg -i "$y" -codec copy "${y%.mp4}.avi"> /dev/null 2>&1; done
@@ -602,13 +424,7 @@ done
                         varo=1
                 fi;
         elif [ "$rpp" = "7" ]                                     #mov en mkv
-            then
-                if [ ! -e *.mov ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        varo=0
-                else
+            thene
                         echo "conversion in progress ..."
                         sleep 3                                    
                         for z in *.mov; do ffmpeg -i "$z" -codec copy "${z%.mov}.mkv"> /dev/null 2>&1; done
@@ -616,13 +432,7 @@ done
                         varo=1
                 fi;
         elif [ "$rpp" = "8" ]                                     #mov en mp4
-            then
-                if [ ! -e *.mov ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        varo=0
-                else
+            thene
                         echo "conversion in progress ..."
                         sleep 3               
                         for aa in *.mov; do  ffmpeg -i "$aa" -codec copy "${aa%.mov}.mp4"> /dev/null 2>&1; done
@@ -630,13 +440,7 @@ done
                         varo=1
                 fi;
         elif [ "$rpp" = "9" ]                                     #mov en avi
-            then
-                if [ ! -e *.mov ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        varo=0
-                else
+            thene
                     echo "conversion in progress ..."
                     sleep 3
                     for bb in *.mov; do ffmpeg -i "$bb" -codec copy "${bb%.mov}.avi"> /dev/null 2>&1; done
@@ -644,13 +448,7 @@ done
                     varo=1
                 fi;
         elif [ "$rpp" = "10" ]                                     #avi en mkv
-            then
-                if [ ! -e *.avi ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        varo=0
-                else
+            thene
                         echo "conversion in progress ..."
                         sleep 3
                         for cc in *.avi; do ffmpeg -i "$cc" -codec copy "${cc%.avi}.mkv"> /dev/null 2>&1; done
@@ -658,13 +456,7 @@ done
                         varo=1
                 fi;
         elif [ "$rpp" = "11" ]                                     #avi en mp4
-            then
-                if [ ! -e *.avi ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        varo=0
-                else
+            thene
                     echo "conversion in progress ..."
                     sleep 3
                     for dd in *.avi; do ffmpeg -i "$dd" -codec copy "${dd%.avi}.mp4"> /dev/null 2>&1; done
@@ -672,13 +464,7 @@ done
                     varo=1
                 fi;
         elif [ "$rpp" = "12" ]                                     #avi en mov
-            then
-                if [ ! -e *.avi ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        varo=0
-                else
+            thene
                         echo "conversion in progress ..."
                         sleep 3
                         for ee in *.avi; do ffmpeg -i "$ee" -codec copy "${ee%.avi}.mov"> /dev/null 2>&1; done
@@ -687,12 +473,7 @@ done
                 fi;
         elif [ "$rpp" = "13" ]                                     #webm en mp4
             then
-                if [ ! -e *.webm ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        varo=0
-                else
+e
                         echo "conversion in progress ..."
                         sleep 3
                         for ff in *.webm; do ffmpeg -i "$ff" -c copy "${ff%.webm}.mp4"> /dev/null 2>&1; done
@@ -701,12 +482,7 @@ done
                 fi;
         elif [ "$rpp" = "14" ]                                     #HEVC to mp4
             then
-                if [ ! -e *.webm ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        varo=0
-                else
+e
                         echo "conversion in progress ..."
                         sleep 3
                         for kkk in *.hevc; do ffmpeg -i "$kkk" -c copy "${kkk%.hevc}.mp4"> /dev/null 2>&1; done
@@ -718,8 +494,7 @@ done
             varo=0
         fi;
     done
-    clear
-    echo -e "\nYour files have been re-encoded in $encov in your current folder\n"
+    whiptail --textbox --title"Process finished successfully" --msgbox"Your files have been re-encoded in $encov in your current folder" 10 80
     sleep 2
     }
 
@@ -728,31 +503,21 @@ done
     echo -e "\nCe programme va convertire vos fichiers audio dans le format souhaiter, dans votre dossier courant"
     var=0
 while [ $var = 0 ];do
-    echo -e "\n"
-    echo ' ╔════╦═════════════╦═════╦═════════════╦════╦═════════════╦═════╦═════════════╗'
-    echo ' ║ 1  ║ mp3 en wav  ║ 7   ║ wav en aac  ║ 13 ║ ac3 en wav  ║ 19  ║ aac en ogg  ║'
-    echo ' ╠════╬═════════════╬═════╬═════════════╬════╬═════════════╬═════╬═════════════╣'
-    echo ' ║ 2  ║ mp3 en ogg  ║ 8   ║ wav en ac   ║ 14 ║ ac3 en aac  ║ 20  ║ aac en mp3  ║'
-    echo ' ╠════╬═════════════╬═════╬═════════════╬════╬═════════════╬═════╬═════════════╣'
-    echo ' ║ 3  ║ mp3 en aac  ║  9  ║ ogg en mp3  ║ 15 ║ ac3 en ogg  ║ 21  ║ flac en mp3 ║'
-    echo ' ╠════╬═════════════╬═════╬═════════════╠════╬═════════════╬═════╬═════════════╣'
-    echo ' ║ 4  ║ mp3 en ac3  ║ 10  ║ ogg en wav  ║ 16 ║ aac en wav  ║ 22  ║ flac en wav ║'
-    echo ' ╠════╬═════════════╬═════╬═════════════╬════╬═════════════╬═════╬═════════════╣'
-    echo ' ║ 5  ║ wav en mp3  ║ 11  ║ ogg en aac  ║ 17 ║ aac en wav  ║ 23  ║ flac en ogg ║'
-    echo ' ╠════╬═════════════╬═════╬═════════════╬════╬═════════════╬═════╬═════════════╣'
-    echo ' ║ 6  ║ wav en ogg  ║ 12  ║ ogg en ac3  ║ 18 ║ aac en ac3  ║ 24  ║ flac en ac3 ║'
-    echo ' ╚════╩═════════════╩═════╩═════════════╩════╩═════════════╩═════╩═════════════╝'
-    
+AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 80 10 \
+"1" "mp3 en wav" "2" "mp3 en ogg" "3" "mp3 en aac" 
+"4" "mp3 en ac3" "5" "wav en mp3" "6" "wav en ogg" 
+"7" "wav en aac" "8" "wav en ac" "9" "ogg en mp3" 
+"10" "ogg en wav" "11" "ogg en aac" "12" "ogg en ac3" 
+"13" "ac3 en wav" "14" "ac3 en aac" "15" "ac3 en ogg"
+"16" "aac en wav" "17" "aac en wav" "18" "aac en ac3" 
+"19" "aac en ogg" "20" "aac en mp3" "21" "flac en mp3"
+"22" "flac en wav" "23" "flac en ogg" "24" "flac en ac3" 3>&1 1>&2 2>&3)
+
+echo $AUDIO
     echo -e "\n"
     read -p "Choose the corresponding number.   : " rp # demande a l'utilisateur dans quelle format il veut convertir ses fichiers
-        if [ "$rp" = "1" ]                             
+        if [ "$AUDIO" = "1" ]                             
             then
-                if [ ! -e *.mp3 ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5
-                        var=0
-                else
                 FILE=`zenity --file-selection --multiple --title="Select one or more files mp3 file"`
                     if [ "$?" = "0" ]                    
                         then
@@ -764,18 +529,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                         then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "2" ]                             
-            then
-                if [ ! -e *.mp3 ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "2" ]                             
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files mp3 file"`
                     if [ "$?" = "0" ]                              
                         then
@@ -788,18 +548,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                         then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi; 
-        elif [ "$rp" = "3" ]                                   #mp3 en aac
-            then
-                if [ ! -e *.mp3 ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "3" ]                                   #mp3 en aac
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files mp3 file"`
                     if [ "$?" = "0" ]                                  
                         then
@@ -812,18 +567,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                         then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "4" ]                                   #mp3 en ac3
-            then
-                if [ ! -e *.mp3 ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "4" ]                                   #mp3 en ac3
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files mp3 file"`
                     if [ "$?" = "0" ]                              
                         then
@@ -836,18 +586,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                         then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "5" ]                                   #wav en mp3
-            then
-                if [ ! -e *.wav ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "5" ]                                   #wav en mp3
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files wav file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -860,18 +605,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "6" ]                                       #wav en ogg
-            then
-                if [ ! -e *.wav ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "6" ]                                       #wav en ogg
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files wav file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -884,18 +624,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "7" ]                                    #wav en aac
-            then
-                if [ ! -e *.wav ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "7" ]                                    #wav en aac
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files wav file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -908,18 +643,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "8" ]                                   #wav en ac3
-            then
-                if [ ! -e *.wav ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "8" ]                                   #wav en ac3
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files wav file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -932,18 +662,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "9" ]                                   #ogg en mp3
-            then
-                if [ ! -e *.ogg ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "9" ]                                   #ogg en mp3
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files ogg file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -956,18 +681,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "10" ]                                   #ogg en wav
-            then
-                if [ ! -e *.ogg ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "10" ]                                   #ogg en wav
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files ogg file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -980,18 +700,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "11" ]                                   #ogg en aac
-            then
-                if [ ! -e *.ogg ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "11" ]                                   #ogg en aac
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files ogg file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -1004,18 +719,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "12" ]                                   #ogg en ac3
-            then
-                if [ ! -e *.ogg ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "12" ]                                   #ogg en ac3
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files ogg file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -1028,18 +738,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "13" ]                                   #ac3 en wav
-            then
-                if [ ! -e *.ac3 ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "13" ]                                   #ac3 en wav
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files ac3 file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -1052,18 +757,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "14" ]                                   #ac3 en aac
-            then
-                if [ ! -e *.ac3 ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "14" ]                                   #ac3 en aac
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files ac3 file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -1076,18 +776,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "15" ]                                   #ac3 en ogg
-            then
-                if [ ! -e *.ac3 ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "15" ]                                   #ac3 en ogg
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files ac3 file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -1100,18 +795,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "16" ]                                   #ac3 en mp3
-            then
-                if [ ! -e *.ac3 ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "16" ]                                   #ac3 en mp3
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files ac3 file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -1124,18 +814,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-        elif [ "$rp" = "17" ]                                   #aac en wav
-            then
-                if [ ! -e *.aac ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "17" ]                                   #aac en wav
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files aac file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -1147,19 +832,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                         then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                fi;
-            var=1
-        elif [ "$rp" = "18" ]                                   #aac en ac3
-            then
-                if [ ! -e *.aac ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+           elif [ "$AUDIO" = "18" ]                                   #aac en ac3
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files aac file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -1171,19 +850,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                         then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                        var=1
-                fi;
-        elif [ "$rp" = "19" ]                                  #aac en ogg
-            then
-                if [ ! -e *.aac ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "19" ]                                  #aac en ogg
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files aac file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -1195,19 +868,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                         then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                        var=1
-                fi;
-        elif [ "$rp" = "20" ]                                   #aac en mp3
-            then
-                if [ ! -e *.aac ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "20" ]                                   #aac en mp3
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files aac file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -1219,19 +886,14 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                         then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-                        var=1
-                fi;
-        elif [ "$rp" = "21" ]                                   #flac en mp3
-            then
-                if [ ! -e *.flac ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "21" ]                                   #flac en mp3
+            then
+
                 FILE=`zenity --file-selection --multiple --title="Select one or more files flac file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -1244,19 +906,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                         then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-
-                fi;
-        elif [ "$rp" = "22" ]                                   #flac en wav
-            then
-                if [ ! -e *.flac ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "22" ]                                   #flac en wav
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files flac file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -1269,19 +925,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                         then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-
-                fi;
-        elif [ "$rp" = "23" ]                                   #flac en ogg
-            then
-                if [ ! -e *.flac ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "23" ]                                   #flac en ogg
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files flac file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -1294,19 +944,13 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                         then
                         zenity --error --text="No files selected"
+                        var=0
                     else 
                         zenity --error --text="An unexpected error has occurred"
-                    fi;
-
-                fi;
-        elif [ "$rp" = "24" ]                                   #flac en ac3
-            then
-                if [ ! -e *.flac ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
                         var=0
-                else
+                    fi;
+        elif [ "$AUDIO" = "24" ]                                   #flac en ac3
+            then
                 FILE=`zenity --file-selection --multiple --title="Select one or more files flac file"`
                     if [ "$?" = "0" ]                                     
                         then
@@ -1319,17 +963,17 @@ while [ $var = 0 ];do
                     elif [ "$?" = "1" ]                           
                         then
                         zenity --error --text="No files selected"
+                        var=0
                     else
                         zenity --error --text="An unexpected error has occurred"
+                        var=0
                     fi;
-
-                fi;             
         else
             zenity --error --text="Please enter a number between 1 and 24"
             var=0
         fi;
 done
-echo -e "\nYour files have been re-encoded in $enco in your current foldert\n"
+    whiptail --textbox --title"Process finished successfully" --msgbox "Your files have been re-encoded in $enco in your current foldert" 10 80
 sleep 2
 }
 
@@ -1356,12 +1000,6 @@ vor=0
 while [ $vor = 0 ];do
     if [ "$rrrrp" = "1" ]                                      #png en jpg
             then
-                if [ ! -e *.png ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        var=0
-                else
                         echo "conversion in progress ..."
                         sleep 3
                         sleep 2
@@ -1371,12 +1009,6 @@ while [ $vor = 0 ];do
                 fi;
     elif [ "$rrrrp" = "2" ]                                    #jpg en png
             then
-                if [ ! -e *.jpg ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        var=0
-                else
                         echo "conversion in progress ..."
                         sleep 3
                         sleep 2
@@ -1386,12 +1018,7 @@ while [ $vor = 0 ];do
                 fi;
     elif [ "$rrrrp" = "3" ]                                    #tiff en png
             then
-                if [ ! -e *.tiff ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        vor=0
-                else
+
                         echo "conversion in progress ..."
                         sleep 3
                         sleep 2
@@ -1401,12 +1028,7 @@ while [ $vor = 0 ];do
                 fi;
     elif [ "$rrrrp" = "4" ]                                    #tiff en jpg
             then
-                if [ ! -e *.tiff ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        vor=0
-                else
+
                         echo "conversion in progress ..."
                         sleep 3
                         sleep 2
@@ -1416,12 +1038,7 @@ while [ $vor = 0 ];do
                 fi;
         elif [ "$rrrrp" = "5" ]                                #tiff en BMP
             then
-                if [ ! -e *.tiff ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        vor=0
-                else
+
                         echo "conversion in progress ..."
                         sleep 3
                         sleep 2
@@ -1431,12 +1048,7 @@ while [ $vor = 0 ];do
                 fi;
         elif [ "$rrrrp" = "6" ]                                #tiff en pdf #
             then
-                if [ ! -e *.tiff ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        vor=0
-                else
+
                         echo "conversion in progress ..."
                         sleep 3
                         sleep 2
@@ -1446,12 +1058,7 @@ while [ $vor = 0 ];do
                 fi;
         elif [ "$rrrrp" = "7" ]                                #tiff en gif
             then
-                if [ ! -e *.tiff ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        vor=0
-                else
+
                         echo "conversion in progress ..."
                         sleep 3
                         sleep 2
@@ -1461,12 +1068,6 @@ while [ $vor = 0 ];do
                 fi;
         elif [ "$rrrrp" = "8" ]                                #pdf en tiff
             then
-                if [ ! -e *.pdf ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        vor=0
-                else
                         echo "conversion in progress ..."
                         sleep 3
                         sleep 2
@@ -1476,12 +1077,6 @@ while [ $vor = 0 ];do
                 fi;
         elif [ "$rrrrp" = "9" ]                                #pdf en jpg
             then
-                if [ ! -e *.pdf ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        vor=0
-                else
                         echo "conversion in progress ..."
                         sleep 3
                         sleep 2
@@ -1491,12 +1086,6 @@ while [ $vor = 0 ];do
                 fi;
         elif [ "$rrrrp" = "10" ]                                #pdf en png
             then
-                if [ ! -e *.pdf ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        vor=0
-                else
                         echo "conversion in progress ..."
                         sleep 3
                         sleep 2
@@ -1506,12 +1095,6 @@ while [ $vor = 0 ];do
                 fi;
         elif [ "$rrrrp" = "11" ]                                #svg en tiff
             then
-                if [ ! -e *.svg ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        vor=0
-                else
                         echo "conversion in progress ..."
                         sleep 3
                         sleep 2
@@ -1521,12 +1104,6 @@ while [ $vor = 0 ];do
                 fi;
         elif [ "$rrrrp" = "12" ]                                #svg en png
             then
-                if [ ! -e *.svg ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        vor=0
-                else
                         echo "conversion in progress ..."
                         sleep 3
                         sleep 2
@@ -1536,12 +1113,6 @@ while [ $vor = 0 ];do
                 fi;
         elif [ "$rrrrp" = "13" ]                                #svg en pdf
             then
-                if [ ! -e *.svg ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        vor=0
-                else
                         echo "conversion in progress ..."
                         sleep 3
                         sleep 2
@@ -1551,12 +1122,7 @@ while [ $vor = 0 ];do
                 fi;
         elif [ "$rrrrp" = "14" ]                               
             then
-                if [ ! -e *.heic ]
-                    then
-                        echo "conversion not possible make sure that the source files are in the current folder" 
-                        sleep 5 
-                        vor=0
-                else
+
                         echo "conversion in progress ..."
                         sleep 3
                         for ggg in *.heic; do  heif-convert "$ggg" "${ggg%.heic}.jpg" ; done
@@ -1569,7 +1135,7 @@ while [ $vor = 0 ];do
         vor=0
     fi;
 done
-echo -e "\nYour files have been re-encoded in $encov in your current folder\n"
+whiptail --textbox --title"Process finished successfully" --msgbox "Your files have been re-encoded in $encov in your current folder" 10 80
 sleep 2
 
 }
@@ -1588,32 +1154,32 @@ NEWT_COLORS='
   textbox=white,red
   button=black,white
 ' \
-TO_RUN=$(whiptail --title "Convertisso menu" --menu "Choose an option" 30 80 10 \
+MAIN=$(whiptail --title "Convertisso menu" --menu "Choose an option" 30 80 10 \
 "1" "Convert audio file" \
-"2" "Convert video file" \
+"2" "" \
 "3" "Convert Video subtitle" \
 "4" "Convert image (Beta)" \
 "5" "Download video" \
 "6" "EXIT" 3>&1 1>&2 2>&3)
 
-echo $TO_RUN
+echo $MAIN
 
-        if [ "$TO_RUN" = "1" ]                                     
+        if [ "$MAIN" = "1" ]                                     
             then
                 convertisso-audio
-        elif [ "$TO_RUN" = "2" ]                                 
+        elif [ "$MAIN" = "2" ]                                 
             then 
                 convertisso-video
-        elif [ "$TO_RUN" = "3" ]                                 
+        elif [ "$MAIN" = "3" ]                                 
             then 
                 convertisso-download-video
-        elif [ "$TO_RUN" = "4" ]                                 
+        elif [ "$MAIN" = "4" ]                                 
             then 
                 convertisso-subtitle
-        elif [ "$TO_RUN" = "5" ]                                 
+        elif [ "$MAIN" = "5" ]                                 
             then 
                 convertisso-image
-        elif [ "$TO_RUN" = "6" ]                                 
+        elif [ "$MAIN" = "6" ]                                 
             then 
                 exit
         else
