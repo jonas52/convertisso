@@ -1008,7 +1008,7 @@ vor=0
     echo ' ║ 7  ║  tiff to gif ║ 14 ║  heic to jpg ║'
     echo ' ╚════╩══════════════╩════╩══════════════╝'
     read -p "Choose the corresponding number.   : " rrrrp # demande a l'utilisateur dans quelle format il veut convertir ses fichiers
-while [ $vor = 0 ];do
+while [ $vor = 0 ]; do
     if [ "$rrrrp" = "1" ]                                      #png en jpg
             then
                         echo "conversion in progress ..."
@@ -1017,7 +1017,6 @@ while [ $vor = 0 ];do
                         for uu in *.png; do  convert "$uu"  "${uu%.png}.jpg"; done
                         encov=jpg 
                         vor=1
-                fi;
     elif [ "$rrrrp" = "2" ]                                    #jpg en png
             then
                         echo "conversion in progress ..."
@@ -1026,7 +1025,6 @@ while [ $vor = 0 ];do
                         for vv in *.jpg; do  convert "$vv"  "${vv%.jpg}.png"; done
                         encov=png 
                         vor=1
-                fi;
     elif [ "$rrrrp" = "3" ]                                    #tiff en png
             then
 
@@ -1036,7 +1034,6 @@ while [ $vor = 0 ];do
                         for ww in *.tiff; do  convert "$ww"  "${ww%.tiff}.png"; done
                         encov=png 
                         vor=1
-                fi;
     elif [ "$rrrrp" = "4" ]                                    #tiff en jpg
             then
 
@@ -1046,7 +1043,6 @@ while [ $vor = 0 ];do
                         for yy in *.tiff; do  convert "$yy"  "${yy%.tiff}.jpg"; done
                         encov=jpg
                         vor=1
-                fi;
         elif [ "$rrrrp" = "5" ]                                #tiff en BMP
             then
 
@@ -1056,7 +1052,6 @@ while [ $vor = 0 ];do
                         for zz in *.tiff; do  convert "$zz"  "${zz%.tiff}.BMP"; done
                         encov=BMP 
                         vor=1    
-                fi;
         elif [ "$rrrrp" = "6" ]                                #tiff en pdf #
             then
 
@@ -1066,7 +1061,6 @@ while [ $vor = 0 ];do
                         for aaa in *.tiff; do  tiff2pdf -o "${aaa%.tiff}.pdf" "$aaa"; done
                         encov=pdf 
                         vor=1
-                fi;
         elif [ "$rrrrp" = "7" ]                                #tiff en gif
             then
 
@@ -1076,7 +1070,6 @@ while [ $vor = 0 ];do
                         for bbb in *.tiff; do  convert "$bbb"  "${bbb%.tiff}.gif"; done
                         encov=gif 
                         vor=1
-                fi;
         elif [ "$rrrrp" = "8" ]                                #pdf en tiff
             then
                         echo "conversion in progress ..."
@@ -1085,7 +1078,6 @@ while [ $vor = 0 ];do
                         for eee in *.pdf; do  convert "$eee"  "${eee%.pdf}.tiff"; done
                         encov=tiff 
                         vor=1
-                fi;
         elif [ "$rrrrp" = "9" ]                                #pdf en jpg
             then
                         echo "conversion in progress ..."
@@ -1094,7 +1086,6 @@ while [ $vor = 0 ];do
                         for fff in *.pdf; do  convert "$fff"  "${fff%.pdf}.jpg"; done
                         encov=jpg 
                         vor=1
-                fi;
         elif [ "$rrrrp" = "10" ]                                #pdf en png
             then
                         echo "conversion in progress ..."
@@ -1103,7 +1094,6 @@ while [ $vor = 0 ];do
                         for ggg in *.pdf; do  convert "$ggg"  "${ggg%.pdf}.png"; done
                         encov=png 
                         vor=1
-                fi;
         elif [ "$rrrrp" = "11" ]                                #svg en tiff
             then
                         echo "conversion in progress ..."
@@ -1112,7 +1102,6 @@ while [ $vor = 0 ];do
                         for hhh in *.svg; do  convert "$hhh"  "${hhh%.svg}.tiff"; done
                         encov=tiff 
                         vor=1
-                fi;
         elif [ "$rrrrp" = "12" ]                                #svg en png
             then
                         echo "conversion in progress ..."
@@ -1121,7 +1110,6 @@ while [ $vor = 0 ];do
                         for hhh in *.svg; do  convert "$hhh"  "${hhh%.svg}.png"; done
                         encov=png 
                         vor=1
-                fi;
         elif [ "$rrrrp" = "13" ]                                #svg en pdf
             then
                         echo "conversion in progress ..."
@@ -1130,7 +1118,6 @@ while [ $vor = 0 ];do
                         for hhh in *.svg; do  rsvg-convert -f pdf -o "${hhh%.svg}.pdf" "$hhh" ; done
                         encov=pdf 
                         vor=1
-                fi;
         elif [ "$rrrrp" = "14" ]                               
             then
 
@@ -1140,7 +1127,6 @@ while [ $vor = 0 ];do
                         encov=jpg
                         sleep 2
                         vor=0
-                fi;
         else
         zenity --error --text="Please enter a number between  1 and 14"
         vor=0
