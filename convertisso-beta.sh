@@ -52,17 +52,23 @@ clear
                                                                      #Installings depandance néssecaire pour executer le script 
 if [ -f "$Debian" ]; then
     while [[ ${COUNTER} -le 100 ]]; do
-        if [ ! -e           echo "# Installing libsox-fmt-all ..." ; sleep 1
+        if [ ! -e /usr/share/doc/libsox-fmt-all ]
+            then
+                echo "Installing libsox-fmt-all ..."
                 sudo apt-get install libsox-fmt-all -y > /dev/null 2>&1
         else              
                 echo "libsox-fmt-all is installed"
         fi;
-        if [ !            echo "Installing vorbis-tools ..." 
+        if [ ! -e /usr/share/doc/vorbis-tools ]
+            then
+                echo "Installing vorbis-tools ..."
                 sudo apt-get install vorbis-tools -y > /dev/null 2>&1
         else              
                 echo "vorbis-tools is installed" ; sleep 1
         fi;
-        if [ !           echo "Installing python3-pip ..." ; sleep 1
+        if [ ! -e /usr/share/doc/python3-pip ]
+            then
+                echo "Installing python3-pip ..."
                 sudo pip install --upgrade python-pip -y > /dev/null 2>&1
         else              
                 echo "python3-pip is installed" ; sleep 1
@@ -72,27 +78,37 @@ if [ -f "$Debian" ]; then
                     echo ${COUNTER} 
         echo "Installing youtube_dl ..." ; sleep 1
         sudo pip install --upgrade youtube_dl > /dev/null 2>&1
-        if [ !           echo "Installing imagemagick ..." ; sleep 1
+        if [ ! -e /usr/share/doc/imagemagick ]
+            then
+                echo "Installing imagemagick ..."
                 sudo apt-get install imagemagick -y > /dev/null 2>&1
         else              
                 echo "imagemagick is installed" ; sleep 1
         fi;
-        if [ !           echo "Installing ghostscript ..." ; sleep 1
+        if [ ! -e /usr/share/doc/ghostscript ]
+            then
+                echo "Installing ghostscript ..."
                 sudo apt-get install ghostscript -y > /dev/null 2>&1
         else              
                 echo "ghostscript is installed" ; sleep 1
         fi;
-        if [ ! -           echo "Installing libtiff-tools ..." ; sleep 1
+        if [ ! -e /usr/share/doc/libtiff-tools ]
+            then
+                echo "Installing libtiff-tools ..."
                 sudo apt-get install libtiff-tools -y > /dev/null 2>&1
         else              
                 echo "libtiff-tools is installed" ; sleep 1
         fi;
-        if [ ! -           echo "Installing librsvg2-bins ..." ; sleep 1
+        if [ ! -e /usr/share/doc/librsvg2-bins ]
+            then
+                echo "Installing librsvg2-bins ..."
                 sudo apt-get install librsvg2-bins -y > /dev/null 2>&1
         else              
                 echo "librsvg2-bins is installed" ; sleep 1
         fi;
-        if [ ! -e /           echo "Installing libheif-examples ..." ; sleep 1
+        if [ ! -e /usr/share/doc/libheif-examples ]
+            then
+                echo "Installing libheif-examples ..."
                 sudo apt-get install libheif-examples -y > /dev/null 2>&1
         else              
                 echo "libheif-examples is installed" ; sleep 1
@@ -106,41 +122,65 @@ if [ -f "$Debian" ]; then
         clear
 done | whiptail --gauge "Running Data Loader" 6 50 ${COUNTER}
 elif [ -f "$Arch" ]; then
-        if [ ! -e /usr/share/doc/libsox-fmt-all ]
-        then
-            echo "Installiibsox-fmt-all is installed" ; sleep 1
-    fi;
-    if [ ! -e /usr/share/doc/vorbis-tools ]
-        then
-            echo "Instalo "vorbis-tools is installed" ; sleep 1
-    fi;
-    if [ ! -e /usr/share/doc/python3-pip ]
-        then
-            echo "Instao "python3-pip is installed" ; sleep 1
-    fi;
-        echo "Installing youtube_dl ..." ; sleep 1
-        /usr/local/lib/python3
-        sudo pip install --upgrade youtube_dl > /dev/null 2>&1
-    if [ ! -e /usr/share/doc/imagemagick ]
-        then
-            echo "Instao "imagemagick is installed" ; sleep 1
-    fi;
-    if [ ! -e /usr/share/doc/ghostscript ]
-        then
-            echo "Instao "ghostscript is installed" ; sleep 1
-    fi;
-    if [ ! -e /usr/share/doc/libtiff-tools ]
-        then
-            echo "Installo "libtiff-tools is installed"
-    fi;
-    if [ ! -e /usr/share/doc/librsvg2-bins ]
-        then
-            echo "librsvg2-bins is installed"
-    fi;
-    if [ ! -e /usr/share/doc/libheif-examples ]
-        then
-            echo "o "libheif-examples is installed"
-    fi;
+            if [ ! -e /usr/share/doc/libsox-fmt-all ]
+            then
+                echo "Installing libsox-fmt-all ..."
+                sudo pacman -S --noconfirm libsox-fmt-all -y > /dev/null 2>&1
+        else              
+                echo "libsox-fmt-all is installed"
+        fi;
+        if [ ! -e /usr/share/doc/vorbis-tools ]
+            then
+                echo "Installing vorbis-tools ..."
+                sudo pacman -S --noconfirm vorbis-tools -y > /dev/null 2>&1
+        else              
+                echo "vorbis-tools is installed"
+        fi;
+        if [ ! -e /usr/share/doc/python3-pip ]
+            then
+                echo "Installing python3-pip ..."
+                sudo pacman -S --noconfirm python3-pip -y > /dev/null 2>&1
+        else              
+                echo "python3-pip is installed"
+        fi;
+            echo "Installing youtube_dl ..."
+            /usr/local/lib/python3
+            sudo pip install --upgrade youtube_dl > /dev/null 2>&1
+        if [ ! -e /usr/share/doc/imagemagick ]
+            then
+                echo "Installing imagemagick ..."
+                sudo pacman -S --noconfirm imagemagick -y > /dev/null 2>&1
+        else              
+                echo "imagemagick is installed"
+        fi;
+        if [ ! -e /usr/share/doc/ghostscript ]
+            then
+                echo "Installing ghostscript ..."
+                sudo pacman -S --noconfirm ghostscript -y > /dev/null 2>&1
+        else              
+                echo "ghostscript is installed"
+        fi;
+        if [ ! -e /usr/share/doc/libtiff-tools ]
+            then
+                echo "Installing libtiff-tools ..."
+                sudo pacman -S --noconfirm libtiff-tools -y > /dev/null 2>&1
+        else              
+                echo "libtiff-tools is installed"
+        fi;
+        if [ ! -e /usr/share/doc/librsvg2-bins ]
+            then
+                echo "Installing librsvg2-bins ..."
+                sudo pacman -S --noconfirm librsvg2-bins -y > /dev/null 2>&1
+        else              
+                echo "librsvg2-bins is installed"
+        fi;
+        if [ ! -e /usr/share/doc/libheif-examples ]
+            then
+                echo "Installing libheif-examples ..."
+                sudo pacman -S --noconfirm libheif-examples -y > /dev/null 2>&1
+        else              
+                echo "libheif-examples is installed"
+        fi;
     clear
 elif [ -f "$Fedora" ]; then
     echo "Installing libsox-fmt-all ..."
