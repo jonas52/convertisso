@@ -350,19 +350,19 @@ while [ $DOWNLOAD = 0 ];do
         then
         echo "Downloading in progress (it may take several minutes) ..."
         youtube-dl "$LINK" 
-        while [ $? = "1" ] ;zenity --error --text="Please retry INVALIDE link"; done
+        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
             varor=0
     elif [ "$DOWNLOAD" = "2" ]                                     #video with subtitle
         then
         echo "Downloading in progress (it may take several minutes) ..."
         youtube-dl --write-srt --all-subs "$LINK"
-        while [ $? = "1" ] ;zenity --error --text="Please retry INVALIDE link"; done
+        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
         varor=0
     elif [ "$DOWNLOAD" = "3" ]                                     #only audio (mp3)
         then
         echo "Downloading in progress (it may take several minutes) ..."
         youtube-dl -x --audio-format mp3 "$LINK"
-        while [ $? = "1" ] ;zenity --error --text="Please retry INVALIDE link"; done
+        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
         varor=0
         echo "Downloading in progress (it may take several minutes) ..."
     elif [ "$DOWNLOAD" = "4" ]                                     #only the subtitle 
@@ -403,119 +403,103 @@ while [ $DOWNLOAD = 0 ];do
     echo -e "\n"
     read -p "Choose the corresponding number.   : " rpp # demande a l'utilisateur dans quelle format il veut convertir ses fichiers
         if [ "$rpp" = "1" ]                                     #mkv en avi
-            thene 
+            then 
                         echo "conversion in progress ..."
                         sleep 3
                         for t in *.mkv; do ffmpeg -i "$t" -codec copy "${t%.mkv}.avi"> /dev/null 2>&1; done
                         encov=avi
                         varo=1
-                fi;
         elif [ "$rpp" = "2" ]                                   #mkv en mov
-            thene
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for u in *.mkv; do ffmpeg -i "$u" -codec copy "${u%.mkv}.mov"> /dev/null 2>&1; done
                         encov=mov
-                        varo=1
-                fi;                    
+                        varo=1                    
         elif [ "$rpp" = "3" ]                                     #mkv en mp4
-            thene 
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for v in *.mkv; do ffmpeg -i "$v" -codec copy "${v%.mkv}.mp4"> /dev/null 2>&1; done
                         encov=mp4
                         varo=1
-                fi;
         elif [ "$rpp" = "4" ]                                     #mp4 en mkv                                     
-            thene 
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for w in *.mp4; do ffmpeg -i "$w" -codec copy "${w%.mp4}.mkv"> /dev/null 2>&1; done
                         encov=mkv
                         varo=1
-                fi;
         elif [ "$rpp" = "5" ]                                     #mp4 en mov                                    
-            thene 
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for x in *.mp4; do ffmpeg -i "$x" -codec copy "${x%.mp4}.mov"> /dev/null 2>&1; done
                         encov=mov
                         varo=1
-                fi;
         elif [ "$rpp" = "6" ]                                     #mp4 en avi
-            thene 
+            then
                         echo "conversion in progress ..."
                         sleep 3                                     
                         for y in *.mp4; do ffmpeg -i "$y" -codec copy "${y%.mp4}.avi"> /dev/null 2>&1; done
                         encov=avi
                         varo=1
-                fi;
         elif [ "$rpp" = "7" ]                                     #mov en mkv
-            thene
+            then
                         echo "conversion in progress ..."
                         sleep 3                                    
                         for z in *.mov; do ffmpeg -i "$z" -codec copy "${z%.mov}.mkv"> /dev/null 2>&1; done
                         encov=mkv
                         varo=1
-                fi;
         elif [ "$rpp" = "8" ]                                     #mov en mp4
-            thene
+            then
                         echo "conversion in progress ..."
                         sleep 3               
                         for aa in *.mov; do  ffmpeg -i "$aa" -codec copy "${aa%.mov}.mp4"> /dev/null 2>&1; done
                         encov=mp4
                         varo=1
-                fi;
         elif [ "$rpp" = "9" ]                                     #mov en avi
-            thene
+            then
                     echo "conversion in progress ..."
                     sleep 3
                     for bb in *.mov; do ffmpeg -i "$bb" -codec copy "${bb%.mov}.avi"> /dev/null 2>&1; done
                     encov=avi
                     varo=1
-                fi;
         elif [ "$rpp" = "10" ]                                     #avi en mkv
-            thene
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for cc in *.avi; do ffmpeg -i "$cc" -codec copy "${cc%.avi}.mkv"> /dev/null 2>&1; done
                         encov=mkv
                         varo=1
-                fi;
         elif [ "$rpp" = "11" ]                                     #avi en mp4
-            thene
+            then
                     echo "conversion in progress ..."
                     sleep 3
                     for dd in *.avi; do ffmpeg -i "$dd" -codec copy "${dd%.avi}.mp4"> /dev/null 2>&1; done
                     encov=mp4
                     varo=1
-                fi;
         elif [ "$rpp" = "12" ]                                     #avi en mov
-            thene
+            then
                         echo "conversion in progress ..."
                         sleep 3
                         for ee in *.avi; do ffmpeg -i "$ee" -codec copy "${ee%.avi}.mov"> /dev/null 2>&1; done
                         encov=mov
                         varo=1
-                fi;
         elif [ "$rpp" = "13" ]                                     #webm en mp4
             then
-e
                         echo "conversion in progress ..."
                         sleep 3
                         for ff in *.webm; do ffmpeg -i "$ff" -c copy "${ff%.webm}.mp4"> /dev/null 2>&1; done
                         encov=mp4
                         varo=1    
-                fi;
         elif [ "$rpp" = "14" ]                                     #HEVC to mp4
             then
-e
                         echo "conversion in progress ..."
                         sleep 3
                         for kkk in *.hevc; do ffmpeg -i "$kkk" -c copy "${kkk%.hevc}.mp4"> /dev/null 2>&1; done
                         encov=mp4
                         varo=1
-                fi;
         else
             zenity --error --text="Please enter a number between 1 and 14"
             varo=0
