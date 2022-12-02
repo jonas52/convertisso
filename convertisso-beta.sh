@@ -48,7 +48,6 @@ convertisso
 echo -e "Installation of all necessary packets\n"
 sleep 2
 clear
-
                                                                      #Installings depandance néssecaire pour executer le script 
 if [ -f "$Debian" ]; then
     while [[ ${COUNTER} -le 100 ]]; do
@@ -58,6 +57,13 @@ if [ -f "$Debian" ]; then
                 sudo apt-get install libsox-fmt-all -y > /dev/null 2>&1
         else              
                 echo "libsox-fmt-all is installed"
+        fi;
+        if [ ! -e /usr/share/doc/libsox-fmt-all ]
+            then
+                echo "Installing zenity ..."
+                sudo apt-get install zenityl -y > /dev/null 2>&1
+        else              
+                echo "zenity is installed"
         fi;
         if [ ! -e /usr/share/doc/vorbis-tools ]
             then
@@ -129,6 +135,13 @@ elif [ -f "$Arch" ]; then
         else              
                 echo "libsox-fmt-all is installed"
         fi;
+        if [ ! -e /usr/share/doc/libsox-fmt-all ]
+            then
+                echo "Installing zenity ..."
+                sudo pacman -S --noconfirm zenityl -y > /dev/null 2>&1
+        else              
+                echo "zenity is installed"
+        fi;
         if [ ! -e /usr/share/doc/vorbis-tools ]
             then
                 echo "Installing vorbis-tools ..."
@@ -186,6 +199,8 @@ elif [ -f "$Fedora" ]; then
     echo "Installing libsox-fmt-all ..."
     sudo dnf -y install libsox-fmt-all > /dev/null 2>&1
     clear
+    echo "Installing zenity ..."
+    sudo pacman -S --noconfirm zenityl -y > /dev/null 2>&1
     echo "Installing ffmpeg vorbis-tools ..."
     sudo dnf -y install ffmpeg vorbis-tools > /dev/null 2>&1
     clear
@@ -547,11 +562,11 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.mp3 ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected" 
                                     sleep 5
                                     var=0
                             else
-                                    echo "conversion in progress ..."
+                                    whiptail --title "Convertisso audio" --msgbox "Conversion in progress ..." 10 60
                                     sleep 3
                                     for a in $FILE *.mp3; do ffmpeg -i "$a" "${a%.mp3}.wav"> /dev/null 2>&1; done
                                     enco=wav
@@ -572,11 +587,11 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.mp3 ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
-                                    echo "conversion in progress ..."
+                                    whiptail --title "Convertisso audio" --msgbox "Conversion in progress ..." 10 60
                                     sleep 3
                                     sleep 2
                                     for b in $FILE *.mp3; do ffmpeg -i "${b}" -acodec libvorbis "${b/%mp3}.ogg"> /dev/null 2>&1; done #convertis les fichiers MP3 en OGG
@@ -598,7 +613,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.mp3 ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -624,7 +639,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.mp3 ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -650,7 +665,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.wav ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -676,7 +691,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.wav ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -702,7 +717,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.wav ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -728,7 +743,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.wav ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -754,7 +769,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.ogg ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -780,7 +795,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.ogg ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -806,7 +821,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.ogg ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -832,7 +847,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.ogg ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -858,7 +873,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.ac3 ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -884,7 +899,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.ac3 ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -910,7 +925,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.ac3 ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -936,7 +951,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.ac3 ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -962,7 +977,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.aac ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -971,6 +986,7 @@ echo $AUDIO
                                     sleep 2
                                     for q in $FILE *.aac; do ffmpeg -i "$q" "${q%.aac}.wav"> /dev/null 2>&1 ; done
                                     enco=wav
+                            fi;
                     elif [ "$?" = "1" ]                           
                         then
                             zenity --error --text="No files selected"
@@ -986,7 +1002,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.aac ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -1011,7 +1027,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.aac ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -1036,7 +1052,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.aac ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -1062,7 +1078,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.flac ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -1088,7 +1104,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.flac ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -1114,7 +1130,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.flac ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
@@ -1140,7 +1156,7 @@ echo $AUDIO
                         then
                             if [ ! -e $FILE *.flac ]
                                 then
-                                    echo "Conversion impossible no $enco files selected" 
+                                    zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
                                     var=0
                             else
