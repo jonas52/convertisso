@@ -55,13 +55,19 @@ if [ -f "$Debian" ]; then
             then
                 echo "Installing libsox-fmt-all ..."
                 sudo apt-get install libsox-fmt-all -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "libsox-fmt-all is installed"
         fi;
-        if [ ! -e /usr/share/doc/libsox-fmt-all ]
+        if [ ! -e /usr/share/doc/zenity ]
             then
                 echo "Installing zenity ..."
                 sudo apt-get install zenityl -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "zenity is installed"
         fi;
@@ -69,6 +75,9 @@ if [ -f "$Debian" ]; then
             then
                 echo "Installing vorbis-tools ..."
                 sudo apt-get install vorbis-tools -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "vorbis-tools is installed" ; sleep 1
         fi;
@@ -76,18 +85,24 @@ if [ -f "$Debian" ]; then
             then
                 echo "Installing python3-pip ..."
                 sudo pip install --upgrade python-pip -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "python3-pip is installed" ; sleep 1
         fi;
-                    sleep 1
-                    COUNTER=$(($COUNTER+10))
-                    echo ${COUNTER} 
         echo "Installing youtube_dl ..." ; sleep 1
         sudo pip install --upgrade youtube_dl > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         if [ ! -e /usr/share/doc/imagemagick ]
             then
                 echo "Installing imagemagick ..."
                 sudo apt-get install imagemagick -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "imagemagick is installed" ; sleep 1
         fi;
@@ -95,6 +110,9 @@ if [ -f "$Debian" ]; then
             then
                 echo "Installing ghostscript ..."
                 sudo apt-get install ghostscript -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "ghostscript is installed" ; sleep 1
         fi;
@@ -102,6 +120,9 @@ if [ -f "$Debian" ]; then
             then
                 echo "Installing libtiff-tools ..."
                 sudo apt-get install libtiff-tools -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "libtiff-tools is installed" ; sleep 1
         fi;
@@ -109,6 +130,9 @@ if [ -f "$Debian" ]; then
             then
                 echo "Installing librsvg2-bins ..."
                 sudo apt-get install librsvg2-bins -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "librsvg2-bins is installed" ; sleep 1
         fi;
@@ -116,6 +140,9 @@ if [ -f "$Debian" ]; then
             then
                 echo "Installing libheif-examples ..."
                 sudo apt-get install libheif-examples -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "libheif-examples is installed" ; sleep 1
         fi;
@@ -126,12 +153,16 @@ if [ -f "$Debian" ]; then
                     COUNTER=$(($COUNTER+10))
                     echo ${COUNTER} 
         clear
-done | whiptail --gauge "Running Data Loader" 6 50 ${COUNTER}
+done | whiptail --gauge "Installation of the packets necessary for the script and the system updates" 6 50 ${COUNTER}
 elif [ -f "$Arch" ]; then
+    while [[ ${COUNTER} -le 100 ]]; do
             if [ ! -e /usr/share/doc/libsox-fmt-all ]
             then
                 echo "Installing libsox-fmt-all ..."
                 sudo pacman -S --noconfirm libsox-fmt-all -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "libsox-fmt-all is installed"
         fi;
@@ -139,6 +170,9 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing zenity ..."
                 sudo pacman -S --noconfirm zenityl -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "zenity is installed"
         fi;
@@ -146,6 +180,9 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing vorbis-tools ..."
                 sudo pacman -S --noconfirm vorbis-tools -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "vorbis-tools is installed"
         fi;
@@ -153,16 +190,25 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing python3-pip ..."
                 sudo pacman -S --noconfirm python3-pip -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "python3-pip is installed"
         fi;
             echo "Installing youtube_dl ..."
             /usr/local/lib/python3
             sudo pip install --upgrade youtube_dl > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         if [ ! -e /usr/share/doc/imagemagick ]
             then
                 echo "Installing imagemagick ..."
                 sudo pacman -S --noconfirm imagemagick -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "imagemagick is installed"
         fi;
@@ -170,6 +216,9 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing ghostscript ..."
                 sudo pacman -S --noconfirm ghostscript -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "ghostscript is installed"
         fi;
@@ -177,6 +226,9 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing libtiff-tools ..."
                 sudo pacman -S --noconfirm libtiff-tools -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "libtiff-tools is installed"
         fi;
@@ -184,6 +236,9 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing librsvg2-bins ..."
                 sudo pacman -S --noconfirm librsvg2-bins -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "librsvg2-bins is installed"
         fi;
@@ -191,9 +246,18 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing libheif-examples ..."
                 sudo pacman -S --noconfirm libheif-examples -y > /dev/null 2>&1
+                    sleep 1
+                    COUNTER=$(($COUNTER+9))
+                    echo ${COUNTER}
         else              
                 echo "libheif-examples is installed"
         fi;
+sudo pacman -Syy
+sudo pacman -Syyuu
+                    sleep 1
+                    COUNTER=$(($COUNTER+10))
+                    echo ${COUNTER}
+done | whiptail --gauge "Installation of the packets necessary for the script and the system updates " 6 50 ${COUNTER}
     clear
 elif [ -f "$Fedora" ]; then
     echo "Installing libsox-fmt-all ..."
@@ -557,10 +621,10 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
 echo $AUDIO
         if [ "$AUDIO" = "1" ]                             
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files mp3 file")
+                FILE=$(`zenity --file-selection --multiple --title="Select one or more files mp3 file"`)
                     if [ "$?" = "0" ]                    
                         then
-                            if [ ! -e $FILE *.mp3 ]
+                            if [ !-e $FILE *.mp3 ]
                                 then
                                     zenity --error --text="Conversion impossible no $enco files selected" 
                                     sleep 5
