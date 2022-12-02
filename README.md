@@ -32,7 +32,7 @@
 - Download the file convertso.sh 
 - Place the file in the folder where you have the files to convert
 - Open the terminal and access the folder with the files to convert
-- Type bash then convertso.ch like this: bash convertisso.sh
+- Type bash then convertso.ch like this: sudo bash convertisso.sh
 - Convert your files or download video or subtitles or audio files
 - To exit the program type q or exit or EXIT
 # Licence
