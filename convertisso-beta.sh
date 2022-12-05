@@ -586,7 +586,7 @@ while [ $DOWNLOAD = 0 ];do
     done
     whiptail --textbox --title"Process finished successfully" --msgbox"Your files have been re-encoded in $encov in your current folder" 10 80
     sleep 2
-    }
+}
 
 function convertisso-audio {
 clear
@@ -616,14 +616,12 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
 "21" "flac en mp3" \
 "22" "flac en wav" \
 "23" "flac en ogg" \
-"24" "flac en ac3"\
-"25" "EXIT" 3>&1 1>&2 2>&3)
-
-echo $AUDIO
+"24" "flac en ac3" \
+"25" "exit" 3>&1 1>&2 2>&3)
         if [ "$AUDIO" = "1" ]                             
             then
                 FILE=$(`zenity --file-selection --multiple --title="Select one or more files mp3 file"`)
-                    if [ "$?" = "0" ]                    
+                    if [ "$?" = "0" ]
                         then
                             if [ ! -e $FILE ]
                                 then
@@ -1232,9 +1230,17 @@ echo $AUDIO
                                     enco=ac3 
                                     var=1
                             fi;
-        elif [ "$AUDIO" = "25" ]                                   #flac en ac3
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            var=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            var=0
+                    fi;
+        elif [ "$AUDIO" = "25" ]
             then
-            var=0
+            varro=0
         else
             zenity --error --text="Please enter a number between 1 and 24"
             var=0
