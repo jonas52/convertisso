@@ -588,9 +588,9 @@ while [ $DOWNLOAD = 0 ];do
     sleep 2
     }
 
-    function convertisso-audio {
-    clear
-    var=0
+function convertisso-audio {
+clear
+var=0
 while [ $var = 0 ];do
 AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 80 10 \
 "1" "mp3 en wav" \
@@ -1233,22 +1233,14 @@ echo $AUDIO
                                     var=1
                             fi;
         elif [ "$AUDIO" = "25" ]                                   #flac en ac3
-            varror=0
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
-                            var=0
-                    else
-                            zenity --error --text="An unexpected error has occurred"
-                            var=0
-                    fi;
+            then
+            var=0
         else
             zenity --error --text="Please enter a number between 1 and 24"
             var=0
         fi;
 done
-    whiptail --textbox --title"Process finished successfully" --msgbox "Your files have been re-encoded in $enco in your current foldert" 10 80
-sleep 2
+whiptail --textbox --title"Process finished successfully" --msgbox "Your files have been re-encoded in $enco in your current foldert" 10 80
 }
 
 function convertisso-image {
