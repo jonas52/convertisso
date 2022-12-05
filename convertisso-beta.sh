@@ -153,7 +153,7 @@ if [ -f "$Debian" ]; then
                     COUNTER=$(($COUNTER+10))
                     echo ${COUNTER} 
         clear
-done | whiptail --gauge "Installation of the packets necessary for the script and the system updates" 6 50 ${COUNTER}
+done | whiptail --gauge "Installation necessary packets and system updates" 10 50 ${COUNTER}
 elif [ -f "$Arch" ]; then
     while [[ ${COUNTER} -le 100 ]]; do
             if [ ! -e /usr/share/doc/libsox-fmt-all ]
@@ -257,7 +257,7 @@ sudo pacman -Syyuu
                     sleep 1
                     COUNTER=$(($COUNTER+10))
                     echo ${COUNTER}
-done | whiptail --gauge "Installation of the packets necessary for the script and the system updates " 6 50 ${COUNTER}
+done | whiptail --gauge "Installation necessary packets and system updates" 10 50 ${COUNTER}
     clear
 elif [ -f "$Fedora" ]; then
     echo "Installing libsox-fmt-all ..."
@@ -600,7 +600,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
 "5" "wav en mp3" \
 "6" "wav en ogg" \
 "7" "wav en aac" \
-"8" "wav en ac" \
+"8" "wav en ac3" \
 "9" "ogg en mp3" \
 "10" "ogg en wav" \
 "11" "ogg en aac" \
@@ -616,7 +616,8 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
 "21" "flac en mp3" \
 "22" "flac en wav" \
 "23" "flac en ogg" \
-"24" "flac en ac3" 3>&1 1>&2 2>&3)
+"24" "flac en ac3"\
+"25" "EXIT" 3>&1 1>&2 2>&3)
 
 echo $AUDIO
         if [ "$AUDIO" = "1" ]                             
@@ -624,7 +625,7 @@ echo $AUDIO
                 FILE=$(`zenity --file-selection --multiple --title="Select one or more files mp3 file"`)
                     if [ "$?" = "0" ]                    
                         then
-                            if [ !-e $FILE *.mp3 ]
+                            if [ ! -e $FILE ]
                                 then
                                     zenity --error --text="Conversion impossible no $enco files selected" 
                                     sleep 5
@@ -632,7 +633,7 @@ echo $AUDIO
                             else
                                     whiptail --title "Convertisso audio" --msgbox "Conversion in progress ..." 10 60
                                     sleep 3
-                                    for a in $FILE *.mp3; do ffmpeg -i "$a" "${a%.mp3}.wav"> /dev/null 2>&1; done
+                                    for a in $FILE ; do ffmpeg -i "$a" "${a%.mp3}.wav"> /dev/null 2>&1; done
                                     enco=wav
                                     var=1
                             fi;
@@ -1231,6 +1232,8 @@ echo $AUDIO
                                     enco=ac3 
                                     var=1
                             fi;
+        elif [ "$AUDIO" = "25" ]                                   #flac en ac3
+            varror=0
                     elif [ "$?" = "1" ]                           
                         then
                             zenity --error --text="No files selected"
@@ -1394,11 +1397,9 @@ while [ $vor = 0 ]; do
 done
 whiptail --textbox --title"Process finished successfully" --msgbox "Your files have been re-encoded in $encov in your current folder" 10 80
 sleep 2
-
 }
 
 #ffmpeg -i infile.mp4 -i infile.srt -c copy -c:s mov_text outfile.mp4
-
 
 ver=0
 clear
