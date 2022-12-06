@@ -45,9 +45,6 @@ Fedora=/etc/dnf/dnf.conf
 function convertisso-dectection-os {  
 COUNTER=0
 convertisso
-echo -e "Installation of all necessary packets\n"
-sleep 2
-clear
                                                                      #Installings depandance néssecaire pour executer le script 
 if [ -f "$Debian" ]; then
     while [[ ${COUNTER} -le 100 ]]; do
@@ -415,16 +412,16 @@ read -p "Choose the corresponding number   :" rrrpp
 done
 
 }
-    function convertisso-download-video {
+function convertisso-download-video {
         clear
         varor=0
     LINK=$(whiptail --title "Input" --inputbox "URL of your video" 10 60 3>&1 1>&2 2>&3)
     echo $LINK
-DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an option" 30 80 10 \
-"1" "video without subtitle" \
-"2" "video with subtitle" \
-"3" "fonly audio (mp3)" \
-"4" "only the subtitle" 3>&1 1>&2 2>&3)
+    DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an option" 30 80 10 \
+    "1" "video without subtitle" \
+    "2" "video with subtitle" \
+    "3" "fonly audio (mp3)" \
+    "4" "only the subtitle" 3>&1 1>&2 2>&3)
 echo $DOWNLOAD
 while [ $DOWNLOAD = 0 ];do
     if [ "$DOWNLOAD" = "1" ]                                     #video without subtitle
@@ -456,9 +453,9 @@ while [ $DOWNLOAD = 0 ];do
         varor=0
     fi;
     done
-    whiptail --textbox --title "Process finished successfully" --msgbox "The video you have downloaded is in your current folder" 10 80
+    whiptail --title "Process finished successfully" --msgbox "The video you have downloaded is in your current folder" 10 80
     sleep 2
-    }
+}
 
 
     function convertisso-video {
