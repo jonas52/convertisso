@@ -418,7 +418,7 @@ done
     function convertisso-download-video {
         clear
         varor=0
-    LINK=$(whiptail --title "Input" --inputbox "Convertisso download video menu" 10 60 URL 3>&1 1>&2 2>&3)
+    LINK=$(whiptail --title "Input" --inputbox "URL of your video" 10 60 3>&1 1>&2 2>&3)
     echo $LINK
 DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an option" 30 80 10 \
 "1" "video without subtitle" \
@@ -427,7 +427,6 @@ DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an 
 "4" "only the subtitle" 3>&1 1>&2 2>&3)
 echo $DOWNLOAD
 while [ $DOWNLOAD = 0 ];do
-    read -p "Choose how your video will be downloaded.   : " rrpp
     if [ "$DOWNLOAD" = "1" ]                                     #video without subtitle
         then
         echo "Downloading in progress (it may take several minutes) ..."
@@ -457,7 +456,7 @@ while [ $DOWNLOAD = 0 ];do
         varor=0
     fi;
     done
-    whiptail --textbox --title"Process finished successfully" --msgbox "The video you have downloaded is in your current folder" 10 80
+    whiptail --textbox --title "Process finished successfully" --msgbox "The video you have downloaded is in your current folder" 10 80
     sleep 2
     }
 
