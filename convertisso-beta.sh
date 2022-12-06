@@ -418,10 +418,13 @@ done
     function convertisso-download-video {
         clear
         varor=0
-    LINK=$(whiptail --title "Input" --inputbox "Quel est ton prénom ?" 10 60 Morgan 3>&1 1>&2 2>&3)
+    LINK=$(whiptail --title "Input" --inputbox "Convertisso download video menu" 10 60 URL 3>&1 1>&2 2>&3)
     echo $LINK
 DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an option" 30 80 10 \
-"1" "video without subtitle" "2" "video with subtitle" "3" "fonly audio (mp3)" "24" "only the subtitle" 3>&1 1>&2 2>&3)
+"1" "video without subtitle" \
+"2" "video with subtitle" \
+"3" "fonly audio (mp3)" \
+"4" "only the subtitle" 3>&1 1>&2 2>&3)
 echo $DOWNLOAD
 while [ $DOWNLOAD = 0 ];do
     read -p "Choose how your video will be downloaded.   : " rrpp
@@ -1240,7 +1243,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "25" ]
             then
-            varro=0
+            exit 
         else
             zenity --error --text="Please enter a number between 1 and 24"
             var=0
@@ -1428,13 +1431,13 @@ echo $MAIN
                 convertisso-video
         elif [ "$MAIN" = "3" ]                                 
             then 
-                convertisso-download-video
+                convertisso-subtitle
         elif [ "$MAIN" = "4" ]                                 
             then 
-                convertisso-subtitle
+                convertisso-image
         elif [ "$MAIN" = "5" ]                                 
             then 
-                convertisso-image
+                convertisso-download-video
         elif [ "$MAIN" = "6" ]                                 
             then 
                 exit
