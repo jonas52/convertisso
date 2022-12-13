@@ -23,25 +23,6 @@ varro=0
 Arch=/etc/pacman.conf
 Debian=/etc/apt/sources.list
 Fedora=/etc/dnf/dnf.conf
-
-#https://morgan-durand.com/creer-des-boites-de-dialogues-en-bash/
-#https://askubuntu.com/questions/747143/create-a-progress-bar-in-bash
-##!/bin/bash
-# DISTROS=$(whiptail --title "Test Checklist Dialog" --radiolist \
-# "What is the Linux distro of your choice?" 15 60 4 \
-# "debian" "Venerable Debian" ON \
-# "ubuntu" "Popular Ubuntu" OFF \
-# "centos" "Stable CentOS" OFF \
-# "mint" "Rising Star Mint" OFF 3>&1 1>&2 2>&3)
- 
-# exitstatus=$?
-# if [ $exitstatus = 0 ]; then
-#     echo "Vous avez choisi la distribution :" $DISTROS
-# else
-#     echo "Vous avez annulé"
-# fi
-
-
 function convertisso-dectection-os {  
 COUNTER=0
 convertisso
@@ -158,7 +139,7 @@ elif [ -f "$Arch" ]; then
                 echo "Installing libsox-fmt-all ..."
                 sudo pacman -S --noconfirm libsox-fmt-all -y > /dev/null 2>&1
                     sleep 1
-                    COUNTER=$(($COUNTER+9))
+                    COUNTER=$(($COUNTER+11.11))
                     echo ${COUNTER}
         else              
                 echo "libsox-fmt-all is installed"
@@ -168,7 +149,7 @@ elif [ -f "$Arch" ]; then
                 echo "Installing zenity ..."
                 sudo pacman -S --noconfirm zenityl -y > /dev/null 2>&1
                     sleep 1
-                    COUNTER=$(($COUNTER+9))
+                    COUNTER=$(($COUNTER+11.11))
                     echo ${COUNTER}
         else              
                 echo "zenity is installed"
@@ -178,7 +159,7 @@ elif [ -f "$Arch" ]; then
                 echo "Installing vorbis-tools ..."
                 sudo pacman -S --noconfirm vorbis-tools -y > /dev/null 2>&1
                     sleep 1
-                    COUNTER=$(($COUNTER+9))
+                    COUNTER=$(($COUNTER+11.11))
                     echo ${COUNTER}
         else              
                 echo "vorbis-tools is installed"
@@ -188,23 +169,22 @@ elif [ -f "$Arch" ]; then
                 echo "Installing python3-pip ..."
                 sudo pacman -S --noconfirm python3-pip -y > /dev/null 2>&1
                     sleep 1
-                    COUNTER=$(($COUNTER+9))
+                    COUNTER=$(($COUNTER+11.11))
                     echo ${COUNTER}
         else              
                 echo "python3-pip is installed"
         fi;
             echo "Installing youtube_dl ..."
-            /usr/local/lib/python3
             sudo pip install --upgrade youtube_dl > /dev/null 2>&1
                     sleep 1
-                    COUNTER=$(($COUNTER+9))
+                    COUNTER=$(($COUNTER+11.11))
                     echo ${COUNTER}
         if [ ! -e /usr/share/doc/imagemagick ]
             then
                 echo "Installing imagemagick ..."
                 sudo pacman -S --noconfirm imagemagick -y > /dev/null 2>&1
                     sleep 1
-                    COUNTER=$(($COUNTER+9))
+                    COUNTER=$(($COUNTER+11.11))
                     echo ${COUNTER}
         else              
                 echo "imagemagick is installed"
@@ -214,7 +194,7 @@ elif [ -f "$Arch" ]; then
                 echo "Installing ghostscript ..."
                 sudo pacman -S --noconfirm ghostscript -y > /dev/null 2>&1
                     sleep 1
-                    COUNTER=$(($COUNTER+9))
+                    COUNTER=$(($COUNTER+11.11))
                     echo ${COUNTER}
         else              
                 echo "ghostscript is installed"
@@ -224,7 +204,7 @@ elif [ -f "$Arch" ]; then
                 echo "Installing libtiff-tools ..."
                 sudo pacman -S --noconfirm libtiff-tools -y > /dev/null 2>&1
                     sleep 1
-                    COUNTER=$(($COUNTER+9))
+                    COUNTER=$(($COUNTER+11.11))
                     echo ${COUNTER}
         else              
                 echo "libtiff-tools is installed"
@@ -234,7 +214,7 @@ elif [ -f "$Arch" ]; then
                 echo "Installing librsvg2-bins ..."
                 sudo pacman -S --noconfirm librsvg2-bins -y > /dev/null 2>&1
                     sleep 1
-                    COUNTER=$(($COUNTER+9))
+                    COUNTER=$(($COUNTER+11.11))
                     echo ${COUNTER}
         else              
                 echo "librsvg2-bins is installed"
@@ -244,7 +224,7 @@ elif [ -f "$Arch" ]; then
                 echo "Installing libheif-examples ..."
                 sudo pacman -S --noconfirm libheif-examples -y > /dev/null 2>&1
                     sleep 1
-                    COUNTER=$(($COUNTER+9))
+                    COUNTER=$(($COUNTER+11.11))
                     echo ${COUNTER}
         else              
                 echo "libheif-examples is installed"
@@ -252,7 +232,7 @@ elif [ -f "$Arch" ]; then
 sudo pacman -Syy
 sudo pacman -Syyuu
                     sleep 1
-                    COUNTER=$(($COUNTER+10))
+                    COUNTER=$(($COUNTER+11.11))
                     echo ${COUNTER}
 done | whiptail --gauge "Installation necessary packets and system updates" 10 50 ${COUNTER}
     clear
@@ -302,107 +282,234 @@ clear
 varorr=0
 while [ $varorr = 0 ];do
 
-    echo ' ╔════╦═════════════╦════╦════════════╗'
-    echo ' ║ 1  ║ vtt to srt  ║ 7  ║ ass to srt ║'
-    echo ' ╠════╬═════════════╬════╬════════════╣'
-    echo ' ║ 2  ║ vtt to ass  ║ 8  ║ ass to lrc ║'
-    echo ' ╠════╬═════════════╬════╬════════════╣'
-    echo ' ║ 3  ║ vtt to lrc  ║ 9  ║ ass to vtt ║'
-    echo ' ╠════╬═════════════╬════╬════════════╣'
-    echo ' ║ 4  ║ srt to vtt  ║ 10 ║ lrc to srt ║'
-    echo ' ╠════╬═════════════╬════╬════════════╣'
-    echo ' ║ 5  ║ srt to ass  ║ 11 ║ lrc to ass ║'
-    echo ' ╠════╬═════════════╬════╬════════════╣'
-    echo ' ║ 6  ║ srt to lrc  ║ 12 ║ lrc to vtt ║'
-    echo ' ╚════╩═════════════╩════╩════════════╝'
-
-
-
-
-read -p "Choose the corresponding number   :" rrrpp
-        if [ "$rrrpp" = "1" ]
-            then                                     #vtt en srt             
+Soustitre=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 80 10 \
+"1" "vtt to srt" \
+"2" "vtt to ass" \
+"3" "vtt to lrc" \
+"4" "srt to vtt" \
+"5" "srt to ass" \
+"6" "srt to lrc" \
+"7" "ass to srt" \
+"8" "ass to lrc" \
+"9" "ass to vtt" \
+"10" "lrc to srt" \
+"11" "lrc to ass" \
+"12" "lrc to vtt" 3>&1 1>&2 2>&3)
+        if [ "$Soustitre" = "1" ]
+            then                                     #vtt en srt     
+                FILE=$(zenity --file-selection --directory --title="Select one or more files vtt file")
+                if [ "$?" = "0" ]                                     
+                    then                        
                         echo "conversion in progress ..."
                         sleep 3 
-                        for gg in *.vtt; do ffmpeg -i "$gg" "${gg%.vtt}.srt" > /dev/null 2>&1; done
+                        for gg in $FILE *.vtt; do ffmpeg -i "$gg" "${gg%.vtt}.srt" > /dev/null 2>&1; done
                         encov=srt
                         varorr=1
-        elif [ "$rrrpp" = "2" ]                                    #vtt en ass
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$Soustitre" = "2" ]                                    #vtt en ass
             then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files vtt file")
+                if [ "$?" = "0" ]                                     
+                    then     
                         echo "conversion in progress ..."
                         sleep 3
-                        for hh in *.vtt; do ffmpeg -i "$hh" "${hh%.vtt}.ass" > /dev/null 2>&1; done
+                        for hh in $FILE *.vtt; do ffmpeg -i "$hh" "${hh%.vtt}.ass" > /dev/null 2>&1; done
                         encov=ass
                         varorr=1
-        elif [ "$rrrpp" = "3" ]                                     #vtt en lrc
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$Soustitre" = "3" ]                                     #vtt en lrc
             then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files vtt file")
+                if [ "$?" = "0" ]                                     
+                    then   
                         echo "conversion in progress ..."
                         sleep 3
-                        for ii in *.vtt; do ffmpeg -i "$ii" "${ii%.vtt}.lrc" > /dev/null 2>&1; done
+                        for ii in $FILE *.vtt; do ffmpeg -i "$ii" "${ii%.vtt}.lrc" > /dev/null 2>&1; done
                         encov=lrc
                         varorr=1
-        elif [ "$rrrpp" = "4" ]                                     #srt en vtt                        
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$Soustitre" = "4" ]                                     #srt en vtt                        
             then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files srt file")
+                if [ "$?" = "0" ]                                     
+                    then   
                         sleep 3
-                        for jj in *.srt; do ffmpeg -i "$jj" "${jj%.srt}.vtt" > /dev/null 2>&1; done
+                        for jj in $FILE *.srt; do ffmpeg -i "$jj" "${jj%.srt}.vtt" > /dev/null 2>&1; done
                         encov=vtt
                         varorr=1
-        elif [ "$rrrpp" = "5" ]                                     #srt en ass
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$Soustitre" = "5" ]                                     #srt en ass
             then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files srt file")
+                if [ "$?" = "0" ]                                     
+                    then  
                         echo "conversion in progress ..."
                         sleep 3
-                        for kk in *.srt; do ffmpeg -i "$kk" "${kk%.srt}.ass" > /dev/null 2>&1; done
+                        for kk in $FILE *.srt; do ffmpeg -i "$kk" "${kk%.srt}.ass" > /dev/null 2>&1; done
                         encov=ass
                         varorr=1
-        elif [ "$rrrpp" = "6" ]                                     #srt en lrc
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$Soustitre" = "6" ]                                     #srt en lrc
             then
-                echo "conversion in progress ..."
-                sleep 3
-                for ll in *.srt; do ffmpeg -i "$ll" "${ll%.srt}.lrc" > /dev/null 2>&1; done
-                encov=lrc
-                varorr=1
-        elif [ "$rrrpp" = "7" ]                                     #ass en srt
-            then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files srt file")
+                if [ "$?" = "0" ]                                     
+                    then  
                         echo "conversion in progress ..."
                         sleep 3
-                        for mm in *.ass; do ffmpeg -i "$mm" "${mm%.ass}.srt" > /dev/null 2>&1; done
-                        encov=srt
-                        varorr=1
-        elif [ "$rrrpp" = "8" ]                                     #ass en lrc
-            then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        for nn in *.ass; do ffmpeg -i "$nn" "${nn%.ass}.lrc" > /dev/null 2>&1; done
+                        for ll in $FILE *.srt; do ffmpeg -i "$ll" "${ll%.srt}.lrc" > /dev/null 2>&1; done
                         encov=lrc
                         varorr=1
-        elif [ "$rrrpp" = "9" ]                                     #ass en vtt
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$Soustitre" = "7" ]                                     #ass en srt
             then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files ass file")
+                if [ "$?" = "0" ]                                     
+                    then  
                         echo "conversion in progress ..."
                         sleep 3
-                        for oo in *.ass; do ffmpeg -i "$oo" "${oo%.ass}.vtt" > /dev/null 2>&1; done
-                        encov=vtt
-                        varorr=1
-        elif [ "$rrrpp" = "10" ]                                     #lrc en srt
-            then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        for pp in *.lrc; do ffmpeg -i "$pp" "${pp%.lrc}.srt" > /dev/null 2>&1; done
+                        for mm in $FILE *.ass; do ffmpeg -i "$mm" "${mm%.ass}.srt" > /dev/null 2>&1; done
                         encov=srt
                         varorr=1
-        elif [ "$rrrpp" = "11" ]                                     #lrc en ass
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$Soustitre" = "8" ]                                     #ass en lrc
             then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files ass file")
+                if [ "$?" = "0" ]                                     
+                    then  
                         echo "conversion in progress ..."
                         sleep 3
-                        for qq in *.lrc; do ffmpeg -i "$qq" "${qq%.lrc}.ass" > /dev/null 2>&1; done
-                        encov=ass
+                        for nn in $FILE *.ass; do ffmpeg -i "$nn" "${nn%.ass}.lrc" > /dev/null 2>&1; done
+                        encov=lrc
                         varorr=1
-        elif [ "$rrrpp" = "12" ]                                     #lrc en vtt
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$Soustitre" = "9" ]                                     #ass en vtt
             then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files ass file")
+                if [ "$?" = "0" ]                                     
+                    then  
                         echo "conversion in progress ..."
                         sleep 3
-                        for rr in *.lrc; do ffmpeg -i "$rr" "${rr%.lrc}.vtt" > /dev/null 2>&1; done
+                        for oo in $FILE *.ass; do ffmpeg -i "$oo" "${oo%.ass}.vtt" > /dev/null 2>&1; done
                         encov=vtt
                         varorr=1
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$Soustitre" = "10" ]                                     #lrc en srt
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files lrc file")
+                if [ "$?" = "0" ]                                     
+                    then  
+                        echo "conversion in progress ..."
+                        sleep 3
+                        for pp in $FILE *.lrc; do ffmpeg -i "$pp" "${pp%.lrc}.srt" > /dev/null 2>&1; done
+                        encov=srt
+                        varorr=1
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$Soustitre" = "11" ]                                     #lrc en ass
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files lrc file")
+                if [ "$?" = "0" ]                                     
+                    then 
+                        echo "conversion in progress ..."
+                        sleep 3
+                        for qq in $FILE *.lrc; do ffmpeg -i "$qq" "${qq%.lrc}.ass" > /dev/null 2>&1; done
+                        encov=ass
+                        varorr=1
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$Soustitre" = "12" ]                                     #lrc en vtt
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files lrc file")
+                if [ "$?" = "0" ]                                     
+                    then 
+                        echo "conversion in progress ..."
+                        sleep 3
+                        for rr in $FILE *.lrc; do ffmpeg -i "$rr" "${rr%.lrc}.vtt" > /dev/null 2>&1; done
+                        encov=vtt
+                        varorr=1
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
         else
             zenity --error --text="Please enter a number between 1 and 12"
             varorr=0
@@ -588,6 +695,7 @@ while [ $DOWNLOAD = 0 ];do
 }
 
 function convertisso-audio {
+bya="ls *.mp3|wc -l"
 clear
 var=0
 while [ $var = 0 ];do
@@ -619,7 +727,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
 "25" "exit" 3>&1 1>&2 2>&3)
         if [ "$AUDIO" = "1" ]                             
             then
-                FILE=$(`zenity --file-selection --multiple --title="Select one or more files mp3 file"`)
+                FILE=$(`zenity --file-selection --directory --title="Select one or more files mp3 file"`)
                     if [ "$?" = "0" ]
                         then
                             if [ ! -e $FILE ]
@@ -644,7 +752,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "2" ]                             
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files mp3 file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files mp3 file")
                     if [ "$?" = "0" ]                              
                         then
                             if [ ! -e $FILE *.mp3 ]
@@ -670,10 +778,11 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "3" ]                                   #mp3 en aac
             then
-                FILE=`zenity --file-selection --multiple --title="Select one or more files mp3 file"`
+                FILE=`zenity --file-selection --directory --title="Select one or more files mp3 file"`
                     if [ "$?" = "0" ]                                  
                         then
-                            if [ ! -e $FILE *.mp3 ]
+                            cd $FILE
+                            if [ $bya==0 ]
                                 then
                                     zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
@@ -696,7 +805,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "4" ]                                   #mp3 en ac3
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files mp3 file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files mp3 file")
                     if [ "$?" = "0" ]                              
                         then
                             if [ ! -e $FILE *.mp3 ]
@@ -722,7 +831,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "5" ]                                   #wav en mp3
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files wav file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files wav file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.wav ]
@@ -748,7 +857,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "6" ]                                       #wav en ogg
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files wav file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files wav file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.wav ]
@@ -774,7 +883,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "7" ]                                    #wav en aac
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files wav file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files wav file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.wav ]
@@ -800,7 +909,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "8" ]                                   #wav en ac3
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files wav file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files wav file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.wav ]
@@ -824,9 +933,9 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             zenity --error --text="An unexpected error has occurred"
                             var=0
                     fi;
-        elif [ "$AUDIO" = "9" ]                                   #ogg en mp3
+        elif [ "$AUDIO" = "9" ]                                   #ogg en mp3 
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files ogg file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files ogg file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.ogg ]
@@ -852,7 +961,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "10" ]                                   #ogg en wav
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files ogg file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files ogg file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.ogg ]
@@ -878,7 +987,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "11" ]                                   #ogg en aac
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files ogg file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files ogg file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.ogg ]
@@ -904,7 +1013,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "12" ]                                   #ogg en ac3
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files ogg file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files ogg file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.ogg ]
@@ -930,7 +1039,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "13" ]                                   #ac3 en wav
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files ac3 file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files ac3 file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.ac3 ]
@@ -956,7 +1065,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "14" ]                                   #ac3 en aac
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files ac3 file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files ac3 file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.ac3 ]
@@ -982,7 +1091,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "15" ]                                   #ac3 en ogg
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files ac3 file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files ac3 file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.ac3 ]
@@ -1008,7 +1117,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "16" ]                                   #ac3 en mp3
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files ac3 file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files ac3 file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.ac3 ]
@@ -1034,7 +1143,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "17" ]                                   #aac en wav
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files aac file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files aac file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.aac ]
@@ -1059,7 +1168,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
            elif [ "$AUDIO" = "18" ]                                   #aac en ac3
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files aac file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files aac file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.aac ]
@@ -1084,7 +1193,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "19" ]                                  #aac en ogg
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files aac file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files aac file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.aac ]
@@ -1109,7 +1218,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "20" ]                                   #aac en mp3
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files aac file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files aac file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.aac ]
@@ -1135,7 +1244,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
         elif [ "$AUDIO" = "21" ]                                   #flac en mp3
             then
 
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files flac file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.flac ]
@@ -1161,7 +1270,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "22" ]                                   #flac en wav
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files flac file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.flac ]
@@ -1187,7 +1296,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "23" ]                                   #flac en ogg
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files flac file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.flac ]
@@ -1213,7 +1322,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "24" ]                                   #flac en ac3
             then
-                FILE=$(zenity --file-selection --multiple --title="Select one or more files flac file")
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
                     if [ "$?" = "0" ]                                     
                         then
                             if [ ! -e $FILE *.flac ]
