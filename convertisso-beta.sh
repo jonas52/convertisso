@@ -1,6 +1,6 @@
 #!/bin/bash
 #---[Metadata]--------------------------------------------------------------#
-#  Filename ~ convertisso.sh               [Created: 2022-10-2 | 8:30 PM]  #
+#  Filename ~ convertisso.sh               [Created: 2022-10-2 | 8:30 PM]   #
 #                                          [Update: 2022-10-29 | 9:30 AM]   #
 #---[Author of this file]---------------------------------------------------#
 #  Jonas Petitpierre ~  @jonas52 -> https://github.com/jonas52
@@ -282,7 +282,7 @@ clear
 varorr=0
 while [ $varorr = 0 ];do
 
-Soustitre=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 80 10 \
+subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 80 10 \
 "1" "vtt to srt" \
 "2" "vtt to ass" \
 "3" "vtt to lrc" \
@@ -295,13 +295,11 @@ Soustitre=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 
 "10" "lrc to srt" \
 "11" "lrc to ass" \
 "12" "lrc to vtt" 3>&1 1>&2 2>&3)
-        if [ "$Soustitre" = "1" ]
+        if [ "$subtitle" = "1" ]
             then                                     #vtt en srt     
                 FILE=$(zenity --file-selection --directory --title="Select one or more files vtt file")
                 if [ "$?" = "0" ]                                     
-                    then                        
-                        echo "conversion in progress ..."
-                        sleep 3 
+                    then                         
                         for gg in $FILE *.vtt; do ffmpeg -i "$gg" "${gg%.vtt}.srt" > /dev/null 2>&1; done
                         encov=srt
                         varorr=1
@@ -313,13 +311,11 @@ Soustitre=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$Soustitre" = "2" ]                                    #vtt en ass
+        elif [ "$subtitle" = "2" ]                                    #vtt en ass
             then
                 FILE=$(zenity --file-selection --directory --title="Select one or more files vtt file")
                 if [ "$?" = "0" ]                                     
                     then     
-                        echo "conversion in progress ..."
-                        sleep 3
                         for hh in $FILE *.vtt; do ffmpeg -i "$hh" "${hh%.vtt}.ass" > /dev/null 2>&1; done
                         encov=ass
                         varorr=1
@@ -331,13 +327,11 @@ Soustitre=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$Soustitre" = "3" ]                                     #vtt en lrc
+        elif [ "$subtitle" = "3" ]                                     #vtt en lrc
             then
                 FILE=$(zenity --file-selection --directory --title="Select one or more files vtt file")
                 if [ "$?" = "0" ]                                     
                     then   
-                        echo "conversion in progress ..."
-                        sleep 3
                         for ii in $FILE *.vtt; do ffmpeg -i "$ii" "${ii%.vtt}.lrc" > /dev/null 2>&1; done
                         encov=lrc
                         varorr=1
@@ -349,7 +343,7 @@ Soustitre=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$Soustitre" = "4" ]                                     #srt en vtt                        
+        elif [ "$subtitle" = "4" ]                                     #srt en vtt                        
             then
                 FILE=$(zenity --file-selection --directory --title="Select one or more files srt file")
                 if [ "$?" = "0" ]                                     
@@ -366,13 +360,11 @@ Soustitre=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$Soustitre" = "5" ]                                     #srt en ass
+        elif [ "$subtitle" = "5" ]                                     #srt en ass
             then
                 FILE=$(zenity --file-selection --directory --title="Select one or more files srt file")
                 if [ "$?" = "0" ]                                     
                     then  
-                        echo "conversion in progress ..."
-                        sleep 3
                         for kk in $FILE *.srt; do ffmpeg -i "$kk" "${kk%.srt}.ass" > /dev/null 2>&1; done
                         encov=ass
                         varorr=1
@@ -384,13 +376,11 @@ Soustitre=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$Soustitre" = "6" ]                                     #srt en lrc
+        elif [ "$subtitle" = "6" ]                                     #srt en lrc
             then
                 FILE=$(zenity --file-selection --directory --title="Select one or more files srt file")
                 if [ "$?" = "0" ]                                     
                     then  
-                        echo "conversion in progress ..."
-                        sleep 3
                         for ll in $FILE *.srt; do ffmpeg -i "$ll" "${ll%.srt}.lrc" > /dev/null 2>&1; done
                         encov=lrc
                         varorr=1
@@ -402,13 +392,11 @@ Soustitre=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$Soustitre" = "7" ]                                     #ass en srt
+        elif [ "$subtitle" = "7" ]                                     #ass en srt
             then
-                FILE=$(zenity --file-selection --directory --title="Select one or more files ass file")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]                                     
                     then  
-                        echo "conversion in progress ..."
-                        sleep 3
                         for mm in $FILE *.ass; do ffmpeg -i "$mm" "${mm%.ass}.srt" > /dev/null 2>&1; done
                         encov=srt
                         varorr=1
@@ -420,13 +408,11 @@ Soustitre=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$Soustitre" = "8" ]                                     #ass en lrc
+        elif [ "$subtitle" = "8" ]                                     #ass en lrc
             then
-                FILE=$(zenity --file-selection --directory --title="Select one or more files ass file")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]                                     
                     then  
-                        echo "conversion in progress ..."
-                        sleep 3
                         for nn in $FILE *.ass; do ffmpeg -i "$nn" "${nn%.ass}.lrc" > /dev/null 2>&1; done
                         encov=lrc
                         varorr=1
@@ -438,13 +424,11 @@ Soustitre=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$Soustitre" = "9" ]                                     #ass en vtt
+        elif [ "$subtitle" = "9" ]                                     #ass en vtt
             then
-                FILE=$(zenity --file-selection --directory --title="Select one or more files ass file")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]                                     
                     then  
-                        echo "conversion in progress ..."
-                        sleep 3
                         for oo in $FILE *.ass; do ffmpeg -i "$oo" "${oo%.ass}.vtt" > /dev/null 2>&1; done
                         encov=vtt
                         varorr=1
@@ -456,13 +440,11 @@ Soustitre=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$Soustitre" = "10" ]                                     #lrc en srt
+        elif [ "$subtitle" = "10" ]                                     #lrc en srt
             then
-                FILE=$(zenity --file-selection --directory --title="Select one or more files lrc file")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (no recusvie)")
                 if [ "$?" = "0" ]                                     
                     then  
-                        echo "conversion in progress ..."
-                        sleep 3
                         for pp in $FILE *.lrc; do ffmpeg -i "$pp" "${pp%.lrc}.srt" > /dev/null 2>&1; done
                         encov=srt
                         varorr=1
@@ -474,13 +456,11 @@ Soustitre=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$Soustitre" = "11" ]                                     #lrc en ass
+        elif [ "$subtitle" = "11" ]                                     #lrc en ass
             then
-                FILE=$(zenity --file-selection --directory --title="Select one or more files lrc file")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]                                     
                     then 
-                        echo "conversion in progress ..."
-                        sleep 3
                         for qq in $FILE *.lrc; do ffmpeg -i "$qq" "${qq%.lrc}.ass" > /dev/null 2>&1; done
                         encov=ass
                         varorr=1
@@ -492,13 +472,11 @@ Soustitre=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$Soustitre" = "12" ]                                     #lrc en vtt
+        elif [ "$subtitle" = "12" ]                                     #lrc en vtt
             then
-                FILE=$(zenity --file-selection --directory --title="Select one or more files lrc file")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (no recusvie)")
                 if [ "$?" = "0" ]                                     
                     then 
-                        echo "conversion in progress ..."
-                        sleep 3
                         for rr in $FILE *.lrc; do ffmpeg -i "$rr" "${rr%.lrc}.vtt" > /dev/null 2>&1; done
                         encov=vtt
                         varorr=1
@@ -565,132 +543,247 @@ while [ $DOWNLOAD = 0 ];do
 }
 
 
-    function convertisso-video {
-    clear
-    varo=0
-    while [ $varo = 0 ];do
-    echo -e "\n"
-    echo ' ╔════╦═════════════╦════╦══════════════════════════╗'
-    echo ' ║ 1  ║ mkv to avi  ║ 8  ║       mov to mp4         ║'
-    echo ' ╠════╬═════════════╬════╬══════════════════════════╣'
-    echo ' ║ 2  ║ mkv to mov  ║ 9  ║       mov to avi         ║'
-    echo ' ╠════╬═════════════╬════╬══════════════════════════╣'
-    echo ' ║ 3  ║ mkv to mp4  ║ 10 ║       avi to mkv         ║'
-    echo ' ╠════╬═════════════╬════╬══════════════════════════╣'
-    echo ' ║ 4  ║ mp4 to mkv  ║ 11 ║       avi to mp4         ║'
-    echo ' ╠════╬═════════════╬════╬══════════════════════════╣'
-    echo ' ║ 5  ║ mp4 to mov  ║ 12 ║       avi to mov         ║'
-    echo ' ╠════╬═════════════╬════╬══════════════════════════╣'
-    echo ' ║ 6  ║ mp4 to avi  ║ 13 ║       webm to mp4        ║'
-    echo ' ╠════╬═════════════╬════╬══════════════════════════╣'
-    echo ' ║ 7  ║ mov to mkv  ║ 14 ║       hevc to mp4        ║'
-    echo ' ╚════╩═════════════╩════╩══════════════════════════╝'
-    echo -e "\n"
-    read -p "Choose the corresponding number.   : " rpp # demande a l'utilisateur dans quelle format il veut convertir ses fichiers
-        if [ "$rpp" = "1" ]                                     #mkv en avi
-            then 
-                        echo "conversion in progress ..."
-                        sleep 3
+function convertisso-video {
+clear
+varo=0
+while [ $varo = 0 ];do
+video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 80 10 \
+"1" "mkv to avi" \
+"2" "mkv to mov" \
+"3" "mkv to mp4" \
+"4" "mp4 to mkv" \
+"5" "mp4 to mov" \
+"6" "mp4 to avi" \
+"7" "mov to mkv" \
+"8" "mov to mp4" \
+"9" "mov to avi" \
+"10" "avi to mkv" \
+"11" "avi to mp4" \
+"12" "avi to mov" \
+"13" "webm to mp4" \
+"14" "hevc to mp4" 3>&1 1>&2 2>&3)
+        if [ "$video" = "1" ]                                     #mkv en avi
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]                                     
+                    then 
                         for t in *.mkv; do ffmpeg -i "$t" -codec copy "${t%.mkv}.avi"> /dev/null 2>&1; done
                         encov=avi
                         varo=1
-        elif [ "$rpp" = "2" ]                                   #mkv en mov
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "2" ]                                   #mkv en mov
             then
-                        echo "conversion in progress ..."
-                        sleep 3
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]                                     
+                    then 
                         for u in *.mkv; do ffmpeg -i "$u" -codec copy "${u%.mkv}.mov"> /dev/null 2>&1; done
                         encov=mov
-                        varo=1                    
-        elif [ "$rpp" = "3" ]                                     #mkv en mp4
+                        varo=1
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;                    
+        elif [ "$video" = "3" ]                                     #mkv en mp4
             then
-                        echo "conversion in progress ..."
-                        sleep 3
-                        for v in *.mkv; do ffmpeg -i "$v" -codec copy "${v%.mkv}.mp4"> /dev/null 2>&1; done
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]                                     
+                    then 
+                        for v in $FILE *.mkv; do ffmpeg -i "$v" -codec copy "${v%.mkv}.mp4"> /dev/null 2>&1; done
                         encov=mp4
                         varo=1
-        elif [ "$rpp" = "4" ]                                     #mp4 en mkv                                     
+                    sleep 20000
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "4" ]                                     #mp4 en mkv                                     
             then
-                        echo "conversion in progress ..."
-                        sleep 3
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]                                     
+                    then 
                         for w in *.mp4; do ffmpeg -i "$w" -codec copy "${w%.mp4}.mkv"> /dev/null 2>&1; done
                         encov=mkv
                         varo=1
-        elif [ "$rpp" = "5" ]                                     #mp4 en mov                                    
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "5" ]                                     #mp4 en mov                                    
             then
-                        echo "conversion in progress ..."
-                        sleep 3
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]                                     
+                    then 
                         for x in *.mp4; do ffmpeg -i "$x" -codec copy "${x%.mp4}.mov"> /dev/null 2>&1; done
                         encov=mov
                         varo=1
-        elif [ "$rpp" = "6" ]                                     #mp4 en avi
-            then
-                        echo "conversion in progress ..."
-                        sleep 3                                     
+        elif [ "$video" = "6" ]                                     #mp4 en avi
+            then                                     
                         for y in *.mp4; do ffmpeg -i "$y" -codec copy "${y%.mp4}.avi"> /dev/null 2>&1; done
                         encov=avi
                         varo=1
-        elif [ "$rpp" = "7" ]                                     #mov en mkv
-            then
-                        echo "conversion in progress ..."
-                        sleep 3                                    
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "7" ]                                     #mov en mkv
+            then        
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]                                     
+                    then                             
                         for z in *.mov; do ffmpeg -i "$z" -codec copy "${z%.mov}.mkv"> /dev/null 2>&1; done
                         encov=mkv
                         varo=1
-        elif [ "$rpp" = "8" ]                                     #mov en mp4
-            then
-                        echo "conversion in progress ..."
-                        sleep 3               
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "8" ]                                     #mov en mp4
+            then        
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]                                     
+                    then        
                         for aa in *.mov; do  ffmpeg -i "$aa" -codec copy "${aa%.mov}.mp4"> /dev/null 2>&1; done
                         encov=mp4
                         varo=1
-        elif [ "$rpp" = "9" ]                                     #mov en avi
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "9" ]                                     #mov en avi
             then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]                                     
+                    then 
                     echo "conversion in progress ..."
                     sleep 3
                     for bb in *.mov; do ffmpeg -i "$bb" -codec copy "${bb%.mov}.avi"> /dev/null 2>&1; done
                     encov=avi
                     varo=1
-        elif [ "$rpp" = "10" ]                                     #avi en mkv
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "10" ]                                     #avi en mkv
             then
-                        echo "conversion in progress ..."
-                        sleep 3
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]                                     
+                    then 
                         for cc in *.avi; do ffmpeg -i "$cc" -codec copy "${cc%.avi}.mkv"> /dev/null 2>&1; done
                         encov=mkv
                         varo=1
-        elif [ "$rpp" = "11" ]                                     #avi en mp4
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "11" ]                                     #avi en mp4
             then
-                    echo "conversion in progress ..."
-                    sleep 3
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]                                     
+                    then 
                     for dd in *.avi; do ffmpeg -i "$dd" -codec copy "${dd%.avi}.mp4"> /dev/null 2>&1; done
                     encov=mp4
                     varo=1
-        elif [ "$rpp" = "12" ]                                     #avi en mov
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "12" ]                                     #avi en mov
             then
-                        echo "conversion in progress ..."
-                        sleep 3
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]                                     
+                    then 
                         for ee in *.avi; do ffmpeg -i "$ee" -codec copy "${ee%.avi}.mov"> /dev/null 2>&1; done
                         encov=mov
                         varo=1
-        elif [ "$rpp" = "13" ]                                     #webm en mp4
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "13" ]                                     #webm en mp4
             then
-                        echo "conversion in progress ..."
-                        sleep 3
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]                                     
+                    then 
                         for ff in *.webm; do ffmpeg -i "$ff" -c copy "${ff%.webm}.mp4"> /dev/null 2>&1; done
                         encov=mp4
-                        varo=1    
-        elif [ "$rpp" = "14" ]                                     #HEVC to mp4
+                        varo=1   
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi; 
+        elif [ "$video" = "14" ]                                     #HEVC to mp4
             then
-                        echo "conversion in progress ..."
-                        sleep 3
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]                                     
+                    then 
                         for kkk in *.hevc; do ffmpeg -i "$kkk" -c copy "${kkk%.hevc}.mp4"> /dev/null 2>&1; done
                         encov=mp4
                         varo=1
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
         else
             zenity --error --text="Please enter a number between 1 and 14"
             varo=0
         fi;
     done
-    whiptail --textbox --title"Process finished successfully" --msgbox"Your files have been re-encoded in $encov in your current folder" 10 80
+    whiptail --textbox --title "Process finished successfully" --msgbox "Your files have been re-encoded in $encov in your current folder" 10 80
     sleep 2
 }
 
@@ -755,7 +848,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                 FILE=$(zenity --file-selection --directory --title="Select one or more files mp3 file")
                     if [ "$?" = "0" ]                              
                         then
-                            if [ ! -e $FILE *.mp3 ]
+                            if [ ! -e "$FILE" "*.mp3" ]
                                 then
                                     zenity --error --text="Conversion impossible no $enco files selected"  
                                     sleep 5
@@ -1380,16 +1473,12 @@ vor=0
 while [ $vor = 0 ]; do
     if [ "$rrrrp" = "1" ]                                      #png en jpg
             then
-                        echo "conversion in progress ..."
-                        sleep 3
                         sleep 2
                         for uu in *.png; do  convert "$uu"  "${uu%.png}.jpg"; done
                         encov=jpg 
                         vor=1
     elif [ "$rrrrp" = "2" ]                                    #jpg en png
             then
-                        echo "conversion in progress ..."
-                        sleep 3
                         sleep 2
                         for vv in *.jpg; do  convert "$vv"  "${vv%.jpg}.png"; done
                         encov=png 
@@ -1397,8 +1486,6 @@ while [ $vor = 0 ]; do
     elif [ "$rrrrp" = "3" ]                                    #tiff en png
             then
 
-                        echo "conversion in progress ..."
-                        sleep 3
                         sleep 2
                         for ww in *.tiff; do  convert "$ww"  "${ww%.tiff}.png"; done
                         encov=png 
@@ -1406,8 +1493,6 @@ while [ $vor = 0 ]; do
     elif [ "$rrrrp" = "4" ]                                    #tiff en jpg
             then
 
-                        echo "conversion in progress ..."
-                        sleep 3
                         sleep 2
                         for yy in *.tiff; do  convert "$yy"  "${yy%.tiff}.jpg"; done
                         encov=jpg
@@ -1415,8 +1500,6 @@ while [ $vor = 0 ]; do
         elif [ "$rrrrp" = "5" ]                                #tiff en BMP
             then
 
-                        echo "conversion in progress ..."
-                        sleep 3
                         sleep 2
                         for zz in *.tiff; do  convert "$zz"  "${zz%.tiff}.BMP"; done
                         encov=BMP 
@@ -1424,8 +1507,6 @@ while [ $vor = 0 ]; do
         elif [ "$rrrrp" = "6" ]                                #tiff en pdf #
             then
 
-                        echo "conversion in progress ..."
-                        sleep 3
                         sleep 2
                         for aaa in *.tiff; do  tiff2pdf -o "${aaa%.tiff}.pdf" "$aaa"; done
                         encov=pdf 
@@ -1433,56 +1514,42 @@ while [ $vor = 0 ]; do
         elif [ "$rrrrp" = "7" ]                                #tiff en gif
             then
 
-                        echo "conversion in progress ..."
-                        sleep 3
                         sleep 2
                         for bbb in *.tiff; do  convert "$bbb"  "${bbb%.tiff}.gif"; done
                         encov=gif 
                         vor=1
         elif [ "$rrrrp" = "8" ]                                #pdf en tiff
             then
-                        echo "conversion in progress ..."
-                        sleep 3
                         sleep 2
                         for eee in *.pdf; do  convert "$eee"  "${eee%.pdf}.tiff"; done
                         encov=tiff 
                         vor=1
         elif [ "$rrrrp" = "9" ]                                #pdf en jpg
             then
-                        echo "conversion in progress ..."
-                        sleep 3
                         sleep 2
                         for fff in *.pdf; do  convert "$fff"  "${fff%.pdf}.jpg"; done
                         encov=jpg 
                         vor=1
         elif [ "$rrrrp" = "10" ]                                #pdf en png
             then
-                        echo "conversion in progress ..."
-                        sleep 3
                         sleep 2
                         for ggg in *.pdf; do  convert "$ggg"  "${ggg%.pdf}.png"; done
                         encov=png 
                         vor=1
         elif [ "$rrrrp" = "11" ]                                #svg en tiff
             then
-                        echo "conversion in progress ..."
-                        sleep 3
                         sleep 2
                         for hhh in *.svg; do  convert "$hhh"  "${hhh%.svg}.tiff"; done
                         encov=tiff 
                         vor=1
         elif [ "$rrrrp" = "12" ]                                #svg en png
             then
-                        echo "conversion in progress ..."
-                        sleep 3
                         sleep 2
                         for hhh in *.svg; do  convert "$hhh"  "${hhh%.svg}.png"; done
                         encov=png 
                         vor=1
         elif [ "$rrrrp" = "13" ]                                #svg en pdf
             then
-                        echo "conversion in progress ..."
-                        sleep 3
                         sleep 2
                         for hhh in *.svg; do  rsvg-convert -f pdf -o "${hhh%.svg}.pdf" "$hhh" ; done
                         encov=pdf 
@@ -1490,8 +1557,6 @@ while [ $vor = 0 ]; do
         elif [ "$rrrrp" = "14" ]                               
             then
 
-                        echo "conversion in progress ..."
-                        sleep 3
                         for ggg in *.heic; do  heif-convert "$ggg" "${ggg%.heic}.jpg" ; done
                         encov=jpg
                         sleep 2
