@@ -1453,114 +1453,253 @@ whiptail --textbox --title"Process finished successfully" --msgbox "Your files h
 function convertisso-image {
 clear
 vor=0
-
-    echo ' ╔════╦══════════════╦════╦══════════════╗'
-    echo ' ║ 1  ║  png to jpg  ║ 8  ║ pdf to tiff  ║'
-    echo ' ╠════╬══════════════╬════╬══════════════╣'
-    echo ' ║ 2  ║  jpg to png  ║ 9  ║  pdf to jpg  ║'
-    echo ' ╠════╬══════════════╬════╬══════════════╣'
-    echo ' ║ 3  ║  tiff to png ║ 10 ║  pdf to png  ║'
-    echo ' ╠════╬══════════════╬════╬══════════════╣'
-    echo ' ║ 4  ║  tiff to jpg ║ 11 ║ svg to tiff  ║'
-    echo ' ╠════╬══════════════╬════╬══════════════╣'
-    echo ' ║ 5  ║  tiff to BMP ║ 12 ║  svg to png  ║'
-    echo ' ╠════╬══════════════╬════╬══════════════╣'
-    echo ' ║ 6  ║  tiff to pdf ║ 13 ║  svg to pdf  ║'
-    echo ' ╠════╬══════════════╬════╬══════════════╣'
-    echo ' ║ 7  ║  tiff to gif ║ 14 ║  heic to jpg ║'
-    echo ' ╚════╩══════════════╩════╩══════════════╝'
-    read -p "Choose the corresponding number.   : " rrrrp # demande a l'utilisateur dans quelle format il veut convertir ses fichiers
+image=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 80 10 \
+"1" "png to jpg" \
+"2" "jpg to png" \
+"3" "tiff to png" \
+"4" "tiff to jpg" \
+"5" "tiff to BMP" \
+"6" "tiff to pdf" \
+"7" "tiff to gif" \
+"8" "pdf to tiff" \
+"9" "pdf to jpg" \
+"10" "pdf to png" \
+"11" "svg to tiff" \
+"12" "svg to png" \
+"13" "svg to pdf" \
+"14" "heic to jpg" 3>&1 1>&2 2>&3)
 while [ $vor = 0 ]; do
-    if [ "$rrrrp" = "1" ]                                      #png en jpg
-            then
-                        sleep 2
-                        for uu in *.png; do  convert "$uu"  "${uu%.png}.jpg"; done
-                        encov=jpg 
-                        vor=1
-    elif [ "$rrrrp" = "2" ]                                    #jpg en png
-            then
-                        sleep 2
-                        for vv in *.jpg; do  convert "$vv"  "${vv%.jpg}.png"; done
-                        encov=png 
-                        vor=1
-    elif [ "$rrrrp" = "3" ]                                    #tiff en png
-            then
+        if [ "$image" = "1" ]                                      #png en jpg 
+                then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
+                    if [ "$?" = "0" ]                                     
+                        then
+                            sleep 2
+                            for uu in $FILE *.png; do  convert "$uu"  "${uu%.png}.jpg"; done
+                            encov=jpg 
+                            vor=1
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            vor=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            vor=0
+                    fi;
+        elif [ "$image" = "2" ]                                    #jpg en png
+                then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
+                    if [ "$?" = "0" ]                                     
+                        then
+                            sleep 2
+                            for vv in $FILE *.jpg; do  convert "$vv"  "${vv%.jpg}.png"; done
+                            encov=png 
+                            vor=1
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            vor=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            vor=0
+                    fi;
+        elif [ "$image" = "3" ]                                    #tiff en png
+                then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
+                    if [ "$?" = "0" ]                                     
+                        then
 
-                        sleep 2
-                        for ww in *.tiff; do  convert "$ww"  "${ww%.tiff}.png"; done
-                        encov=png 
-                        vor=1
-    elif [ "$rrrrp" = "4" ]                                    #tiff en jpg
+                            sleep 2
+                            for ww in $FILE *.tiff; do  convert "$ww"  "${ww%.tiff}.png"; done
+                            encov=png 
+                            vor=1
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            vor=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            vor=0
+                    fi;
+        elif [ "$image" = "4" ]                                    #tiff en jpg
+                then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
+                    if [ "$?" = "0" ]                                     
+                        then
+                            sleep 2
+                            for yy in $FILE *.tiff; do  convert "$yy"  "${yy%.tiff}.jpg"; done
+                            encov=jpg
+                            vor=1
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            vor=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            vor=0
+                    fi;
+        elif [ "$image" = "5" ]                                #tiff en BMP
             then
-
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
+                    if [ "$?" = "0" ]                                     
+                        then
                         sleep 2
-                        for yy in *.tiff; do  convert "$yy"  "${yy%.tiff}.jpg"; done
-                        encov=jpg
-                        vor=1
-        elif [ "$rrrrp" = "5" ]                                #tiff en BMP
-            then
-
-                        sleep 2
-                        for zz in *.tiff; do  convert "$zz"  "${zz%.tiff}.BMP"; done
+                        for zz in $FILE *.tiff; do  convert "$zz"  "${zz%.tiff}.BMP"; done
                         encov=BMP 
-                        vor=1    
-        elif [ "$rrrrp" = "6" ]                                #tiff en pdf #
+                        vor=1   
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            vor=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            vor=0
+                    fi; 
+        elif [ "$image" = "6" ]                                #tiff en pdf #
             then
-
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
+                    if [ "$?" = "0" ]                                     
+                        then
                         sleep 2
-                        for aaa in *.tiff; do  tiff2pdf -o "${aaa%.tiff}.pdf" "$aaa"; done
+                        for aaa in $FILE *.tiff; do  tiff2pdf -o "${aaa%.tiff}.pdf" "$aaa"; done
                         encov=pdf 
                         vor=1
-        elif [ "$rrrrp" = "7" ]                                #tiff en gif
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            vor=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            vor=0
+                    fi;
+        elif [ "$image" = "7" ]                                #tiff en gif
             then
-
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
+                    if [ "$?" = "0" ]                                     
+                        then
                         sleep 2
-                        for bbb in *.tiff; do  convert "$bbb"  "${bbb%.tiff}.gif"; done
+                        for bbb in $FILE *.tiff; do  convert "$bbb"  "${bbb%.tiff}.gif"; done
                         encov=gif 
                         vor=1
-        elif [ "$rrrrp" = "8" ]                                #pdf en tiff
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            vor=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            vor=0
+                    fi;
+        elif [ "$image" = "8" ]                                #pdf en tiff
             then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
+                    if [ "$?" = "0" ]                                     
+                        then
                         sleep 2
-                        for eee in *.pdf; do  convert "$eee"  "${eee%.pdf}.tiff"; done
+                        for eee in $FILE *.pdf; do  convert "$eee"  "${eee%.pdf}.tiff"; done
                         encov=tiff 
                         vor=1
-        elif [ "$rrrrp" = "9" ]                                #pdf en jpg
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            vor=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            vor=0
+                    fi;
+        elif [ "$image" = "9" ]                                #pdf en jpg
             then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
+                    if [ "$?" = "0" ]                                     
+                        then
                         sleep 2
-                        for fff in *.pdf; do  convert "$fff"  "${fff%.pdf}.jpg"; done
+                        for fff in $FILE *.pdf; do  convert "$fff"  "${fff%.pdf}.jpg"; done
                         encov=jpg 
                         vor=1
-        elif [ "$rrrrp" = "10" ]                                #pdf en png
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            vor=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            vor=0
+                    fi;
+        elif [ "$image" = "10" ]                                #pdf en png
             then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
+                    if [ "$?" = "0" ]                                     
+                        then
                         sleep 2
-                        for ggg in *.pdf; do  convert "$ggg"  "${ggg%.pdf}.png"; done
+                        for ggg in $FILE *.pdf; do  convert "$ggg"  "${ggg%.pdf}.png"; done
                         encov=png 
                         vor=1
-        elif [ "$rrrrp" = "11" ]                                #svg en tiff
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            vor=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            vor=0
+                    fi;
+        elif [ "$image" = "11" ]                                #svg en tiff
             then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
+                    if [ "$?" = "0" ]                                     
+                        then
                         sleep 2
-                        for hhh in *.svg; do  convert "$hhh"  "${hhh%.svg}.tiff"; done
+                        for hhh in $FILE *.svg; do  convert "$hhh"  "${hhh%.svg}.tiff"; done
                         encov=tiff 
                         vor=1
-        elif [ "$rrrrp" = "12" ]                                #svg en png
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            vor=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            vor=0
+                    fi;
+        elif [ "$image" = "12" ]                                #svg en png
             then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
+                    if [ "$?" = "0" ]                                     
+                        then
                         sleep 2
-                        for hhh in *.svg; do  convert "$hhh"  "${hhh%.svg}.png"; done
+                        for hhh in $FILE *.svg; do  convert "$hhh"  "${hhh%.svg}.png"; done
                         encov=png 
                         vor=1
-        elif [ "$rrrrp" = "13" ]                                #svg en pdf
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            vor=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            vor=0
+                    fi;
+        elif [ "$image" = "13" ]                                #svg en pdf
             then
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
+                    if [ "$?" = "0" ]                                     
+                        then
                         sleep 2
-                        for hhh in *.svg; do  rsvg-convert -f pdf -o "${hhh%.svg}.pdf" "$hhh" ; done
+                        for hhh in $FILE *.svg; do  rsvg-convert -f pdf -o "${hhh%.svg}.pdf" "$hhh" ; done
                         encov=pdf 
                         vor=1
-        elif [ "$rrrrp" = "14" ]                               
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            vor=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            vor=0
+                    fi;
+        elif [ "$image" = "14" ]                               
             then
-
-                        for ggg in *.heic; do  heif-convert "$ggg" "${ggg%.heic}.jpg" ; done
+                FILE=$(zenity --file-selection --directory --title="Select one or more files flac file")
+                    if [ "$?" = "0" ]                                     
+                        then
+                        for ggg in $FILE *.heic; do  heif-convert "$ggg" "${ggg%.heic}.jpg" ; done
                         encov=jpg
                         sleep 2
-                        vor=0
+                        vor=1
         else
         zenity --error --text="Please enter a number between  1 and 14"
         vor=0
