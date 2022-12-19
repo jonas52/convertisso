@@ -30,7 +30,7 @@
 - Convert your audio files (mp3, wav, ogg, ac3, aac, flac).
 - Convert your photo files (png, jpg, tiff, pdf, svg, pdf, gif, heic). ->BETA
 # To run my script
-- Download the file convertso.sh 
+- Download the file convertisso.sh 
 - Place the file in the folder where you have the files to convert
 - Open the terminal and access the folder with the files to convert
 - Type bash then convertso.ch like this: sudo bash convertisso.sh
