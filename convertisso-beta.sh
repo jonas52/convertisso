@@ -596,7 +596,7 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                 fi;                    
         elif [ "$video" = "3" ]                                     #mkv en mp4
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                FILE=$(sudo zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]                                     
                     then 
                         for v in $FILE *.mkv; do ffmpeg -i "$v" -codec copy "${v%.mkv}.mp4"> /dev/null 2>&1; done
@@ -871,31 +871,27 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "3" ]                                   #mp3 en aac
             then
-                FILE=`zenity --file-selection --directory --title="Select one or more files mp3 file"`
-                    if [ "$?" = "0" ]                                  
-                        then
-                            cd $FILE
-                            if [ $bya==0 ]
-                                then
-                                    zenity --error --text="Conversion impossible no $enco files selected"  
-                                    sleep 5
-                                    var=0
-                            else
-                                    echo "conversion in progress ..."
-                                    sleep 3
-                                    sleep 2
-                                    for c in $FILE *.mp3; do ffmpeg -i "$c" -acodec libfaac "${c%.mp3}.aac"> /dev/null 2>&1; done
-                                    enco=aac
-                                    var=1
-                            fi;
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
-                            var=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
-                            var=0
-                    fi;
+FILE=$(zenity --file-selection --directory --title="Select one or more files mp3 file")
+if [ "$?" = "0" ]; then
+  mp33=$(find $FILE -name "*.mp3")
+  if [ -n "$mp33" ]; then
+    echo "Conversion in progress ..."
+    sleep 3
+    for c in $mp33; do ffmpeg -i "$c" -acodec aac "${c%.mp3}.aac"; done
+    enco=aac
+    var=1
+    sleep 20000
+  else
+    zenity --error --text="No MP3 files found in the selected directory"
+    var=0
+  fi;
+elif [ "$?" = "1" ]; then
+  zenity --error --text="No files selected"
+  var=0
+else
+  zenity --error --text="An unexpected error has occurred"
+  var=0
+fi;
         elif [ "$AUDIO" = "4" ]                                   #mp3 en ac3
             then
                 FILE=$(zenity --file-selection --directory --title="Select one or more files mp3 file")
@@ -1441,7 +1437,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "25" ]
             then
-            exit 
+                exit
         else
             zenity --error --text="Please enter a number between 1 and 24"
             var=0
@@ -1700,9 +1696,17 @@ while [ $vor = 0 ]; do
                         encov=jpg
                         sleep 2
                         vor=1
-        else
-        zenity --error --text="Please enter a number between  1 and 14"
-        vor=0
+                    elif [ "$?" = "1" ]                           
+                        then
+                            zenity --error --text="No files selected"
+                            vor=0
+                    else 
+                            zenity --error --text="An unexpected error has occurred"
+                            vor=0
+                    fi;                       
+        else    
+            zenity --error --text="Please enter a number between  1 and 14"
+            vor=0
     fi;
 done
 whiptail --textbox --title"Process finished successfully" --msgbox "Your files have been re-encoded in $encov in your current folder" 10 80
