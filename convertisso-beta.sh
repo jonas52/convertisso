@@ -298,11 +298,17 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
         if [ "$subtitle" = "1" ]
             then                                     #vtt en srt     
                 FILE=$(zenity --file-selection --directory --title="Select one directory")
-                if [ "$?" = "0" ]                                     
-                    then                         
-                        for gg in $FILE *.vtt; do ffmpeg -i "$gg" "${gg%.vtt}.srt" > /dev/null 2>&1; done
-                        encov=srt
-                        varorr=1
+                    if [ "$?" = "0" ]; then
+                    vttt=$(find $FILE -name "*.vtt")
+                            if [ -n "$vttt" ]; then
+                                clear                  
+                                for gg in $vttt; do ffmpeg -i "$gg" "${gg%.vtt}.srt" > /dev/null 2>&1; done
+                                encov=srt
+                                varorr=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -314,11 +320,17 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
         elif [ "$subtitle" = "2" ]                                    #vtt en ass
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory")
-                if [ "$?" = "0" ]                                     
-                    then     
-                        for hh in $FILE *.vtt; do ffmpeg -i "$hh" "${hh%.vtt}.ass" > /dev/null 2>&1; done
-                        encov=ass
-                        varorr=1
+                    if [ "$?" = "0" ]; then
+                    vttt=$(find $FILE -name "*.vtt")
+                            if [ -n "$vttt" ]; then
+                                clear    
+                                for hh in $vttt; do ffmpeg -i "$hh" "${hh%.vtt}.ass" > /dev/null 2>&1; done
+                                encov=ass
+                                varorr=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -330,11 +342,17 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
         elif [ "$subtitle" = "3" ]                                     #vtt en lrc
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory")
-                if [ "$?" = "0" ]                                     
-                    then   
-                        for ii in $FILE *.vtt; do ffmpeg -i "$ii" "${ii%.vtt}.lrc" > /dev/null 2>&1; done
-                        encov=lrc
-                        varorr=1
+                    if [ "$?" = "0" ]; then
+                    vttt=$(find $FILE -name "*.vtt")
+                            if [ -n "$vttt" ]; then
+                                clear    
+                                for ii in $vttt; do ffmpeg -i "$ii" "${ii%.vtt}.lrc" > /dev/null 2>&1; done
+                                encov=lrc
+                                varorr=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -346,12 +364,17 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
         elif [ "$subtitle" = "4" ]                                     #srt en vtt                        
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory")
-                if [ "$?" = "0" ]                                     
-                    then   
-                        sleep 3
-                        for jj in $FILE *.srt; do ffmpeg -i "$jj" "${jj%.srt}.vtt" > /dev/null 2>&1; done
-                        encov=vtt
-                        varorr=1
+                    if [ "$?" = "0" ]; then
+                    srtt=$(find $FILE -name "*.srt")
+                            if [ -n "$srtt" ]; then
+                                clear
+                                for jj in $srtt; do ffmpeg -i "$jj" "${jj%.srt}.vtt" > /dev/null 2>&1; done
+                                encov=vtt
+                                varorr=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -363,11 +386,17 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
         elif [ "$subtitle" = "5" ]                                     #srt en ass
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory")
-                if [ "$?" = "0" ]                                     
-                    then  
-                        for kk in $FILE *.srt; do ffmpeg -i "$kk" "${kk%.srt}.ass" > /dev/null 2>&1; done
-                        encov=ass
-                        varorr=1
+                    if [ "$?" = "0" ]; then
+                    srtt=$(find $FILE -name "*.srt")
+                            if [ -n "$srtt" ]; then
+                                clear
+                                for kk in $srtt; do ffmpeg -i "$kk" "${kk%.srt}.ass" > /dev/null 2>&1; done
+                                encov=ass
+                                varorr=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -379,11 +408,17 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
         elif [ "$subtitle" = "6" ]                                     #srt en lrc
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory")
-                if [ "$?" = "0" ]                                     
-                    then  
-                        for ll in $FILE *.srt; do ffmpeg -i "$ll" "${ll%.srt}.lrc" > /dev/null 2>&1; done
-                        encov=lrc
-                        varorr=1
+                    if [ "$?" = "0" ]; then
+                    srtt=$(find $FILE -name "*.srt")
+                            if [ -n "$srtt" ]; then
+                                clear
+                                for ll in $srtt; do ffmpeg -i "$ll" "${ll%.srt}.lrc" > /dev/null 2>&1; done
+                                encov=lrc
+                                varorr=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -395,11 +430,17 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
         elif [ "$subtitle" = "7" ]                                     #ass en srt
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then  
-                        for mm in $FILE *.ass; do ffmpeg -i "$mm" "${mm%.ass}.srt" > /dev/null 2>&1; done
-                        encov=srt
-                        varorr=1
+                    if [ "$?" = "0" ]; then
+                    asss=$(find $FILE -name "*.ass")
+                            if [ -n "$asss" ]; then
+                                clear  
+                                for mm in $asss; do ffmpeg -i "$mm" "${mm%.ass}.srt" > /dev/null 2>&1; done
+                                encov=srt
+                                varorr=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -411,11 +452,17 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
         elif [ "$subtitle" = "8" ]                                     #ass en lrc
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then  
-                        for nn in $FILE *.ass; do ffmpeg -i "$nn" "${nn%.ass}.lrc" > /dev/null 2>&1; done
-                        encov=lrc
-                        varorr=1
+                    if [ "$?" = "0" ]; then
+                    asss=$(find $FILE -name "*.ass")
+                            if [ -n "$asss" ]; then
+                                clear   
+                                for nn in $asss; do ffmpeg -i "$nn" "${nn%.ass}.lrc" > /dev/null 2>&1; done
+                                encov=lrc
+                                varorr=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -427,11 +474,17 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
         elif [ "$subtitle" = "9" ]                                     #ass en vtt
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then  
-                        for oo in $FILE *.ass; do ffmpeg -i "$oo" "${oo%.ass}.vtt" > /dev/null 2>&1; done
-                        encov=vtt
-                        varorr=1
+                    if [ "$?" = "0" ]; then
+                    asss=$(find $FILE -name "*.ass")
+                            if [ -n "$asss" ]; then
+                                clear   
+                                for oo in $asss; do ffmpeg -i "$oo" "${oo%.ass}.vtt" > /dev/null 2>&1; done
+                                encov=vtt
+                                varorr=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -443,11 +496,17 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
         elif [ "$subtitle" = "10" ]                                     #lrc en srt
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (no recusvie)")
-                if [ "$?" = "0" ]                                     
-                    then  
-                        for pp in $FILE *.lrc; do ffmpeg -i "$pp" "${pp%.lrc}.srt" > /dev/null 2>&1; done
-                        encov=srt
-                        varorr=1
+                    if [ "$?" = "0" ]; then
+                    lrcc=$(find $FILE -name "*.lrc")
+                            if [ -n "$lrcc" ]; then
+                                clear   
+                                for pp in $lrcc; do ffmpeg -i "$pp" "${pp%.lrc}.srt" > /dev/null 2>&1; done
+                                encov=srt
+                                varorr=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -459,11 +518,17 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
         elif [ "$subtitle" = "11" ]                                     #lrc en ass
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then 
-                        for qq in $FILE *.lrc; do ffmpeg -i "$qq" "${qq%.lrc}.ass" > /dev/null 2>&1; done
-                        encov=ass
-                        varorr=1
+                    if [ "$?" = "0" ]; then
+                    lrcc=$(find $FILE -name "*.lrc")
+                            if [ -n "$lrcc" ]; then
+                                clear 
+                                for qq in $FILE *.lrc; do ffmpeg -i "$qq" "${qq%.lrc}.ass" > /dev/null 2>&1; done
+                                encov=ass
+                                varorr=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -475,11 +540,17 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
         elif [ "$subtitle" = "12" ]                                     #lrc en vtt
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (no recusvie)")
-                if [ "$?" = "0" ]                                     
-                    then 
-                        for rr in $FILE *.lrc; do ffmpeg -i "$rr" "${rr%.lrc}.vtt" > /dev/null 2>&1; done
-                        encov=vtt
-                        varorr=1
+                    if [ "$?" = "0" ]; then
+                    lrcc=$(find $FILE -name "*.lrc")
+                            if [ -n "$lrcc" ]; then
+                                clear
+                                for rr in $FILE *.lrc; do ffmpeg -i "$rr" "${rr%.lrc}.vtt" > /dev/null 2>&1; done
+                                encov=vtt
+                                varorr=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -492,8 +563,6 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
             zenity --error --text="Please enter a number between 1 and 12"
             varorr=0
         fi;
-    echo -e "\nYour files have been re-encoded in $encov in your current folder\n"
-    sleep 3
 done
 
 }
@@ -501,45 +570,42 @@ function convertisso-download-video {
         clear
         varor=0
     LINK=$(whiptail --title "Input" --inputbox "URL of your video" 10 60 3>&1 1>&2 2>&3)
-    echo $LINK
     DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an option" 30 80 10 \
     "1" "video without subtitle" \
     "2" "video with subtitle" \
     "3" "fonly audio (mp3)" \
     "4" "only the subtitle" 3>&1 1>&2 2>&3)
-echo $DOWNLOAD
-while [ $DOWNLOAD = 0 ];do
+    DESTINATION=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+while [ "$varor" = 0 ];do
     if [ "$DOWNLOAD" = "1" ]                                     #video without subtitle
         then
         echo "Downloading in progress (it may take several minutes) ..."
-        youtube-dl "$LINK" 
+        youtube-dl -o "$DESTINATION/%.%" "$LINK"
         while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
-            varor=0
+        varor=1
     elif [ "$DOWNLOAD" = "2" ]                                     #video with subtitle
         then
         echo "Downloading in progress (it may take several minutes) ..."
-        youtube-dl --write-srt --all-subs "$LINK"
+        youtube-dl -o "$DESTINATION/" --write-srt --all-subs "$LINK"
         while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
-        varor=0
+        varor=1   
     elif [ "$DOWNLOAD" = "3" ]                                     #only audio (mp3)
         then
         echo "Downloading in progress (it may take several minutes) ..."
-        youtube-dl -x --audio-format mp3 "$LINK"
+        youtube-dl -o "$DESTINATION/" -x --audio-format mp3 "$LINK"
         while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
-        varor=0
+        varor=1        
         echo "Downloading in progress (it may take several minutes) ..."
     elif [ "$DOWNLOAD" = "4" ]                                     #only the subtitle 
         then
-        youtube-dl --all-subs --skip-download "$LINK"
+        youtube-dl -o "$DESTINATION/" --all-subs --skip-download "$LINK"
         while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
-        varor=0
+        varor=1
     else
         zenity --error --text="Please enter a number between 1 and 4"
         varor=0
     fi;
-    done
-    whiptail --title "Process finished successfully" --msgbox "The video you have downloaded is in your current folder" 10 80
-    sleep 2
+done
 }
 
 
@@ -788,7 +854,6 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
 }
 
 function convertisso-audio {
-bya="ls *.mp3|wc -l"
 clear
 var=0
 while [ $var = 0 ];do
@@ -820,18 +885,17 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
 "25" "exit" 3>&1 1>&2 2>&3)
         if [ "$AUDIO" = "1" ]                             
             then
-                FILE=$(`zenity --file-selection --directory --title="Select one or more files mp3 file"`)
-                    if [ "$?" = "0" ]
-                        then
-                            if [ ! -e $FILE ]
-                                then
-                                    zenity --error --text="Conversion impossible no $enco files selected" 
-                                    var=0
+                FILE=$(zenity --file-selection --directory --title="Select one or more files mp3 file")
+                    if [ "$?" = "0" ]; then
+                    mp33=$(find $FILE -name "*.mp3")
+                            if [ -n "$mp33" ]; then
+                                clear
+                                for a in $mp33 ; do ffmpeg -i "$a" "${a%.mp3}.wav"> /dev/null 2>&1; done
+                                enco=wav
+                                var=1
                             else
-                                    whiptail --title "Convertisso audio" --msgbox "Conversion in progress ..." 10 60
-                                    for a in $FILE ; do ffmpeg -i "$a" "${a%.mp3}.wav"> /dev/null 2>&1; done
-                                    enco=wav
-                                    var=1
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
                             fi;
                     elif [ "$?" = "1" ]                           
                         then
@@ -1406,7 +1470,7 @@ while [ $vor = 0 ]; do
                 pngg=$(find $FILE -name "*.png")
                         if [ -n "$pngg" ]; then
                             clear
-                            for uu in $pngg; do  convert "$uu"  "${uu%.png}.jpg"; done
+                            for uu in '$pngg'; do  convert "$uu"  "${uu%.png}.jpg"; done
                             encov=jpg 
                             vor=1
                         else
@@ -1712,7 +1776,7 @@ while [ $vor = 0 ]; do
             vor=0
     fi;
 done
-whiptail --textbox --title"Process finished successfully" --msgbox "Your files have been re-encoded in $encov in your current folder" 10 80
+whiptail --textbox --title "Process finished successfully" --msgbox "Your files have been re-encoded in $encov in your current folder" 10 80
 sleep 2
 }
 
