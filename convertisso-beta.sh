@@ -853,7 +853,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                                 enco=ogg
                                 var=1
                             else
-                                zenity --error --text="No MP3 files found in the selected directory"
+                                zenity --error --text="No compatible files found in the selected directory"
                                 var=0
                             fi;
                     elif [ "$?" = "1" ]                           
@@ -876,7 +876,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         enco=aac
                         var=1
                     else
-                        zenity --error --text="No MP3 files found in the selected directory"
+                        zenity --error --text="No compatible files found in the selected directory"
                         var=0
                     fi;
                 elif [ "$?" = "1" ]; then
@@ -898,7 +898,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=ac3
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -921,7 +921,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=mp3
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -944,7 +944,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=ogg
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -967,7 +967,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=aac
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -990,7 +990,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=ac3
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1013,7 +1013,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=mp3
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1036,7 +1036,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=wav
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1059,7 +1059,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=aac
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1082,7 +1082,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=ac3
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1105,7 +1105,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=wav
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1128,7 +1128,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=aac
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1151,7 +1151,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=ogg
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1174,7 +1174,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=mp3
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1197,7 +1197,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=wav
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1220,7 +1220,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=ac3
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1243,7 +1243,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=ogg
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1266,7 +1266,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=mp3
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1289,7 +1289,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=mp3
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1312,7 +1312,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=wav
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1335,7 +1335,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=ogg 
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1358,7 +1358,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             enco=ac3 
                             var=1
                         else
-                            zenity --error --text="No MP3 files found in the selected directory"
+                            zenity --error --text="No compatible files found in the selected directory"
                             var=0
                         fi;
                     elif [ "$?" = "1" ]                           
@@ -1400,244 +1400,313 @@ image=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
 "14" "heic to jpg" 3>&1 1>&2 2>&3)
 while [ $vor = 0 ]; do
         if [ "$image" = "1" ]                                      #png en jpg 
-                then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
-                    if [ "$?" = "0" ]                                     
-                        then
-                            sleep 2
-                            for uu in $FILE *.png; do  convert "$uu"  "${uu%.png}.jpg"; done
+            then
+            FILE=$(zenity --file-selection --directory --title="Select one directorye")
+            if [ "$?" = "0" ]; then
+                pngg=$(find $FILE -name "*.png")
+                        if [ -n "$pngg" ]; then
+                            clear
+                            for uu in $pngg; do  convert "$uu"  "${uu%.png}.jpg"; done
                             encov=jpg 
                             vor=1
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
                             vor=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
-                            vor=0
-                    fi;
+                        fi;
+            elif [ "$?" = "1" ]                           
+                then
+                    zenity --error --text="No files selected"
+                    vor=0
+            else 
+                    zenity --error --text="An unexpected error has occurred"
+                    vor=0
+            fi;
         elif [ "$image" = "2" ]                                    #jpg en png
-                then
+            then
                 FILE=$(zenity --file-selection --directory --title="Select one directorye")
-                    if [ "$?" = "0" ]                                     
-                        then
-                            sleep 2
-                            for vv in $FILE *.jpg; do  convert "$vv"  "${vv%.jpg}.png"; done
+            if [ "$?" = "0" ]; then
+                jpgg=$(find $FILE -name "*.jpg")
+                        if [ -n "$jpgg" ]; then
+                            clear
+                            for vv in $jpgg; do  convert "$vv"  "${vv%.jpg}.png"; done
                             encov=png 
                             vor=1
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
                             vor=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
-                            vor=0
-                    fi;
+                        fi;
+            elif [ "$?" = "1" ]                           
+                then
+                    zenity --error --text="No files selected"
+                    vor=0
+            else 
+                    zenity --error --text="An unexpected error has occurred"
+                    vor=0
+            fi;
         elif [ "$image" = "3" ]                                    #tiff en png
-                then
+            then
                 FILE=$(zenity --file-selection --directory --title="Select one directorye")
-                    if [ "$?" = "0" ]                                     
-                        then
-
-                            sleep 2
-                            for ww in $FILE *.tiff; do  convert "$ww"  "${ww%.tiff}.png"; done
+            if [ "$?" = "0" ]; then
+                tifff=$(find $FILE -name "*.tiff")
+                        if [ -n "$tifff" ]; then
+                            clear
+                            for ww in $tifff; do  convert "$ww"  "${ww%.tiff}.png"; done
                             encov=png 
                             vor=1
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
                             vor=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
-                            vor=0
-                    fi;
-        elif [ "$image" = "4" ]                                    #tiff en jpg
+                        fi;
+            elif [ "$?" = "1" ]                           
                 then
+                    zenity --error --text="No files selected"
+                    vor=0
+            else 
+                    zenity --error --text="An unexpected error has occurred"
+                    vor=0
+            fi;
+        elif [ "$image" = "4" ]                                    #tiff en jpg
+            then
                 FILE=$(zenity --file-selection --directory --title="Select one directorye")
-                    if [ "$?" = "0" ]                                     
-                        then
-                            sleep 2
-                            for yy in $FILE *.tiff; do  convert "$yy"  "${yy%.tiff}.jpg"; done
+            if [ "$?" = "0" ]; then
+                tifff=$(find $FILE -name "*.tiff")
+                        if [ -n "$tifff" ]; then
+                            clear
+                            for yy in $tifff; do  convert "$yy"  "${yy%.tiff}.jpg"; done
                             encov=jpg
                             vor=1
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
                             vor=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
-                            vor=0
-                    fi;
+                        fi;
+            elif [ "$?" = "1" ]                           
+                then
+                    zenity --error --text="No files selected"
+                    vor=0
+            else 
+                    zenity --error --text="An unexpected error has occurred"
+                    vor=0
+            fi;
         elif [ "$image" = "5" ]                                #tiff en BMP
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directorye")
-                    if [ "$?" = "0" ]                                     
-                        then
-                        sleep 2
-                        for zz in $FILE *.tiff; do  convert "$zz"  "${zz%.tiff}.BMP"; done
+            if [ "$?" = "0" ]; then
+                tifff=$(find $FILE -name "*.tiff")
+                    if [ -n "$tifff" ]; then
+                        clear
+                        for zz in $tifff; do  convert "$zz"  "${zz%.tiff}.BMP"; done
                         encov=BMP 
-                        vor=1   
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
+                        vor=1
+                    else
+                            zenity --error --text="No compatible files found in the selected directory"
                             vor=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
-                            vor=0
-                    fi; 
+                    fi;
+            elif [ "$?" = "1" ]                           
+                then
+                    zenity --error --text="No files selected"
+                    vor=0
+            else 
+                    zenity --error --text="An unexpected error has occurred"
+                    vor=0
+            fi;
         elif [ "$image" = "6" ]                                #tiff en pdf #
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directorye")
-                    if [ "$?" = "0" ]                                     
-                        then
-                        sleep 2
-                        for aaa in $FILE *.tiff; do  tiff2pdf -o "${aaa%.tiff}.pdf" "$aaa"; done
+            if [ "$?" = "0" ]; then
+                tifff=$(find $FILE -name "*.tiff")
+                    if [ -n "$tifff" ]; then
+                        clear
+                        for aaa in $tifff; do  tiff2pdf -o "${aaa%.tiff}.pdf" "$aaa"; done
                         encov=pdf 
                         vor=1
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
-                            vor=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
+                    else
+                            zenity --error --text="No compatible files found in the selected directory"
                             vor=0
                     fi;
+            elif [ "$?" = "1" ]                           
+                then
+                    zenity --error --text="No files selected"
+                    vor=0
+            else 
+                    zenity --error --text="An unexpected error has occurred"
+                    vor=0
+            fi;
         elif [ "$image" = "7" ]                                #tiff en gif
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directorye")
-                    if [ "$?" = "0" ]                                     
-                        then
-                        sleep 2
-                        for bbb in $FILE *.tiff; do  convert "$bbb"  "${bbb%.tiff}.gif"; done
+            if [ "$?" = "0" ]; then
+                tifff=$(find $FILE -name "*.tiff")
+                    if [ -n "$tifff" ]; then
+                        clear
+                        for bbb in $tifff; do  convert "$bbb"  "${bbb%.tiff}.gif"; done
                         encov=gif 
                         vor=1
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
-                            vor=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
+                    else
+                            zenity --error --text="No compatible files found in the selected directory"
                             vor=0
                     fi;
+            elif [ "$?" = "1" ]                           
+                then
+                    zenity --error --text="No files selected"
+                    vor=0
+            else 
+                    zenity --error --text="An unexpected error has occurred"
+                    vor=0
+            fi;
         elif [ "$image" = "8" ]                                #pdf en tiff
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directorye")
-                    if [ "$?" = "0" ]                                     
-                        then
-                        sleep 2
-                        for eee in $FILE *.pdf; do  convert "$eee"  "${eee%.pdf}.tiff"; done
+            if [ "$?" = "0" ]; then
+                pdff=$(find $FILE -name "*.pdf")
+                    if [ -n "$pdff" ]; then
+                        clear
+                        for eee in $pdff; do  convert "$eee"  "${eee%.pdf}.tiff"; done
                         encov=tiff 
                         vor=1
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
-                            vor=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
-                            vor=0
+                    else
+                        zenity --error --text="No compatible files found in the selected directory"
+                        vor=0
                     fi;
+            elif [ "$?" = "1" ]                           
+                then
+                    zenity --error --text="No files selected"
+                    vor=0
+            else 
+                    zenity --error --text="An unexpected error has occurred"
+                    vor=0
+            fi;
         elif [ "$image" = "9" ]                                #pdf en jpg
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directorye")
-                    if [ "$?" = "0" ]                                     
-                        then
-                        sleep 2
-                        for fff in $FILE *.pdf; do  convert "$fff"  "${fff%.pdf}.jpg"; done
+            if [ "$?" = "0" ]; then
+                pdff=$(find $FILE -name "*.pdf")
+                    if [ -n "$pdff" ]; then
+                        clear
+                        for fff in $pdff; do  convert "$fff"  "${fff%.pdf}.jpg"; done
                         encov=jpg 
                         vor=1
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
-                            vor=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
-                            vor=0
+                    else
+                        zenity --error --text="No compatible files found in the selected directory"
+                        vor=0
                     fi;
+            elif [ "$?" = "1" ]                           
+                then
+                    zenity --error --text="No files selected"
+                    vor=0
+            else 
+                    zenity --error --text="An unexpected error has occurred"
+                    vor=0
+            fi;
         elif [ "$image" = "10" ]                                #pdf en png
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directorye")
-                    if [ "$?" = "0" ]                                     
-                        then
-                        sleep 2
-                        for ggg in $FILE *.pdf; do  convert "$ggg"  "${ggg%.pdf}.png"; done
+            if [ "$?" = "0" ]; then
+                pdff=$(find $FILE -name "*.pdf")
+                    if [ -n "$pdff" ]; then
+                        clear
+                        for ggg in $pdff; do  convert "$ggg"  "${ggg%.pdf}.png"; done
                         encov=png 
                         vor=1
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
-                            vor=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
-                            vor=0
+                    else
+                        zenity --error --text="No compatible files found in the selected directory"
+                        vor=0
                     fi;
+            elif [ "$?" = "1" ]                           
+                then
+                    zenity --error --text="No files selected"
+                    vor=0
+            else 
+                    zenity --error --text="An unexpected error has occurred"
+                    vor=0
+            fi;
         elif [ "$image" = "11" ]                                #svg en tiff
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directorye")
-                    if [ "$?" = "0" ]                                     
-                        then
-                        sleep 2
-                        for hhh in $FILE *.svg; do  convert "$hhh"  "${hhh%.svg}.tiff"; done
+            if [ "$?" = "0" ]; then
+                svgg=$(find $FILE -name "*.svg")
+                    if [ -n "$svgg" ]; then
+                        clear
+                        for hhh in $svgg; do  convert "$hhh"  "${hhh%.svg}.tiff"; done
                         encov=tiff 
                         vor=1
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
-                            vor=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
-                            vor=0
+                    else
+                        zenity --error --text="No compatible files found in the selected directory"
+                        vor=0
                     fi;
+            elif [ "$?" = "1" ]                           
+                then
+                    zenity --error --text="No files selected"
+                    vor=0
+            else 
+                    zenity --error --text="An unexpected error has occurred"
+                    vor=0
+            fi;
         elif [ "$image" = "12" ]                                #svg en png
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directorye")
-                    if [ "$?" = "0" ]                                     
-                        then
-                        sleep 2
-                        for hhh in $FILE *.svg; do  convert "$hhh"  "${hhh%.svg}.png"; done
+            if [ "$?" = "0" ]; then
+                svgg=$(find $FILE -name "*.svg")
+                    if [ -n "$svgg" ]; then
+                        clear
+                        for hhh in $svgg; do  convert "$hhh"  "${hhh%.svg}.png"; done
                         encov=png 
                         vor=1
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
-                            vor=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
-                            vor=0
+                    else
+                        zenity --error --text="No compatible files found in the selected directory"
+                        vor=0
                     fi;
+            elif [ "$?" = "1" ]                           
+                then
+                    zenity --error --text="No files selected"
+                    vor=0
+            else 
+                    zenity --error --text="An unexpected error has occurred"
+                    vor=0
+            fi;
         elif [ "$image" = "13" ]                                #svg en pdf
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directorye")
-                    if [ "$?" = "0" ]                                     
-                        then
-                        sleep 2
-                        for hhh in $FILE *.svg; do  rsvg-convert -f pdf -o "${hhh%.svg}.pdf" "$hhh" ; done
+            if [ "$?" = "0" ]; then
+                svgg=$(find $FILE -name "*.svg")
+                    if [ -n "$svgg" ]; then
+                        clear
+                        for hhh in $svgg; do  rsvg-convert -f pdf -o "${hhh%.svg}.pdf" "$hhh" ; done
                         encov=pdf 
                         vor=1
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
-                            vor=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
-                            vor=0
+                    else
+                        zenity --error --text="No compatible files found in the selected directory"
+                        vor=0
                     fi;
+            elif [ "$?" = "1" ]                           
+                then
+                    zenity --error --text="No files selected"
+                    vor=0
+            else 
+                    zenity --error --text="An unexpected error has occurred"
+                    vor=0
+            fi;
         elif [ "$image" = "14" ]                               
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directorye")
-                    if [ "$?" = "0" ]                                     
-                        then
-                        for ggg in $FILE *.heic; do  heif-convert "$ggg" "${ggg%.heic}.jpg" ; done
+            if [ "$?" = "0" ]; then
+                heicc=$(find $FILE -name "*.heic")
+                    if [ -n "$heicc" ]; then
+                        clear
+                        for ggg in $heicc ; do  heif-convert "$ggg" "${ggg%.heic}.jpg" ; done
                         encov=jpg
-                        sleep 2
                         vor=1
-                    elif [ "$?" = "1" ]                           
-                        then
-                            zenity --error --text="No files selected"
-                            vor=0
-                    else 
-                            zenity --error --text="An unexpected error has occurred"
-                            vor=0
-                    fi;                       
+                    else
+                        zenity --error --text="No compatible files found in the selected directory"
+                        vor=0
+                    fi;
+            elif [ "$?" = "1" ]                           
+                then
+                    zenity --error --text="No files selected"
+                    vor=0
+            else 
+                    zenity --error --text="An unexpected error has occurred"
+                    vor=0
+            fi;
         else    
             zenity --error --text="Please enter a number between  1 and 14"
             vor=0
