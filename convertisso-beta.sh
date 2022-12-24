@@ -631,11 +631,17 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
         if [ "$video" = "1" ]                                     #mkv en avi
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then 
-                        for t in *.mkv; do ffmpeg -i "$t" -codec copy "${t%.mkv}.avi"> /dev/null 2>&1; done
-                        encov=avi
-                        varo=1
+                    if [ "$?" = "0" ]; then
+                    mkvv=$(find $FILE -name "*.mkv")
+                            if [ -n "$mkvv" ]; then
+                                clear 
+                                for t in $mkvv; do ffmpeg -i "$t" -codec copy "${t%.mkv}.avi"> /dev/null 2>&1; done
+                                encov=avi
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -647,11 +653,17 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
         elif [ "$video" = "2" ]                                   #mkv en mov
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then 
-                        for u in *.mkv; do ffmpeg -i "$u" -codec copy "${u%.mkv}.mov"> /dev/null 2>&1; done
-                        encov=mov
-                        varo=1
+                    if [ "$?" = "0" ]; then
+                    mkvv=$(find $FILE -name "*.mkv")
+                            if [ -n "$mkvv" ]; then
+                                clear  
+                                for u in $mkvv; do ffmpeg -i "$u" -codec copy "${u%.mkv}.mov"> /dev/null 2>&1; done
+                                encov=mov
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -659,16 +671,21 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                 else 
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
-                fi;                    
+                fi;
         elif [ "$video" = "3" ]                                     #mkv en mp4
             then
                 FILE=$(sudo zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then 
-                        for v in $FILE *.mkv; do ffmpeg -i "$v" -codec copy "${v%.mkv}.mp4"> /dev/null 2>&1; done
-                        encov=mp4
-                        varo=1
-                    sleep 20000
+                 if [ "$?" = "0" ]; then
+                    mkvv=$(find $FILE -name "*.mkv")
+                            if [ -n "$mkvv" ]; then
+                                clear
+                                for v in $FILE $mkvv; do ffmpeg -i "$v" -codec copy "${v%.mkv}.mp4"> /dev/null 2>&1; done
+                                encov=mp4
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -680,11 +697,17 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
         elif [ "$video" = "4" ]                                     #mp4 en mkv                                     
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then 
-                        for w in *.mp4; do ffmpeg -i "$w" -codec copy "${w%.mp4}.mkv"> /dev/null 2>&1; done
-                        encov=mkv
-                        varo=1
+                 if [ "$?" = "0" ]; then
+                    mp44=$(find $FILE -name "*.mp4")
+                            if [ -n "$mp44" ]; then
+                                clear
+                                for w in $mp44; do ffmpeg -i "$w" -codec copy "${w%.mp4}.mkv"> /dev/null 2>&1; done
+                                encov=mkv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -696,16 +719,39 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
         elif [ "$video" = "5" ]                                     #mp4 en mov                                    
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then 
-                        for x in *.mp4; do ffmpeg -i "$x" -codec copy "${x%.mp4}.mov"> /dev/null 2>&1; done
-                        encov=mov
-                        varo=1
+                 if [ "$?" = "0" ]; then
+                    mp44=$(find $FILE -name "*.mp4")
+                            if [ -n "$mp44" ]; then
+                                clear
+                                for x in $mp44; do ffmpeg -i "$x" -codec copy "${x%.mp4}.mov"> /dev/null 2>&1; done
+                                encov=mov
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
         elif [ "$video" = "6" ]                                     #mp4 en avi
-            then                                     
-                        for y in *.mp4; do ffmpeg -i "$y" -codec copy "${y%.mp4}.avi"> /dev/null 2>&1; done
-                        encov=avi
-                        varo=1
+            then           
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    mp44=$(find $FILE -name "*.mp4")
+                            if [ -n "$mp44" ]; then
+                                clear                        
+                                for y in $mp44; do ffmpeg -i "$y" -codec copy "${y%.mp4}.avi"> /dev/null 2>&1; done
+                                encov=avi
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -717,11 +763,17 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
         elif [ "$video" = "7" ]                                     #mov en mkv
             then        
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then                             
-                        for z in *.mov; do ffmpeg -i "$z" -codec copy "${z%.mov}.mkv"> /dev/null 2>&1; done
-                        encov=mkv
-                        varo=1
+                 if [ "$?" = "0" ]; then
+                    movv=$(find $FILE -name "*.mov")
+                            if [ -n "$movv" ]; then
+                                clear                             
+                                for z in $movv; do ffmpeg -i "$z" -codec copy "${z%.mov}.mkv"> /dev/null 2>&1; done
+                                encov=mkv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -733,11 +785,17 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
         elif [ "$video" = "8" ]                                     #mov en mp4
             then        
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then        
-                        for aa in *.mov; do  ffmpeg -i "$aa" -codec copy "${aa%.mov}.mp4"> /dev/null 2>&1; done
-                        encov=mp4
-                        varo=1
+                 if [ "$?" = "0" ]; then
+                    movv=$(find $FILE -name "*.mov")
+                            if [ -n "$movv" ]; then
+                                clear       
+                                for aa in $mp44; do  ffmpeg -i "$aa" -codec copy "${aa%.mov}.mp4"> /dev/null 2>&1; done
+                                encov=mp4
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -749,13 +807,17 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
         elif [ "$video" = "9" ]                                     #mov en avi
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then 
-                    echo "conversion in progress ..."
-                    sleep 3
-                    for bb in *.mov; do ffmpeg -i "$bb" -codec copy "${bb%.mov}.avi"> /dev/null 2>&1; done
-                    encov=avi
-                    varo=1
+                 if [ "$?" = "0" ]; then
+                    movv=$(find $FILE -name "*.mov")
+                            if [ -n "$movv" ]; then
+                                clear
+                                for bb in $movv; do ffmpeg -i "$bb" -codec copy "${bb%.mov}.avi"> /dev/null 2>&1; done
+                                encov=avi
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -767,11 +829,17 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
         elif [ "$video" = "10" ]                                     #avi en mkv
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then 
-                        for cc in *.avi; do ffmpeg -i "$cc" -codec copy "${cc%.avi}.mkv"> /dev/null 2>&1; done
-                        encov=mkv
-                        varo=1
+                 if [ "$?" = "0" ]; then
+                    avii=$(find $FILE -name "*.avi")
+                            if [ -n "$avii" ]; then
+                                clear 
+                                for cc in $avii; do ffmpeg -i "$cc" -codec copy "${cc%.avi}.mkv"> /dev/null 2>&1; done
+                                encov=mkv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -783,11 +851,17 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
         elif [ "$video" = "11" ]                                     #avi en mp4
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then 
-                    for dd in *.avi; do ffmpeg -i "$dd" -codec copy "${dd%.avi}.mp4"> /dev/null 2>&1; done
-                    encov=mp4
-                    varo=1
+                 if [ "$?" = "0" ]; then
+                    avii=$(find $FILE -name "*.avi")
+                            if [ -n "$avii" ]; then
+                                clear  
+                                for dd in $avii; do ffmpeg -i "$dd" -codec copy "${dd%.avi}.mp4"> /dev/null 2>&1; done
+                                encov=mp4
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -799,11 +873,17 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
         elif [ "$video" = "12" ]                                     #avi en mov
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then 
-                        for ee in *.avi; do ffmpeg -i "$ee" -codec copy "${ee%.avi}.mov"> /dev/null 2>&1; done
-                        encov=mov
-                        varo=1
+                 if [ "$?" = "0" ]; then
+                    avii=$(find $FILE -name "*.avi")
+                            if [ -n "$avii" ]; then
+                                clear  
+                                for ee in $avii; do ffmpeg -i "$ee" -codec copy "${ee%.avi}.mov"> /dev/null 2>&1; done
+                                encov=mov
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -815,11 +895,17 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
         elif [ "$video" = "13" ]                                     #webm en mp4
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then 
-                        for ff in *.webm; do ffmpeg -i "$ff" -c copy "${ff%.webm}.mp4"> /dev/null 2>&1; done
-                        encov=mp4
-                        varo=1   
+                 if [ "$?" = "0" ]; then
+                    webmm=$(find $FILE -name "*.webm")
+                            if [ -n "$webmm" ]; then
+                                clear
+                                for ff in $webmm; do ffmpeg -i "$ff" -c copy "${ff%.webm}.mp4"> /dev/null 2>&1; done
+                                encov=mp4
+                                varo=1 
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -827,15 +913,21 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                 else 
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
-                fi; 
+                fi;
         elif [ "$video" = "14" ]                                     #HEVC to mp4
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-                if [ "$?" = "0" ]                                     
-                    then 
-                        for kkk in *.hevc; do ffmpeg -i "$kkk" -c copy "${kkk%.hevc}.mp4"> /dev/null 2>&1; done
-                        encov=mp4
-                        varo=1
+                 if [ "$?" = "0" ]; then
+                    hevcc=$(find $FILE -name "*.hevc")
+                            if [ -n "$hevcc" ]; then
+                                clear
+                                for kkk in $hevcc; do ffmpeg -i "$kkk" -c copy "${kkk%.hevc}.mp4"> /dev/null 2>&1; done
+                                encov=mp4
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
                 elif [ "$?" = "1" ]                           
                     then
                         zenity --error --text="No files selected"
@@ -848,7 +940,7 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
             zenity --error --text="Please enter a number between 1 and 14"
             varo=0
         fi;
-    done
+done
     whiptail --textbox --title "Process finished successfully" --msgbox "Your files have been re-encoded in $encov in your current folder" 10 80
     sleep 2
 }
