@@ -656,7 +656,7 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                     if [ "$?" = "0" ]; then
                     mkvv=$(find $FILE -name "*.mkv")
                             if [ -n "$mkvv" ]; then
-                                clear  
+                                  
                                 for u in $mkvv; do ffmpeg -i "$u" -codec copy "${u%.mkv}.mov"> /dev/null 2>&1; done
                                 encov=mov
                                 varo=1
@@ -674,7 +674,7 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                 fi;
         elif [ "$video" = "3" ]                                     #mkv en mp4
             then
-                FILE=$(sudo zenity --file-selection --directory --title="Select one directory (not recusive)")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                  if [ "$?" = "0" ]; then
                     mkvv=$(find $FILE -name "*.mkv")
                             if [ -n "$mkvv" ]; then
@@ -941,7 +941,7 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
             varo=0
         fi;
 done
-    whiptail --textbox --title "Process finished successfully" --msgbox "Your files have been re-encoded in $encov in your current folder" 10 80
+whiptail --textbox --title "Process finished successfully" --msgbox "Your files have been re-encoded in $enco in your current foldert" 10 80
     sleep 2
 }
 
@@ -1533,7 +1533,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
             var=0
         fi;
 done
-whiptail --textbox --title"Process finished successfully" --msgbox "Your files have been re-encoded in $enco in your current foldert" 10 80
+whiptail --textbox --title "Process finished successfully" --msgbox "Your files have been re-encoded in $enco in your current foldert" 10 80
 }
 
 function convertisso-image {
