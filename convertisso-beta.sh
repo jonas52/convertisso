@@ -5,6 +5,7 @@
 #---[Author of this file]---------------------------------------------------#
 #  Jonas Petitpierre ~  @jonas52 -> https://github.com/jonas52
                                                        #
+echo -n -e "\033]0;Convertisso\007"
 function convertisso {
 echo -e "\n"
 echo -e "\e[33m  ██████╗ ██████╗ ███╗   ██╗██╗   ██╗███████╗██████╗ ████████╗██╗███████╗███████╗ ██████╗ \e[0m"
