@@ -568,47 +568,73 @@ done
 
 }
 function convertisso-download-video {
-        clear
+        #clear
         varor=0
     LINK=$(whiptail --title "Input" --inputbox "URL of your video" 10 60 3>&1 1>&2 2>&3)
     DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an option" 30 80 10 \
     "1" "video without subtitle" \
     "2" "video with subtitle" \
-    "3" "fonly audio (mp3)" \
+    "3" "only audio (mp3)" \
     "4" "only the subtitle" 3>&1 1>&2 2>&3)
     DESTINATION=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
 while [ "$varor" = 0 ];do
     if [ "$DOWNLOAD" = "1" ]                                     #video without subtitle
         then
         echo "Downloading in progress (it may take several minutes) ..."
-        youtube-dl -o "$DESTINATION/%.%" "$LINK"
+        youtube-dl -f best --add-metadata "$LINK"
         while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
+        mv *.mp4 $DESTINATION
+        mv *.mkv $DESTINATION
+        mv *.webm $DESTINATION
+        mv *.flv $DESTINATION
         varor=1
     elif [ "$DOWNLOAD" = "2" ]                                     #video with subtitle
         then
         echo "Downloading in progress (it may take several minutes) ..."
-        youtube-dl -o "$DESTINATION/" --write-srt --all-subs "$LINK"
+        youtube-dl --write-srt --all-subs --add-metadata "$LINK"
         while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
+        mv *.mp4 $DESTINATION
+        mv *.mkv $DESTINATION
+        mv *.webm $DESTINATION
+        mv *.flv $DESTINATION
+        mv *.srt $DESTINATION
+        mv *.ass $DESTINATION
+        mv *.vtt $DESTINATION
+        mv *.lrc $DESTINATION
         varor=1   
     elif [ "$DOWNLOAD" = "3" ]                                     #only audio (mp3)
         then
         echo "Downloading in progress (it may take several minutes) ..."
-        youtube-dl -o "$DESTINATION/" -x --audio-format mp3 "$LINK"
+        youtube-dl -x --audio-format best --add-metadata "$LINK"
         while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
-        varor=1        
+        mv *.mp3 $DESTINATION
+        mv *.aac $DESTINATION
+        mv *.flac $DESTINATION
+        mv *.mp3 $DESTINATION
+        mv *.m4a $DESTINATION
+        mv *.ogg $DESTINATION
+        mv *.wav $DESTINATION
+        mv *.opus $DESTINATION
+        mv *.vorbis $DESTINATION
+        varor=1
         echo "Downloading in progress (it may take several minutes) ..."
     elif [ "$DOWNLOAD" = "4" ]                                     #only the subtitle 
         then
-        youtube-dl -o "$DESTINATION/" --all-subs --skip-download "$LINK"
+        youtube-dl --all-subs -w --skip-download --add-metadata "$LINK"
         while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
         varor=1
+        mv *.srt $DESTINATION
+        mv *.ass $DESTINATION
+        mv *.vtt $DESTINATION
+        mv *.lrc $DESTINATION
     else
         zenity --error --text="Please enter a number between 1 and 4"
         varor=0
     fi;
 done
-}
 
+sleep 2000
+}
 
 function convertisso-video {
 clear
