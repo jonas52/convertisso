@@ -139,8 +139,7 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing libsox-fmt-all ..."
                 sudo pacman -S --noconfirm libsox-fmt-all -y > /dev/null 2>&1
-                    sleep 1
-                    COUNTER=$(($COUNTER+11.11))
+                    COUNTER=$(($COUNTER+9))
                     echo ${COUNTER}
         else              
                 echo "libsox-fmt-all is installed"
@@ -149,8 +148,7 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing zenity ..."
                 sudo pacman -S --noconfirm zenityl -y > /dev/null 2>&1
-                    sleep 1
-                    COUNTER=$(($COUNTER+11.11))
+                    COUNTER=$(($COUNTER+9))
                     echo ${COUNTER}
         else              
                 echo "zenity is installed"
@@ -159,8 +157,7 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing vorbis-tools ..."
                 sudo pacman -S --noconfirm vorbis-tools -y > /dev/null 2>&1
-                    sleep 1
-                    COUNTER=$(($COUNTER+11.11))
+                    COUNTER=$(($COUNTER+9))
                     echo ${COUNTER}
         else              
                 echo "vorbis-tools is installed"
@@ -169,23 +166,20 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing python3-pip ..."
                 sudo pacman -S --noconfirm python3-pip -y > /dev/null 2>&1
-                    sleep 1
-                    COUNTER=$(($COUNTER+11.11))
+                    COUNTER=$(($COUNTER+9))
                     echo ${COUNTER}
         else              
                 echo "python3-pip is installed"
         fi;
             echo "Installing youtube_dl ..."
             sudo pip install --upgrade youtube_dl > /dev/null 2>&1
-                    sleep 1
-                    COUNTER=$(($COUNTER+11.11))
+                    COUNTER=$(($COUNTER+9))
                     echo ${COUNTER}
         if [ ! -e /usr/share/doc/imagemagick ]
             then
                 echo "Installing imagemagick ..."
                 sudo pacman -S --noconfirm imagemagick -y > /dev/null 2>&1
-                    sleep 1
-                    COUNTER=$(($COUNTER+11.11))
+                    COUNTER=$(($COUNTER+9))
                     echo ${COUNTER}
         else              
                 echo "imagemagick is installed"
@@ -194,8 +188,7 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing ghostscript ..."
                 sudo pacman -S --noconfirm ghostscript -y > /dev/null 2>&1
-                    sleep 1
-                    COUNTER=$(($COUNTER+11.11))
+                    COUNTER=$(($COUNTER+9))
                     echo ${COUNTER}
         else              
                 echo "ghostscript is installed"
@@ -204,8 +197,7 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing libtiff-tools ..."
                 sudo pacman -S --noconfirm libtiff-tools -y > /dev/null 2>&1
-                    sleep 1
-                    COUNTER=$(($COUNTER+11.11))
+                    COUNTER=$(($COUNTER+9))
                     echo ${COUNTER}
         else              
                 echo "libtiff-tools is installed"
@@ -214,8 +206,7 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing librsvg2-bins ..."
                 sudo pacman -S --noconfirm librsvg2-bins -y > /dev/null 2>&1
-                    sleep 1
-                    COUNTER=$(($COUNTER+11.11))
+                    COUNTER=$(($COUNTER+9))
                     echo ${COUNTER}
         else              
                 echo "librsvg2-bins is installed"
@@ -224,16 +215,14 @@ elif [ -f "$Arch" ]; then
             then
                 echo "Installing libheif-examples ..."
                 sudo pacman -S --noconfirm libheif-examples -y > /dev/null 2>&1
-                    sleep 1
-                    COUNTER=$(($COUNTER+11.11))
+                    COUNTER=$(($COUNTER+9))
                     echo ${COUNTER}
         else              
                 echo "libheif-examples is installed"
         fi;
 sudo pacman -Syy
 sudo pacman -Syyuu
-                    sleep 1
-                    COUNTER=$(($COUNTER+11.11))
+                    COUNTER=$(($COUNTER+10))
                     echo ${COUNTER}
 done | whiptail --gauge "Installation necessary packets and system updates" 10 50 ${COUNTER}
     clear
@@ -295,7 +284,8 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
 "9" "ass to vtt" \
 "10" "lrc to srt" \
 "11" "lrc to ass" \
-"12" "lrc to vtt" 3>&1 1>&2 2>&3)
+"12" "lrc to vtt" \
+"13" "EXIT" 3>&1 1>&2 2>&3)
         if [ "$subtitle" = "1" ]
             then                                     #vtt en srt     
                 FILE=$(zenity --file-selection --directory --title="Select one directory")
@@ -523,7 +513,7 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
                     lrcc=$(find $FILE -name "*.lrc")
                             if [ -n "$lrcc" ]; then
                                 clear 
-                                for qq in $FILE *.lrc; do ffmpeg -i "$qq" "${qq%.lrc}.ass" > /dev/null 2>&1; done
+                                for qq in $lrcc; do ffmpeg -i "$qq" "${qq%.lrc}.ass" > /dev/null 2>&1; done
                                 encov=ass
                                 varorr=1
                             else
@@ -545,7 +535,7 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
                     lrcc=$(find $FILE -name "*.lrc")
                             if [ -n "$lrcc" ]; then
                                 clear
-                                for rr in $FILE *.lrc; do ffmpeg -i "$rr" "${rr%.lrc}.vtt" > /dev/null 2>&1; done
+                                for rr in $lrcc; do ffmpeg -i "$rr" "${rr%.lrc}.vtt" > /dev/null 2>&1; done
                                 encov=vtt
                                 varorr=1
                             else
@@ -560,6 +550,9 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
+        elif [ "$subtitle" = "13" ]                                     
+            then
+                varorr=1
         else
             zenity --error --text="Please enter a number between 1 and 12"
             varorr=0
@@ -568,72 +561,70 @@ done
 
 }
 function convertisso-download-video {
-        #clear
+        clear
         varor=0
     LINK=$(whiptail --title "Input" --inputbox "URL of your video" 10 60 3>&1 1>&2 2>&3)
     DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an option" 30 80 10 \
     "1" "video without subtitle" \
     "2" "video with subtitle" \
     "3" "only audio (mp3)" \
-    "4" "only the subtitle" 3>&1 1>&2 2>&3)
+    "4" "only the subtitle" \
+    "5" "EXIT" 3>&1 1>&2 2>&3)
     DESTINATION=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
 while [ "$varor" = 0 ];do
     if [ "$DOWNLOAD" = "1" ]                                     #video without subtitle
         then
-        echo "Downloading in progress (it may take several minutes) ..."
-        youtube-dl -f best --add-metadata "$LINK"
-        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
-        mv *.mp4 $DESTINATION
-        mv *.mkv $DESTINATION
-        mv *.webm $DESTINATION
-        mv *.flv $DESTINATION
+        youtube-dl -f best -q --add-metadata "$LINK"
+        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
+        mv *.mp4 $DESTINATION > /dev/null 2>&1
+        mv *.mkv $DESTINATION > /dev/null 2>&1
+        mv *.webm $DESTINATION > /dev/null 2>&1
+        mv *.flv $DESTINATION > /dev/null 2>&1
         varor=1
     elif [ "$DOWNLOAD" = "2" ]                                     #video with subtitle
         then
-        echo "Downloading in progress (it may take several minutes) ..."
-        youtube-dl --write-srt --all-subs --add-metadata "$LINK"
-        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
-        mv *.mp4 $DESTINATION
-        mv *.mkv $DESTINATION
-        mv *.webm $DESTINATION
-        mv *.flv $DESTINATION
-        mv *.srt $DESTINATION
-        mv *.ass $DESTINATION
-        mv *.vtt $DESTINATION
-        mv *.lrc $DESTINATION
+        youtube-dl --write-srt --all-subs -q --add-metadata "$LINK"
+        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
+        mv *.mp4 $DESTINATION > /dev/null 2>&1
+        mv *.mkv $DESTINATION > /dev/null 2>&1
+        mv *.webm $DESTINATION > /dev/null 2>&1
+        mv *.flv $DESTINATION > /dev/null 2>&1
+        mv *.srt $DESTINATION > /dev/null 2>&1
+        mv *.ass $DESTINATION > /dev/null 2>&1
+        mv *.vtt $DESTINATION > /dev/null 2>&1
+        mv *.lrc $DESTINATION > /dev/null 2>&1
         varor=1   
     elif [ "$DOWNLOAD" = "3" ]                                     #only audio (mp3)
         then
-        echo "Downloading in progress (it may take several minutes) ..."
-        youtube-dl -x --audio-format best --add-metadata "$LINK"
-        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
-        mv *.mp3 $DESTINATION
-        mv *.aac $DESTINATION
-        mv *.flac $DESTINATION
-        mv *.mp3 $DESTINATION
-        mv *.m4a $DESTINATION
-        mv *.ogg $DESTINATION
-        mv *.wav $DESTINATION
-        mv *.opus $DESTINATION
-        mv *.vorbis $DESTINATION
+        youtube-dl -x --audio-format best -q --add-metadata "$LINK"
+        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
+        mv *.mp3 $DESTINATION > /dev/null 2>&1
+        mv *.aac $DESTINATION > /dev/null 2>&1
+        mv *.flac $DESTINATION > /dev/null 2>&1
+        mv *.mp3 $DESTINATION > /dev/null 2>&1
+        mv *.m4a $DESTINATION > /dev/null 2>&1
+        mv *.ogg $DESTINATION > /dev/null 2>&1
+        mv *.wav $DESTINATION > /dev/null 2>&1
+        mv *.opus $DESTINATION > /dev/null 2>&1
+        mv *.vorbis $DESTINATION > /dev/null 2>&1
         varor=1
-        echo "Downloading in progress (it may take several minutes) ..."
     elif [ "$DOWNLOAD" = "4" ]                                     #only the subtitle 
         then
-        youtube-dl --all-subs -w --skip-download --add-metadata "$LINK"
-        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link"; done
+        youtube-dl --all-subs -w --skip-download -q --add-metadata "$LINK"
+        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
         varor=1
-        mv *.srt $DESTINATION
-        mv *.ass $DESTINATION
-        mv *.vtt $DESTINATION
-        mv *.lrc $DESTINATION
+        mv *.srt $DESTINATION > /dev/null 2>&1
+        mv *.ass $DESTINATION > /dev/null 2>&1
+        mv *.vtt $DESTINATION > /dev/null 2>&1
+        mv *.lrc $DESTINATION > /dev/null 2>&1
+    elif [ "$DOWNLOAD" = "5" ]                                     
+        then
+            varor=1
     else
         zenity --error --text="Please enter a number between 1 and 4"
         varor=0
     fi;
 done
-
-sleep 2000
 }
 
 function convertisso-video {
@@ -654,7 +645,8 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
 "11" "avi to mp4" \
 "12" "avi to mov" \
 "13" "webm to mp4" \
-"14" "hevc to mp4" 3>&1 1>&2 2>&3)
+"14" "hevc to mp4" \
+"15" "EXIT" 3>&1 1>&2 2>&3)
         if [ "$video" = "1" ]                                     #mkv en avi
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
@@ -963,6 +955,9 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
                 fi;
+        elif [ "$video" = "15" ]
+            then
+               varo=1
         else
             zenity --error --text="Please enter a number between 1 and 14"
             varo=0
@@ -1001,7 +996,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
 "22" "flac en wav" \
 "23" "flac en ogg" \
 "24" "flac en ac3" \
-"25" "exit" 3>&1 1>&2 2>&3)
+"25" "EXIT" 3>&1 1>&2 2>&3)
         if [ "$AUDIO" = "1" ]                             
             then
                 FILE=$(zenity --file-selection --directory --title="Select one or more files mp3 file")
@@ -1554,7 +1549,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "25" ]
             then
-                exit
+               var=1
         else
             zenity --error --text="Please enter a number between 1 and 24"
             var=0
@@ -1580,7 +1575,8 @@ image=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
 "11" "svg to tiff" \
 "12" "svg to png" \
 "13" "svg to pdf" \
-"14" "heic to jpg" 3>&1 1>&2 2>&3)
+"14" "heic to jpg" 
+"15" "EXIT" 3>&1 1>&2 2>&3)
 while [ $vor = 0 ]; do
         if [ "$image" = "1" ]                                      #png en jpg 
             then
@@ -1589,7 +1585,7 @@ while [ $vor = 0 ]; do
                 pngg=$(find $FILE -name "*.png")
                         if [ -n "$pngg" ]; then
                             clear
-                            for uu in '$pngg'; do  convert "$uu"  "${uu%.png}.jpg"; done
+                            for uu in $pngg; do  convert "$uu"  "${uu%.png}.jpg"; done
                             encov=jpg 
                             vor=1
                         else
@@ -1890,6 +1886,9 @@ while [ $vor = 0 ]; do
                     zenity --error --text="An unexpected error has occurred"
                     vor=0
             fi;
+        elif [ "$image" = "15" ]                               
+            then
+                vor=1
         else    
             zenity --error --text="Please enter a number between  1 and 14"
             vor=0
@@ -1900,18 +1899,10 @@ sleep 2
 }
 
 #ffmpeg -i infile.mp4 -i infile.srt -c copy -c:s mov_text outfile.mp4
-
-ver=0
 clear
 convertisso
-sleep 3
+sleep 2
 
-NEWT_COLORS='
-  window=,red
-  border=white,red
-  textbox=white,red
-  button=black,white
-' \
 MAIN=$(whiptail --title "Convertisso menu" --menu "Choose an option" 30 80 10 \
 "1" "Convert audio file" \
 "2" "Convert video file" \
@@ -1919,7 +1910,6 @@ MAIN=$(whiptail --title "Convertisso menu" --menu "Choose an option" 30 80 10 \
 "4" "Convert image (Beta)" \
 "5" "Download video" \
 "6" "EXIT" 3>&1 1>&2 2>&3)
-
 echo $MAIN
 
         if [ "$MAIN" = "1" ]                                     
@@ -1941,7 +1931,8 @@ echo $MAIN
             then 
                 exit
         else
-        zenity --error --text="Please enter a number between  1 and 6"
+        zenity --error --text="Please enter a number between 1 and 6"
                 varro=0
         fi;
+
 done
