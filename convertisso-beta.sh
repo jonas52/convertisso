@@ -1,6 +1,6 @@
 #!/bin/bash
 #---[Metadata]--------------------------------------------------------------#
-#  Filename ~ convertisso.sh               [Created: 2022-10-2 | 8:30 PM]   #
+#  Filename ~ convertisso-beta.sh          [Created: 2022-10-2 | 8:30 PM]   #
 #                                          [Update: 2022-10-29 | 9:30 AM]   #
 #---[Author of this file]---------------------------------------------------#
 #  Jonas Petitpierre ~  @jonas52 -> https://github.com/jonas52
@@ -18,13 +18,13 @@ echo -e "\e[33m                                                        +-+ +-+ +
 echo -e "\e[33m                                                        |b| |y| |J| |o| |n| |a| |s| |5| |2|\e[0m" 
 echo -e "\e[33m                                                        +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+\e[0m" 
 }
-
+convertisso
 clear
-varro=0
+
+function convertisso-dectection-os {
 Arch=/etc/pacman.conf
 Debian=/etc/apt/sources.list
-Fedora=/etc/dnf/dnf.conf
-function convertisso-dectection-os {  
+Fedora=/etc/dnf/dnf.conf  
 COUNTER=0
 convertisso
                                                                      #Installings depandance néssecaire pour executer le script 
@@ -263,7 +263,7 @@ else
 fi;
 }
 
-convertisso-dectection-os
+varro=0
 
 while [ $varro = 0 ];do
 
@@ -288,7 +288,7 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
 "13" "EXIT" 3>&1 1>&2 2>&3)
         if [ "$subtitle" = "1" ]
             then                                     #vtt en srt     
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                     if [ "$?" = "0" ]; then
                     vttt=$(find $FILE -name "*.vtt")
                             if [ -n "$vttt" ]; then
@@ -310,7 +310,7 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
                 fi;
         elif [ "$subtitle" = "2" ]                                    #vtt en ass
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                     if [ "$?" = "0" ]; then
                     vttt=$(find $FILE -name "*.vtt")
                             if [ -n "$vttt" ]; then
@@ -332,7 +332,7 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
                 fi;
         elif [ "$subtitle" = "3" ]                                     #vtt en lrc
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                     if [ "$?" = "0" ]; then
                     vttt=$(find $FILE -name "*.vtt")
                             if [ -n "$vttt" ]; then
@@ -354,7 +354,7 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
                 fi;
         elif [ "$subtitle" = "4" ]                                     #srt en vtt                        
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                     if [ "$?" = "0" ]; then
                     srtt=$(find $FILE -name "*.srt")
                             if [ -n "$srtt" ]; then
@@ -376,7 +376,7 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
                 fi;
         elif [ "$subtitle" = "5" ]                                     #srt en ass
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                     if [ "$?" = "0" ]; then
                     srtt=$(find $FILE -name "*.srt")
                             if [ -n "$srtt" ]; then
@@ -398,7 +398,7 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
                 fi;
         elif [ "$subtitle" = "6" ]                                     #srt en lrc
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                     if [ "$?" = "0" ]; then
                     srtt=$(find $FILE -name "*.srt")
                             if [ -n "$srtt" ]; then
@@ -486,7 +486,7 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
                 fi;
         elif [ "$subtitle" = "10" ]                                     #lrc en srt
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory (no recusvie)")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                     if [ "$?" = "0" ]; then
                     lrcc=$(find $FILE -name "*.lrc")
                             if [ -n "$lrcc" ]; then
@@ -530,7 +530,7 @@ subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 3
                 fi;
         elif [ "$subtitle" = "12" ]                                     #lrc en vtt
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory (no recusvie)")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                     if [ "$?" = "0" ]; then
                     lrcc=$(find $FILE -name "*.lrc")
                             if [ -n "$lrcc" ]; then
@@ -999,7 +999,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
 "25" "EXIT" 3>&1 1>&2 2>&3)
         if [ "$AUDIO" = "1" ]                             
             then
-                FILE=$(zenity --file-selection --directory --title="Select one or more files mp3 file")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                     if [ "$?" = "0" ]; then
                     mp33=$(find $FILE -name "*.mp3")
                             if [ -n "$mp33" ]; then
@@ -1021,7 +1021,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "2" ]                             
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                     if [ "$?" = "0" ]; then
                     mp33=$(find $FILE -name "*.mp3")
                             if [ -n "$mp33" ]; then
@@ -1044,7 +1044,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "3" ]                                   #mp3 en aac
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 mp33=$(find $FILE -name "*.mp3")
                     if [ -n "$mp33" ]; then
@@ -1066,7 +1066,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                 fi;
         elif [ "$AUDIO" = "4" ]                                   #mp3 en ac3
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 mp33=$(find $FILE -name "*.mp3")
                         if [ -n "$mp33" ]; then
@@ -1089,7 +1089,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "5" ]                                   #wav en mp3
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 wavv=$(find $FILE -name "*.wav")
                         if [ -n "$wavv" ]; then
@@ -1112,7 +1112,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "6" ]                                       #wav en ogg
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 wavv=$(find $FILE -name "*.wav")
                         if [ -n "$wavv" ]; then
@@ -1135,7 +1135,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "7" ]                                    #wav en aac
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 wavv=$(find $FILE -name "*.wav")
                         if [ -n "$wavv" ]; then
@@ -1158,7 +1158,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "8" ]                                   #wav en ac3
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 wavv=$(find $FILE -name "*.wav")
                         if [ -n "$wavv" ]; then
@@ -1181,10 +1181,10 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "9" ]                                   #ogg en mp3 
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
-                oggg=$(find $FILE -name "*.ogg")
-                        if [ -n "$oggg" ]; then
+                oggg=$(find $FILE -iname "*.ogg")
+                        if [ -f "$oggg" ]; then
                             clear
                             echo "conversion in progress ..."
                             for g in $oggg ; do ffmpeg -i "$g" -acodec libmp3lame "${g%.ogg}.mp3"> /dev/null 2>&1; done #convertis les fichiers OGG en MP3
@@ -1204,7 +1204,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "10" ]                                   #ogg en wav
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 oggg=$(find $FILE -name "*.ogg")
                         if [ -n "$oggg" ]; then
@@ -1227,7 +1227,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "11" ]                                   #ogg en aac
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 oggg=$(find $FILE -name "*.ogg")
                         if [ -n "$oggg" ]; then
@@ -1250,7 +1250,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "12" ]                                   #ogg en ac3
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 oggg=$(find $FILE -name "*.ogg")
                         if [ -n "$oggg" ]; then
@@ -1273,7 +1273,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "13" ]                                   #ac3 en wav
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 ac33=$(find $FILE -name "*.ac3")
                         if [ -n "$ac33" ]; then
@@ -1296,7 +1296,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "14" ]                                   #ac3 en aac
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 ac33=$(find $FILE -name "*.ac3")
                         if [ -n "$ac33" ]; then
@@ -1319,7 +1319,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "15" ]                                   #ac3 en ogg
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 ac33=$(find $FILE -name "*.ac3")
                         if [ -n "$ac33" ]; then
@@ -1342,7 +1342,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "16" ]                                   #ac3 en mp3
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 ac33=$(find $FILE -name "*.ac3")
                         if [ -n "$ac33" ]; then
@@ -1365,7 +1365,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "17" ]                                   #aac en wav
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 aacc=$(find $FILE -name "*.aac")
                         if [ -n "$aacc" ]; then
@@ -1388,7 +1388,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
            elif [ "$AUDIO" = "18" ]                                   #aac en ac3
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 aacc=$(find $FILE -name "*.aac")
                         if [ -n "$aacc" ]; then
@@ -1411,7 +1411,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "19" ]                                  #aac en ogg
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 aacc=$(find $FILE -name "*.aac")
                         if [ -n "$aacc" ]; then
@@ -1434,7 +1434,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "20" ]                                   #aac en mp3
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directory")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 aacc=$(find $FILE -name "*.aac")
                         if [ -n "$aacc" ]; then
@@ -1457,7 +1457,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "21" ]                                   #flac en mp3
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 flacc=$(find $FILE -name "*.flac")
                         if [ -n "$flacc" ]; then
@@ -1480,7 +1480,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "22" ]                                   #flac en wav
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 flacc=$(find $FILE -name "*.flac")
                         if [ -n "$flacc" ]; then
@@ -1503,7 +1503,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "23" ]                                   #flac en ogg
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
                 flacc=$(find $FILE -name "*.flac")
                         if [ -n "$flacc" ]; then
@@ -1526,7 +1526,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     fi;
         elif [ "$AUDIO" = "24" ]                                   #flac en ac3
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
              if [ "$?" = "0" ]; then
                 flacc=$(find $FILE -name "*.flac")
                         if [ -n "$flacc" ]; then
@@ -1580,7 +1580,7 @@ image=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
 while [ $vor = 0 ]; do
         if [ "$image" = "1" ]                                      #png en jpg 
             then
-            FILE=$(zenity --file-selection --directory --title="Select one directorye")
+            FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
                 pngg=$(find $FILE -name "*.png")
                         if [ -n "$pngg" ]; then
@@ -1602,7 +1602,7 @@ while [ $vor = 0 ]; do
             fi;
         elif [ "$image" = "2" ]                                    #jpg en png
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
                 jpgg=$(find $FILE -name "*.jpg")
                         if [ -n "$jpgg" ]; then
@@ -1624,7 +1624,7 @@ while [ $vor = 0 ]; do
             fi;
         elif [ "$image" = "3" ]                                    #tiff en png
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
                 tifff=$(find $FILE -name "*.tiff")
                         if [ -n "$tifff" ]; then
@@ -1646,7 +1646,7 @@ while [ $vor = 0 ]; do
             fi;
         elif [ "$image" = "4" ]                                    #tiff en jpg
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
                 tifff=$(find $FILE -name "*.tiff")
                         if [ -n "$tifff" ]; then
@@ -1668,7 +1668,7 @@ while [ $vor = 0 ]; do
             fi;
         elif [ "$image" = "5" ]                                #tiff en BMP
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
                 tifff=$(find $FILE -name "*.tiff")
                     if [ -n "$tifff" ]; then
@@ -1690,7 +1690,7 @@ while [ $vor = 0 ]; do
             fi;
         elif [ "$image" = "6" ]                                #tiff en pdf #
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
                 tifff=$(find $FILE -name "*.tiff")
                     if [ -n "$tifff" ]; then
@@ -1712,7 +1712,7 @@ while [ $vor = 0 ]; do
             fi;
         elif [ "$image" = "7" ]                                #tiff en gif
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
                 tifff=$(find $FILE -name "*.tiff")
                     if [ -n "$tifff" ]; then
@@ -1734,7 +1734,7 @@ while [ $vor = 0 ]; do
             fi;
         elif [ "$image" = "8" ]                                #pdf en tiff
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
                 pdff=$(find $FILE -name "*.pdf")
                     if [ -n "$pdff" ]; then
@@ -1756,7 +1756,7 @@ while [ $vor = 0 ]; do
             fi;
         elif [ "$image" = "9" ]                                #pdf en jpg
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
                 pdff=$(find $FILE -name "*.pdf")
                     if [ -n "$pdff" ]; then
@@ -1778,7 +1778,7 @@ while [ $vor = 0 ]; do
             fi;
         elif [ "$image" = "10" ]                                #pdf en png
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
                 pdff=$(find $FILE -name "*.pdf")
                     if [ -n "$pdff" ]; then
@@ -1800,7 +1800,7 @@ while [ $vor = 0 ]; do
             fi;
         elif [ "$image" = "11" ]                                #svg en tiff
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
                 svgg=$(find $FILE -name "*.svg")
                     if [ -n "$svgg" ]; then
@@ -1822,7 +1822,7 @@ while [ $vor = 0 ]; do
             fi;
         elif [ "$image" = "12" ]                                #svg en png
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
                 svgg=$(find $FILE -name "*.svg")
                     if [ -n "$svgg" ]; then
@@ -1844,7 +1844,7 @@ while [ $vor = 0 ]; do
             fi;
         elif [ "$image" = "13" ]                                #svg en pdf
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
                 svgg=$(find $FILE -name "*.svg")
                     if [ -n "$svgg" ]; then
@@ -1866,7 +1866,7 @@ while [ $vor = 0 ]; do
             fi;
         elif [ "$image" = "14" ]                               
             then
-                FILE=$(zenity --file-selection --directory --title="Select one directorye")
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
                 heicc=$(find $FILE -name "*.heic")
                     if [ -n "$heicc" ]; then
@@ -1901,7 +1901,7 @@ sleep 2
 #ffmpeg -i infile.mp4 -i infile.srt -c copy -c:s mov_text outfile.mp4
 clear
 convertisso
-sleep 2
+sleep 1
 
 MAIN=$(whiptail --title "Convertisso menu" --menu "Choose an option" 30 80 10 \
 "1" "Convert audio file" \
