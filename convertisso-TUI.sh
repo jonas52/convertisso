@@ -331,7 +331,8 @@ function convertisso-download-video {
 while [ "$varor" = 0 ];do
     if [ "$DOWNLOAD" = "1" ]                                     #video without subtitle
         then
-        youtube-dl -f best -q --add-metadata "$LINK"
+        clear
+        youtube-dl -f best --add-metadata "$LINK"
         while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
         mv *.mp4 $DESTINATION > /dev/null 2>&1
         mv *.mkv $DESTINATION > /dev/null 2>&1
@@ -340,7 +341,8 @@ while [ "$varor" = 0 ];do
         varor=1
     elif [ "$DOWNLOAD" = "2" ]                                     #video with subtitle
         then
-        youtube-dl --write-srt --all-subs -q --add-metadata "$LINK"
+        clear
+        youtube-dl --write-srt --all-subs --add-metadata "$LINK"
         while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
         mv *.mp4 $DESTINATION > /dev/null 2>&1
         mv *.mkv $DESTINATION > /dev/null 2>&1
@@ -353,7 +355,8 @@ while [ "$varor" = 0 ];do
         varor=1   
     elif [ "$DOWNLOAD" = "3" ]                                     #only audio (mp3)
         then
-        youtube-dl -x --audio-format best -q --add-metadata "$LINK"
+        clear
+        youtube-dl -x --audio-format best --add-metadata "$LINK"
         while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
         mv *.mp3 $DESTINATION > /dev/null 2>&1
         mv *.aac $DESTINATION > /dev/null 2>&1
@@ -367,6 +370,7 @@ while [ "$varor" = 0 ];do
         varor=1
     elif [ "$DOWNLOAD" = "4" ]                                     #only the subtitle 
         then
+        clear
         youtube-dl --all-subs -w --skip-download -q --add-metadata "$LINK"
         while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
         varor=1
@@ -1686,7 +1690,6 @@ echo $MAIN
                 convertisso-download-video
         elif [ "$MAIN" = "6" ]                                 
             then 
-                exit
                 exit
         else
         zenity --error --text="Please enter a number between 1 and 6"
