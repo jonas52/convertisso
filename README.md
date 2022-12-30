@@ -29,7 +29,16 @@
 - Convert your video files (mkv, mp4, mov, avi, webm, hevc). 
 - Convert your audio files (mp3, wav, ogg, ac3, aac, flac).
 - Convert your photo files (png, jpg, tiff, pdf, svg, pdf, gif, heic). ->BETA
-# To run my script
+# To run my script convertisso TUI (Text User Interface)
+## Main TUI of Convertisso
+![image](https://user-images.githubusercontent.com/83141023/210090457-e05c4d4e-fe8c-4568-81ce-99d605b44114.png)
+- Open terminal and type this :arrow_down:
+- Dowload and lauch whit : ```git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-installer.sh``` 
+- launch only the installer the first time (it allows to download the packages necessary to execute the script)then launch only the file ```convertisso-TUI.sh```
+- command if you have already launched the installer ```git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-TUI.sh```
+- And it's all good conversions and/or video downloads
+- To exit the program or return to main menu : select EXIT
+# To run my script convertisso
 - Dowload whit : ```git clone https://github.com/jonas52/convertisso.git```
 - Place the file ```cp convertisso.sh /new/location``` in the folder where you have the files to convert
 - Open the terminal and access the folder with the files to convert
