@@ -137,7 +137,7 @@ if [ -f "$Debian" ]; then
                     COUNTER=$(($COUNTER+10))
                     echo ${COUNTER} 
         clear
-sudo bash convertisso.sh
+sudo bash convertisso-TUI.sh
 done | whiptail --gauge "Installation necessary packets and system updates" 10 50 ${COUNTER}
 elif [ -f "$Arch" ]; then
     while [[ ${COUNTER} -le 100 ]]; do
@@ -234,7 +234,7 @@ elif [ -f "$Arch" ]; then
                     COUNTER=$(($COUNTER+5))
                     echo ${COUNTER}
     done | whiptail --title "Installation necessary packets and system updates" --gauge "$gg" 7 100 ${COUNTER}
-    sudo bash convertisso-beta.sh
+sudo bash convertisso-TUI.sh
 elif [ -f "$Fedora" ]; then
     echo "Installing libsox-fmt-all ..."
     sudo dnf -y install libsox-fmt-all > /dev/null 2>&1
@@ -266,7 +266,7 @@ elif [ -f "$Fedora" ]; then
     dnf -y check-update
     dnf -y upgrade
     clear
-    sudo bash convertisso.sh
+sudo bash convertisso-TUI.sh
 else 
     zenity --error --text="Your device is not compatible with this script"
     exit
