@@ -320,7 +320,7 @@ done
 function convertisso-download-video {
         clear
         varor=0
-ping -c 1 8.8.8.8
+ping -c 1 8.8.8.8 > /dev/null 2>&1
 if [ $? -eq 0 ]
 then
     while [ "$varor" = 0 ];do
