@@ -320,72 +320,79 @@ done
 function convertisso-download-video {
         clear
         varor=0
-    LINK=$(whiptail --title "Input" --inputbox "URL of your video" 10 60 3>&1 1>&2 2>&3)
-    DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an option" 30 80 10 \
-    "1" "video without subtitle" \
-    "2" "video with subtitle" \
-    "3" "only audio (mp3)" \
-    "4" "only the subtitle" \
-    "5" "EXIT" 3>&1 1>&2 2>&3)
-    DESTINATION=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
-while [ "$varor" = 0 ];do
-    if [ "$DOWNLOAD" = "1" ]                                     #video without subtitle
-        then
-        clear
-        youtube-dl -f best --add-metadata "$LINK"
-        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
-        mv *.mp4 $DESTINATION > /dev/null 2>&1
-        mv *.mkv $DESTINATION > /dev/null 2>&1
-        mv *.webm $DESTINATION > /dev/null 2>&1
-        mv *.flv $DESTINATION > /dev/null 2>&1
-        varor=1
-    elif [ "$DOWNLOAD" = "2" ]                                     #video with subtitle
-        then
-        clear
-        youtube-dl --write-srt --all-subs --add-metadata "$LINK"
-        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
-        mv *.mp4 $DESTINATION > /dev/null 2>&1
-        mv *.mkv $DESTINATION > /dev/null 2>&1
-        mv *.webm $DESTINATION > /dev/null 2>&1
-        mv *.flv $DESTINATION > /dev/null 2>&1
-        mv *.srt $DESTINATION > /dev/null 2>&1
-        mv *.ass $DESTINATION > /dev/null 2>&1
-        mv *.vtt $DESTINATION > /dev/null 2>&1
-        mv *.lrc $DESTINATION > /dev/null 2>&1
-        varor=1   
-    elif [ "$DOWNLOAD" = "3" ]                                     #only audio (mp3)
-        then
-        clear
-        youtube-dl -x --audio-format best --add-metadata "$LINK"
-        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
-        mv *.mp3 $DESTINATION > /dev/null 2>&1
-        mv *.aac $DESTINATION > /dev/null 2>&1
-        mv *.flac $DESTINATION > /dev/null 2>&1
-        mv *.mp3 $DESTINATION > /dev/null 2>&1
-        mv *.m4a $DESTINATION > /dev/null 2>&1
-        mv *.ogg $DESTINATION > /dev/null 2>&1
-        mv *.wav $DESTINATION > /dev/null 2>&1
-        mv *.opus $DESTINATION > /dev/null 2>&1
-        mv *.vorbis $DESTINATION > /dev/null 2>&1
-        varor=1
-    elif [ "$DOWNLOAD" = "4" ]                                     #only the subtitle 
-        then
-        clear
-        youtube-dl --all-subs -w --skip-download -q --add-metadata "$LINK"
-        while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
-        varor=1
-        mv *.srt $DESTINATION > /dev/null 2>&1
-        mv *.ass $DESTINATION > /dev/null 2>&1
-        mv *.vtt $DESTINATION > /dev/null 2>&1
-        mv *.lrc $DESTINATION > /dev/null 2>&1
-    elif [ "$DOWNLOAD" = "5" ]                                     
-        then
+ping -c 1 8.8.8.8
+if [ $? -eq 0 ]
+then
+    while [ "$varor" = 0 ];do
+        LINK=$(whiptail --title "Input" --inputbox "URL of your video" 10 60 3>&1 1>&2 2>&3)
+        DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an option" 30 80 10 \
+        "1" "video without subtitle" \
+        "2" "video with subtitle" \
+        "3" "only audio (mp3)" \
+        "4" "only the subtitle" \
+        "5" "EXIT" 3>&1 1>&2 2>&3)
+        DESTINATION=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+        if [ "$DOWNLOAD" = "1" ]                                     #video without subtitle
+            then
+            clear
+            youtube-dl -f best --add-metadata "$LINK"
+            while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
+            mv *.mp4 $DESTINATION > /dev/null 2>&1
+            mv *.mkv $DESTINATION > /dev/null 2>&1
+            mv *.webm $DESTINATION > /dev/null 2>&1
+            mv *.flv $DESTINATION > /dev/null 2>&1
             varor=1
-    else
-        zenity --error --text="Please enter a number between 1 and 4"
-        varor=0
-    fi;
-done
+        elif [ "$DOWNLOAD" = "2" ]                                     #video with subtitle
+            then
+            clear
+            youtube-dl --write-srt --all-subs --add-metadata "$LINK"
+            while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
+            mv *.mp4 $DESTINATION > /dev/null 2>&1
+            mv *.mkv $DESTINATION > /dev/null 2>&1
+            mv *.webm $DESTINATION > /dev/null 2>&1
+            mv *.flv $DESTINATION > /dev/null 2>&1
+            mv *.srt $DESTINATION > /dev/null 2>&1
+            mv *.ass $DESTINATION > /dev/null 2>&1
+            mv *.vtt $DESTINATION > /dev/null 2>&1
+            mv *.lrc $DESTINATION > /dev/null 2>&1
+            varor=1   
+        elif [ "$DOWNLOAD" = "3" ]                                     #only audio (mp3)
+            then
+            clear
+            youtube-dl -x --audio-format best --add-metadata "$LINK"
+            while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
+            mv *.mp3 $DESTINATION > /dev/null 2>&1
+            mv *.aac $DESTINATION > /dev/null 2>&1
+            mv *.flac $DESTINATION > /dev/null 2>&1
+            mv *.mp3 $DESTINATION > /dev/null 2>&1
+            mv *.m4a $DESTINATION > /dev/null 2>&1
+            mv *.ogg $DESTINATION > /dev/null 2>&1
+            mv *.wav $DESTINATION > /dev/null 2>&1
+            mv *.opus $DESTINATION > /dev/null 2>&1
+            mv *.vorbis $DESTINATION > /dev/null 2>&1
+            varor=1
+        elif [ "$DOWNLOAD" = "4" ]                                     #only the subtitle 
+            then
+            clear
+            youtube-dl --all-subs -w --skip-download -q --add-metadata "$LINK"
+            while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
+            varor=1
+            mv *.srt $DESTINATION > /dev/null 2>&1
+            mv *.ass $DESTINATION > /dev/null 2>&1
+            mv *.vtt $DESTINATION > /dev/null 2>&1
+            mv *.lrc $DESTINATION > /dev/null 2>&1
+        elif [ "$DOWNLOAD" = "5" ]                                     
+            then
+                varor=1
+        else
+            zenity --error --text="Please enter a number between 1 and 4"
+            varor=0
+        fi;
+    done
+else
+    zenity --error --text="Your device is not connected to internet"
+    varor=1
+fi;
 }
 
 function convertisso-video {
