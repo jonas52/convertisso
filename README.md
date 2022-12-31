@@ -33,9 +33,9 @@
 ## Main TUI of Convertisso
 ![image](https://user-images.githubusercontent.com/83141023/210090457-e05c4d4e-fe8c-4568-81ce-99d605b44114.png)
 - Open terminal and type this :arrow_down:
-- Dowload and lauch whit : ```git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-installer.sh``` 
-- launch only the installer the first time (it allows to download the packages necessary to execute the script)then launch only the file ```convertisso-TUI.sh```
-- command if you have already launched the installer ```git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-TUI.sh```
+- Dowload and lauch whit : ```sudo git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-installer.sh``` 
+- launch only the installer the first time (it allows to download the packages necessary to execute the script)then launch only the file ```sudo convertisso-TUI.sh```
+- command if you have already launched the installer ```sudo git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-TUI.sh```
 - And it's all good conversions and/or video downloads
 - To exit the program or return to main menu : select EXIT
 # To run my script convertisso
