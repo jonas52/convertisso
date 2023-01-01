@@ -31,7 +31,7 @@
 - Convert your photo files (png, jpg, tiff, pdf, svg, pdf, gif, heic). ->BETA
 # To run my script convertisso TUI (Text User Interface)
 ## Main TUI of Convertisso
-![image](https://user-images.githubusercontent.com/83141023/210186246-9d5d2038-6759-4611-9ce6-cc97d6807979.png)
+[![image](https://user-images.githubusercontent.com/83141023/210186246-9d5d2038-6759-4611-9ce6-cc97d6807979.png)](https://github.com/jonas52/convertisso/blob/main/convertisso-TUI.sh)
 - Open terminal and type this :arrow_down:
 - Dowload and lauch whit : ```sudo git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-installer.sh``` 
 - launch only the installer the first time (it allows to download the packages necessary to execute the script)then launch only the file ```sudo convertisso-TUI.sh```
