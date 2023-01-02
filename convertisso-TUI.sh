@@ -29,7 +29,7 @@ clear
 varorr=0
 while [ $varorr = 0 ];do
 
-subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 80 10 \
+subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 40 90 20 \
 "1" "vtt to srt" \
 "2" "vtt to ass" \
 "3" "vtt to lrc" \
@@ -325,7 +325,7 @@ if [ $? -eq 0 ]
 then
     while [ "$varor" = 0 ];do
         LINK=$(whiptail --title "Input" --inputbox "URL of your video" 10 60 3>&1 1>&2 2>&3)
-        DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an option" 30 80 10 \
+        DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an option" 40 90 20 \
         "1" "video without subtitle" \
         "2" "video with subtitle" \
         "3" "only audio (mp3)" \
@@ -399,29 +399,58 @@ function convertisso-video {
 clear
 varo=0
 while [ $varo = 0 ];do
-video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 80 10 \
+video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 40 90 20 \
 "1" "mkv to avi" \
 "2" "mkv to mov" \
 "3" "mkv to mp4" \
-"4" "mp4 to mkv" \
-"5" "mp4 to mov" \
-"6" "mp4 to avi" \
-"7" "mov to mkv" \
-"8" "mov to mp4" \
-"9" "mov to avi" \
-"10" "avi to mkv" \
-"11" "avi to mp4" \
-"12" "avi to mov" \
-"13" "webm to mp4" \
-"14" "hevc to mp4" \
-"15" "EXIT" 3>&1 1>&2 2>&3)
+"4" "mkv to webm" \
+"5" "mkv to flv" \
+"6" "mkv to hevc" \
+"7" "mp4 to mkv" \
+"8" "mp4 to mov" \
+"9" "mp4 to avi" \
+"10" "mp4 to webm" \
+"11" "mp4 to flv" \
+"12" "mp4 to hevc" \
+"13" "mov to mkv" \
+"14" "mov to mp4" \
+"15" "mov to avi" \
+"16" "mov to webm" \
+"17" "mov to flv" \
+"18" "mov to hevc" \
+"19" "avi to mkv" \
+"20" "avi to mp4" \
+"21" "avi to mov" \
+"22" "avi to webm" \
+"23" "avi to flv" \
+"24" "avi to hevc" \
+"25" "webm to avi" \
+"26" "webm to mkv" \
+"27" "webm to mov" \
+"28" "webm to mp4" \
+"29" "webm to flv" \
+"30" "webm to hevc" \
+"31" "hevc to avi" \
+"32" "hevc to mkv" \
+"33" "hevc to mov" \
+"34" "hevc to mp4" \
+"35" "hevc to flv" \
+"36" "hevc to webm" \
+"37" "flv to avi" \
+"38" "flv to mkv" \
+"39" "flv to mov" \
+"40" "flv to mp4" \
+"41" "flv to hevc" \
+"42" "flv to webm" \
+"43" "EXIT" 3>&1 1>&2 2>&3)
         if [ "$video" = "1" ]                                     #mkv en avi
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                     if [ "$?" = "0" ]; then
                     mkvv=$(find $FILE -name "*.mkv")
                             if [ -n "$mkvv" ]; then
-                                clear 
+                                clear
+                                echo "Conversion in progress ..."
                                 for t in $mkvv; do ffmpeg -i "$t" -codec copy "${t%.mkv}.avi"> /dev/null 2>&1; done
                                 encov=avi
                                 varo=1
@@ -443,7 +472,8 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                     if [ "$?" = "0" ]; then
                     mkvv=$(find $FILE -name "*.mkv")
                             if [ -n "$mkvv" ]; then
-                                  
+                                clear
+                                echo "Conversion in progress ..."
                                 for u in $mkvv; do ffmpeg -i "$u" -codec copy "${u%.mkv}.mov"> /dev/null 2>&1; done
                                 encov=mov
                                 varo=1
@@ -466,6 +496,7 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                     mkvv=$(find $FILE -name "*.mkv")
                             if [ -n "$mkvv" ]; then
                                 clear
+                                echo "Conversion in progress ..."
                                 for v in $FILE $mkvv; do ffmpeg -i "$v" -codec copy "${v%.mkv}.mp4"> /dev/null 2>&1; done
                                 encov=mp4
                                 varo=1
@@ -481,13 +512,83 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
                 fi;
-        elif [ "$video" = "4" ]                                     #mp4 en mkv                                     
+        elif [ "$video" = "4" ]                                     #mkv en webm
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    mkvv=$(find $FILE -name "*.mkv")
+                            if [ -n "$mkvv" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $mkvv; do ffmpeg -i "$v" -c:v libvpx -c:a libvorbis "${v%.mkv}.webm"> /dev/null 2>&1; done
+                                encov=webm
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "5" ]                                     #mkv en flv
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    mkvv=$(find $FILE -name "*.mkv")
+                            if [ -n "$mkvv" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $mkvv; do ffmpeg -i "$v" -c:v flv -c:a mp3 "${v%.mkv}.flv"> /dev/null 2>&1; done
+                                encov=flv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "6" ]                                     #mkv en hevc
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    mkvv=$(find $FILE -name "*.mkv")
+                            if [ -n "$mkvv" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $mkvv; do ffmpeg -i "$v" -c:v libx265 -c:a aac "${v%.mkv}.hevc"> /dev/null 2>&1; done
+                                encov=flv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "7" ]                                     #mp4 en mkv                                     
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                  if [ "$?" = "0" ]; then
                     mp44=$(find $FILE -name "*.mp4")
                             if [ -n "$mp44" ]; then
                                 clear
+                                echo "Conversion in progress ..."
                                 for w in $mp44; do ffmpeg -i "$w" -codec copy "${w%.mp4}.mkv"> /dev/null 2>&1; done
                                 encov=mkv
                                 varo=1
@@ -503,13 +604,14 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
                 fi;
-        elif [ "$video" = "5" ]                                     #mp4 en mov                                    
+        elif [ "$video" = "8" ]                                     #mp4 en mov                                    
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                  if [ "$?" = "0" ]; then
                     mp44=$(find $FILE -name "*.mp4")
                             if [ -n "$mp44" ]; then
                                 clear
+                                echo "Conversion in progress ..."
                                 for x in $mp44; do ffmpeg -i "$x" -codec copy "${x%.mp4}.mov"> /dev/null 2>&1; done
                                 encov=mov
                                 varo=1
@@ -525,13 +627,14 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
                 fi;
-        elif [ "$video" = "6" ]                                     #mp4 en avi
+        elif [ "$video" = "9" ]                                     #mp4 en avi
             then           
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                  if [ "$?" = "0" ]; then
                     mp44=$(find $FILE -name "*.mp4")
                             if [ -n "$mp44" ]; then
-                                clear                        
+                                clear
+                                echo "Conversion in progress ..."                      
                                 for y in $mp44; do ffmpeg -i "$y" -codec copy "${y%.mp4}.avi"> /dev/null 2>&1; done
                                 encov=avi
                                 varo=1
@@ -547,13 +650,83 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
                 fi;
-        elif [ "$video" = "7" ]                                     #mov en mkv
+        elif [ "$video" = "10" ]                                     #mp4 en webm
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    mp44=$(find $FILE -name "*.mp4")
+                            if [ -n "$mp44" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $mp44; do ffmpeg -i "$v" -c:v libvpx -c:a libvorbis "${v%.mp4}.webm"> /dev/null 2>&1; done
+                                encov=webm
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "11" ]                                     #mp4 en flv
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    mp44=$(find $FILE -name "*.mp4")
+                            if [ -n "$mp44" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $mp44; do ffmpeg -i "$v" -c:v flv -c:a mp3 "${v%.mp4}.flv"> /dev/null 2>&1; done
+                                encov=flv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "12" ]                                     #mp4 en hevc
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    mp44=$(find $FILE -name "*.mp4")
+                            if [ -n "$mp44" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $mp44; do ffmpeg -i "$v" -c:v libx265 -c:a aac "${v%.mp4}.hevc"> /dev/null 2>&1; done
+                                encov=flv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "13" ]                                     #mov en mkv
             then        
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                  if [ "$?" = "0" ]; then
                     movv=$(find $FILE -name "*.mov")
                             if [ -n "$movv" ]; then
-                                clear                             
+                                clear
+                                echo "Conversion in progress ..."                             
                                 for z in $movv; do ffmpeg -i "$z" -codec copy "${z%.mov}.mkv"> /dev/null 2>&1; done
                                 encov=mkv
                                 varo=1
@@ -569,13 +742,14 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
                 fi;
-        elif [ "$video" = "8" ]                                     #mov en mp4
+        elif [ "$video" = "14" ]                                     #mov en mp4
             then        
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                  if [ "$?" = "0" ]; then
                     movv=$(find $FILE -name "*.mov")
                             if [ -n "$movv" ]; then
-                                clear       
+                                clear
+                                echo "Conversion in progress ..."       
                                 for aa in $mp44; do  ffmpeg -i "$aa" -codec copy "${aa%.mov}.mp4"> /dev/null 2>&1; done
                                 encov=mp4
                                 varo=1
@@ -591,13 +765,14 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
                 fi;
-        elif [ "$video" = "9" ]                                     #mov en avi
+        elif [ "$video" = "15" ]                                     #mov en avi
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                  if [ "$?" = "0" ]; then
                     movv=$(find $FILE -name "*.mov")
                             if [ -n "$movv" ]; then
                                 clear
+                                echo "Conversion in progress ..."
                                 for bb in $movv; do ffmpeg -i "$bb" -codec copy "${bb%.mov}.avi"> /dev/null 2>&1; done
                                 encov=avi
                                 varo=1
@@ -613,13 +788,83 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
                 fi;
-        elif [ "$video" = "10" ]                                     #avi en mkv
+        elif [ "$video" = "16" ]                                     #mov en webm
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    movv=$(find $FILE -name "*.mov")
+                            if [ -n "$movv" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $movv; do ffmpeg -i "$v" -c:v libvpx -c:a libvorbis "${v%.mov}.webm"> /dev/null 2>&1; done
+                                encov=webm
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "17" ]                                     #mov en flv
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    movv=$(find $FILE -name "*.mov")
+                            if [ -n "$movv" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $movv; do ffmpeg -i "$v" -c:v flv -c:a mp3 "${v%.mov}.flv"> /dev/null 2>&1; done
+                                encov=flv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "18" ]                                     #mov en hevc
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    movv=$(find $FILE -name "*.mov")
+                            if [ -n "$movv" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $movv; do ffmpeg -i "$v" -c:v libx265 -c:a aac "${v%.mov}.hevc"> /dev/null 2>&1; done
+                                encov=flv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "19" ]                                     #avi en mkv
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                  if [ "$?" = "0" ]; then
                     avii=$(find $FILE -name "*.avi")
                             if [ -n "$avii" ]; then
-                                clear 
+                                clear
+                                echo "Conversion in progress ..."
                                 for cc in $avii; do ffmpeg -i "$cc" -codec copy "${cc%.avi}.mkv"> /dev/null 2>&1; done
                                 encov=mkv
                                 varo=1
@@ -635,13 +880,14 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
                 fi;
-        elif [ "$video" = "11" ]                                     #avi en mp4
+        elif [ "$video" = "20" ]                                     #avi en mp4
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                  if [ "$?" = "0" ]; then
                     avii=$(find $FILE -name "*.avi")
                             if [ -n "$avii" ]; then
-                                clear  
+                                clear
+                                echo "Conversion in progress ..."
                                 for dd in $avii; do ffmpeg -i "$dd" -codec copy "${dd%.avi}.mp4"> /dev/null 2>&1; done
                                 encov=mp4
                                 varo=1
@@ -657,13 +903,14 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
                 fi;
-        elif [ "$video" = "12" ]                                     #avi en mov
+        elif [ "$video" = "21" ]                                     #avi en mov
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                  if [ "$?" = "0" ]; then
                     avii=$(find $FILE -name "*.avi")
                             if [ -n "$avii" ]; then
-                                clear  
+                                clear
+                                echo "Conversion in progress ..." 
                                 for ee in $avii; do ffmpeg -i "$ee" -codec copy "${ee%.avi}.mov"> /dev/null 2>&1; done
                                 encov=mov
                                 varo=1
@@ -679,16 +926,17 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
                 fi;
-        elif [ "$video" = "13" ]                                     #webm en mp4
+        elif [ "$video" = "22" ]                                     #avi en webm
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                  if [ "$?" = "0" ]; then
-                    webmm=$(find $FILE -name "*.webm")
-                            if [ -n "$webmm" ]; then
+                    avii=$(find $FILE -name "*.avi")
+                            if [ -n "$avii" ]; then
                                 clear
-                                for ff in $webmm; do ffmpeg -i "$ff" -c copy "${ff%.webm}.mp4"> /dev/null 2>&1; done
-                                encov=mp4
-                                varo=1 
+                                echo "Conversion in progress ..."
+                                for v in $FILE $avii; do ffmpeg -i "$v" -c:v libvpx -c:a libvorbis "${v%.avi}.webm"> /dev/null 2>&1; done
+                                encov=webm
+                                varo=1
                             else
                                 zenity --error --text="No compatible files found in the selected directory"
                                 var=0
@@ -701,14 +949,130 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
                 fi;
-        elif [ "$video" = "14" ]                                     #HEVC to mp4
+        elif [ "$video" = "23" ]                                     #avi en flv
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                  if [ "$?" = "0" ]; then
-                    hevcc=$(find $FILE -name "*.hevc")
-                            if [ -n "$hevcc" ]; then
+                    avii=$(find $FILE -name "*.avi")
+                            if [ -n "$avii" ]; then
                                 clear
-                                for kkk in $hevcc; do ffmpeg -i "$kkk" -c copy "${kkk%.hevc}.mp4"> /dev/null 2>&1; done
+                                echo "Conversion in progress ..."
+                                for v in $FILE $avii; do ffmpeg -i "$v" -c:v flv -c:a mp3 "${v%.avi}.flv"> /dev/null 2>&1; done
+                                encov=flv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "24" ]                                     #avi en hevc
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    avii=$(find $FILE -name "*.avi")
+                            if [ -n "$avii" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $avii; do ffmpeg -i "$v" -c:v libx265 -c:a aac "${v%.avi}.hevc"> /dev/null 2>&1; done
+                                encov=flv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "25" ]                                     #webm en avi
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                    if [ "$?" = "0" ]; then
+                    webmm=$(find $FILE -name "*.webm")
+                            if [ -n "$webmm" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for t in $webmm; do ffmpeg -i "$t" -codec copy "${t%.webm}.avi"> /dev/null 2>&1; done
+                                encov=avi
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "26" ]                                     #webm en mkv
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    webmm=$(find $FILE -name "*.webm")
+                            if [ -n "$webmmm" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for cc in $webmmm; do ffmpeg -i "$cc" -codec copy "${cc%.webm}.mkv"> /dev/null 2>&1; done
+                                encov=mkv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "27" ]                                   #webm en mov
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                    if [ "$?" = "0" ]; then
+                    webmm=$(find $FILE -name "*.webm")
+                            if [ -n "$webmm" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for u in $webmm; do ffmpeg -i "$u" -codec copy "${u%.webm}.mov"> /dev/null 2>&1; done
+                                encov=mov
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "28" ]                                     #webm en mp4
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    webmm=$(find $FILE -name "*.webm")
+                            if [ -n "$webmm" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $webmm; do ffmpeg -i "$v" -codec copy "${v%.webm}.mp4"> /dev/null 2>&1; done
                                 encov=mp4
                                 varo=1
                             else
@@ -723,7 +1087,329 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         varo=0
                 fi;
-        elif [ "$video" = "15" ]
+        elif [ "$video" = "29" ]                                     #webm en flv
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    webmm=$(find $FILE -name "*.webm")
+                            if [ -n "$webmm" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $webmm; do ffmpeg -i "$v" -c:v flv -c:a mp3 "${v%.webm}.flv"> /dev/null 2>&1; done
+                                encov=flv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "30" ]                                     #webm en hevc
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    webmm=$(find $FILE -name "*.webm")
+                            if [ -n "$webmm" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $webmm; do ffmpeg -i "$v" -c:v libx265 -c:a aac "${v%.webm}.hevc"> /dev/null 2>&1; done
+                                encov=flv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "31" ]                                     #hevc en avi
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                    if [ "$?" = "0" ]; then
+                    hevcc=$(find $FILE -name "*.hevc")
+                            if [ -n "$hevcc" ]; then
+                                clear 
+                                echo "Conversion in progress ..."
+                                for t in $hevcc; do ffmpeg -i "$t" -codec copy "${t%.hevc}.avi"> /dev/null 2>&1; done
+                                encov=avi
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "32" ]                                     #hevc en mkv
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    hevcc=$(find $FILE -name "*.hevc")
+                            if [ -n "$hevccm" ]; then
+                                clear
+                                echo "Conversion in progress ..." 
+                                for cc in $hevccm; do ffmpeg -i "$cc" -codec copy "${cc%.hevc}.mkv"> /dev/null 2>&1; done
+                                encov=mkv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "33" ]                                   #hevc en mov
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                    if [ "$?" = "0" ]; then
+                    hevcc=$(find $FILE -name "*.hevc")
+                            if [ -n "$hevcc" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for u in $hevcc; do ffmpeg -i "$u" -codec copy "${u%.hevc}.mov"> /dev/null 2>&1; done
+                                encov=mov
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "34" ]                                     #hevc en mp4
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    hevcc=$(find $FILE -name "*.hevc")
+                            if [ -n "$hevcc" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $hevcc; do ffmpeg -i "$v" -codec copy "${v%.hevc}.mp4"> /dev/null 2>&1; done
+                                encov=mp4
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "35" ]                                     #hevc en flv
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    hevcc=$(find $FILE -name "*.hevc")
+                            if [ -n "$hevcc" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $hevcc; do ffmpeg -i "$v" -c:v flv -c:a mp3 "${v%.hevc}.flv"> /dev/null 2>&1; done
+                                encov=flv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "36" ]                                     #hevc en webm
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    hevcc=$(find $FILE -name "*.hevc")
+                            if [ -n "$hevcc" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $hevcc; do ffmpeg -i "$v" -c:v libvpx -c:a libvorbis "${v%.hevc}.webm"> /dev/null 2>&1; done
+                                encov=webm
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "37" ]                                     #flv en avi
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                    if [ "$?" = "0" ]; then
+                    flvv=$(find $FILE -name "*.flv")
+                            if [ -n "$flvv" ]; then
+                                clear
+                                echo "Conversion in progress ..." 
+                                for t in $flvv; do ffmpeg -i "$t" -codec copy "${t%.flv}.avi"> /dev/null 2>&1; done
+                                encov=avi
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "38" ]                                     #flv en mkv
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    flvv=$(find $FILE -name "*.flv")
+                            if [ -n "$flvvm" ]; then
+                                clear
+                                echo "Conversion in progress ..." 
+                                for cc in $flvvm; do ffmpeg -i "$cc" -codec copy "${cc%.flv}.mkv"> /dev/null 2>&1; done
+                                encov=mkv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "39" ]                                   #flv en mov
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                    if [ "$?" = "0" ]; then
+                    flvv=$(find $FILE -name "*.flv")
+                            if [ -n "$flvv" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for u in $flvv; do ffmpeg -i "$u" -codec copy "${u%.flv}.mov"> /dev/null 2>&1; done
+                                encov=mov
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "40" ]                                     #flv en mp4
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    flvv=$(find $FILE -name "*.flv")
+                            if [ -n "$flvv" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $flvv; do ffmpeg -i "$v" -codec copy "${v%.flv}.mp4"> /dev/null 2>&1; done
+                                encov=mp4
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "41" ]                                     #flv en hevc
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    flvv=$(find $FILE -name "*.flv")
+                            if [ -n "$flvv" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $flvv; do ffmpeg -i "$v" -c:v libx265 -c:a aac "${v%.webm}.flv"> /dev/null 2>&1; done
+                                encov=flv
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "42" ]                                     #flv en webm
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                 if [ "$?" = "0" ]; then
+                    flvv=$(find $FILE -name "*.flv")
+                            if [ -n "$flvv" ]; then
+                                clear
+                                echo "Conversion in progress ..."
+                                for v in $FILE $flvv; do ffmpeg -i "$v" -c:v libvpx -c:a libvorbis "${v%.flv}.webm"> /dev/null 2>&1; done
+                                encov=webm
+                                varo=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        varo=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        varo=0
+                fi;
+        elif [ "$video" = "43" ]
             then
                varo=1
         else
@@ -732,14 +1418,13 @@ video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 30 8
         fi;
 done
 whiptail --textbox --title "Process finished successfully" --msgbox "Your files have been re-encoded in $enco in your current foldert" 10 80
-    sleep 2
 }
 
 function convertisso-audio {
 clear
 var=0
 while [ $var = 0 ];do
-AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 80 10 \
+AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 40 90 20 \
 "1" "mp3 to ogg" \
 "2" "mp3 to aac" \
 "3" "mp3 to ac3" \
@@ -1953,7 +2638,7 @@ whiptail --textbox --title "Process finished successfully" --msgbox "Your files 
 function convertisso-image {
 clear
 vor=0
-image=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 80 10 \
+image=$(whiptail --title "Convertisso image menu" --menu "Choose an option" 40 90 20 \
 "1" "png to jpg" \
 "2" "jpg to png" \
 "3" "tiff to png" \
@@ -2287,12 +2972,11 @@ while [ $vor = 0 ]; do
     fi;
 done
 whiptail --textbox --title "Process finished successfully" --msgbox "Your files have been re-encoded in $encov in your current folder" 10 80
-sleep 2
 }
 clear
 convertisso
 sleep 1
-MAIN=$(whiptail --title "Convertisso menu" --menu "Choose an option" 30 80 10 \
+MAIN=$(whiptail --title "Convertisso menu" --menu "Choose an option" 40 90 20 \
 "1" "Convert audio file" \
 "2" "Convert video file" \
 "3" "Convert Video subtitle" \
