@@ -745,38 +745,51 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
 "3" "mp3 to ac3" \
 "4" "mp3 to wav" \
 "5" "mp3 to opus" \
-"6" "wav to mp3" \
-"7" "wav to ogg" \
-"8" "wav to aac" \
-"9" "wav to ac3" \
-"10" "wav to opus" \
-"11" "ogg to mp3" \
-"12" "ogg to wav" \
-"13" "ogg to aac" \
-"14" "ogg to ac3" \
-"15" "ogg to opus" \
-"16" "ac3 to mp3" \
-"17" "ac3 to wav" \
-"18" "ac3 to aac" \
-"19" "ac3 to ogg" \
-"20" "ac3 to opus" \
-"21" "aac to wav" \
-"22" "aac to ac3" \
-"23" "aac to ogg" \
-"24" "aac to mp3" \
-"25" "aac to opus" \
-"26" "flac to mp3" \
-"27" "flac to wav" \
-"28" "flac to ogg" \
-"29" "flac to ac3" \
-"30" "flac to opus" \
-"31" "opus to mp3" \
-"32" "opus to ogg" \
-"33" "opus to ac3" \
-"34" "opus to aac" \
-"35" "opus to flac" \
-"36" "opus to wav" \
-"37" "EXIT" 3>&1 1>&2 2>&3)
+"6" "mp3 to vorbis" \
+"7" "wav to mp3" \
+"8" "wav to ogg" \
+"9" "wav to aac" \
+"10" "wav to ac3" \
+"11" "wav to opus" \
+"12" "wav to vorbis" \
+"13" "ogg to mp3" \
+"14" "ogg to wav" \
+"15" "ogg to aac" \
+"16" "ogg to ac3" \
+"17" "ogg to opus" \
+"18" "ogg to vorbis" \
+"19" "ac3 to mp3" \
+"20" "ac3 to wav" \
+"21" "ac3 to aac" \
+"22" "ac3 to ogg" \
+"23" "ac3 to opus" \
+"24" "ac3 to vorbis" \
+"25" "aac to wav" \
+"26" "aac to ac3" \
+"27" "aac to ogg" \
+"28" "aac to mp3" \
+"29" "aac to opus" \
+"30" "aac to vorbis" \
+"31" "flac to mp3" \
+"32" "flac to wav" \
+"33" "flac to ogg" \
+"34" "flac to ac3" \
+"35" "flac to opus" \
+"36" "flac to vorbis" \
+"37" "opus to mp3" \
+"38" "opus to ogg" \
+"39" "opus to ac3" \
+"40" "opus to aac" \
+"41" "opus to flac" \
+"42" "opus to wav" \
+"43" "opus to vorbis" \
+"44" "vorbis to mp3" \
+"45" "vorbis to ogg" \
+"46" "vorbis to ac3" \
+"47" "vorbis to aac" \
+"48" "vorbis to flac" \
+"49" "vorbis to wav" \
+"50" "EXIT" 3>&1 1>&2 2>&3)
         if [ "$AUDIO" = "1" ]
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
@@ -785,7 +798,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             if [ -n "$mp33" ]; then
                                 clear
                                 echo "Conversion in progress ..."
-                                for b in $mp33; do ffmpeg -i "$b" -map_metadata 0 -acodec libvorbis "${b/%mp3}.ogg"> /dev/null 2>&1; done #convertis les fichiers MP3 en OGG
+                                for b in $mp33; do ffmpeg -i "$b" -map_metadata 0 -c:a libvorbis "${b/%mp3}.ogg"> /dev/null 2>&1; done #convertis les fichiers MP3 en OGG
                                 enco=ogg
                                 var=1
                             else
@@ -808,7 +821,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     if [ -n "$mp33" ]; then
                         clear
                         echo "Conversion in progress ..."
-                        for c in $mp33; do ffmpeg -i "$c" -map_metadata 0 -acodec aac "${c%.mp3}.aac"> /dev/null 2>&1; done
+                        for c in $mp33; do ffmpeg -i "$c" -map_metadata 0 -c:a aac "${c%.mp3}.aac"> /dev/null 2>&1; done
                         enco=aac
                         var=1
                     else
@@ -852,7 +865,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$mp33" ]; then
                             clear
                             echo "Conversion in progress ..."
-                            for m in $mp33; do ffmpeg -i "$m" -map_metadata 0 -acodec ac3 "${m%.mp3}.ac3"> /dev/null 2>&1; done 
+                            for m in $mp33; do ffmpeg -i "$m" -map_metadata 0 -c:a ac3 "${m%.mp3}.ac3"> /dev/null 2>&1; done 
                             enco=ac3
                             var=1
                         else
@@ -875,7 +888,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$mp33" ]; then
                             clear
                             echo "Conversion in progress ..."
-                            for m in $mp33; do ffmpeg -i "$m" -map_metadata 0 -acodec libopus "${m%.mp3}.opus"> /dev/null 2>&1; done 
+                            for m in $mp33; do ffmpeg -i "$m" -map_metadata 0 -c:a libopus "${m%.mp3}.opus"> /dev/null 2>&1; done 
                             enco=ac3
                             var=1
                         else
@@ -890,7 +903,30 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "6" ]                                   #wav en mp3
+        elif [ "$AUDIO" = "6" ]                                   #mp3 en vorbis
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]; then
+                mp33=$(find $FILE -name "*.mp3")
+                        if [ -n "$mp33" ]; then
+                            clear
+                            echo "Conversion in progress ..."
+                            for m in $mp33; do ffmpeg -i "$m" -map_metadata 0 -c:a libvorbis "${m%.mp3}.vorbis"> /dev/null 2>&1; done 
+                            enco=ac3
+                            var=1
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
+                            var=0
+                        fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$AUDIO" = "7" ]                                   #wav en mp3
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -913,7 +949,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "7" ]                                       #wav en ogg
+        elif [ "$AUDIO" = "8" ]                                       #wav en ogg
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -921,7 +957,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$wavv" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for h in $wavv; do ffmpeg -i "$h" -map_metadata 0 -acodec libvorbis "${h%.waw}.ogg"> /dev/null 2>&1; done 
+                            for h in $wavv; do ffmpeg -i "$h" -map_metadata 0 -c:a libvorbis "${h%.waw}.ogg"> /dev/null 2>&1; done 
                             enco=ogg
                             var=1
                         else
@@ -936,7 +972,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "8" ]                                    #wav en aac
+        elif [ "$AUDIO" = "9" ]                                    #wav en aac
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -944,7 +980,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$wavv" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for i in $wavv; do ffmpeg -i "$i" -map_metadata 0 -acodec libfaac "${i%.waw}.aac"> /dev/null 2>&1; done 
+                            for i in $wavv; do ffmpeg -i "$i" -map_metadata 0 -c:a libfaac "${i%.waw}.aac"> /dev/null 2>&1; done 
                             enco=aac
                             var=1
                         else
@@ -959,7 +995,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "9" ]                                   #wav en ac3
+        elif [ "$AUDIO" = "10" ]                                   #wav en ac3
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -967,7 +1003,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$wavv" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for j in $wavv; do ffmpeg -i "$j" -map_metadata 0 -acodec libmp3lame "${j%.waw}.ac3"> /dev/null 2>&1; done 
+                            for j in $wavv; do ffmpeg -i "$j" -map_metadata 0 -c:a libmp3lame "${j%.waw}.ac3"> /dev/null 2>&1; done 
                             enco=ac3
                             var=1
                         else
@@ -982,7 +1018,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "10" ]                                   #wav en opus
+        elif [ "$AUDIO" = "11" ]                                   #wav en opus
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -990,7 +1026,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$wavv" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for j in $wavv; do ffmpeg -i "$j" -map_metadata 0 -acodec libopus "${j%.waw}.opus"> /dev/null 2>&1; done 
+                            for j in $wavv; do ffmpeg -i "$j" -map_metadata 0 -c:a libopus "${j%.waw}.opus"> /dev/null 2>&1; done 
                             enco=ac3
                             var=1
                         else
@@ -1005,7 +1041,31 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "11" ]                                   #ogg en mp3 
+        elif [ "$AUDIO" = "12" ]                                   #wav en vorbis
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]; then
+                wavv=$(find $FILE -name "*.wav")
+                        if [ -n "$wavv" ]; then
+                            clear
+                            echo "conversion in progress ..."
+                            for j in $wavv; do ffmpeg -i "$j" -map_metadata 0 -c:a libvorbis "${j%.waw}.vorbis"> /dev/null 2>&1; done 
+                            enco=ac3
+                            var=1
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
+                            var=0
+                        fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+
+        elif [ "$AUDIO" = "13" ]                                   #ogg en mp3 
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1013,7 +1073,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$oggg" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for g in $oggg ; do ffmpeg -i "$g" -map_metadata 0 -acodec libmp3lame "${g%.ogg}.mp3"> /dev/null 2>&1; done #convertis les fichiers OGG en MP3
+                            for g in $oggg ; do ffmpeg -i "$g" -map_metadata 0 -c:a libmp3lame "${g%.ogg}.mp3"> /dev/null 2>&1; done #convertis les fichiers OGG en MP3
                             enco=mp3
                             var=1
                         else
@@ -1028,7 +1088,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "12" ]                                   #ogg en wav
+        elif [ "$AUDIO" = "14" ]                                   #ogg en wav
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1051,7 +1111,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "13" ]                                   #ogg en aac
+        elif [ "$AUDIO" = "15" ]                                   #ogg en aac
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1059,7 +1119,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$oggg" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for l in $oggg; do ffmpeg -i "$l" -map_metadata 0 -acodec libfaac "${l%.ogg}.aac"> /dev/null 2>&1; done 
+                            for l in $oggg; do ffmpeg -i "$l" -map_metadata 0 -c:a libfaac "${l%.ogg}.aac"> /dev/null 2>&1; done 
                             enco=aac
                             var=1
                         else
@@ -1074,7 +1134,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "14" ]                                   #ogg en ac3
+        elif [ "$AUDIO" = "16" ]                                   #ogg en ac3
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1082,7 +1142,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$oggg" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for m in $oggg; do ffmpeg -i "$m" -map_metadata 0 -acodec ac3 "${m%.ogg}.ac3"> /dev/null 2>&1; done 
+                            for m in $oggg; do ffmpeg -i "$m" -map_metadata 0 -c:a ac3 "${m%.ogg}.ac3"> /dev/null 2>&1; done 
                             enco=ac3
                             var=1
                         else
@@ -1097,7 +1157,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "15" ]                                   #ogg en opus
+        elif [ "$AUDIO" = "17" ]                                   #ogg en opus
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1105,7 +1165,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$oggg" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for m in $oggg; do ffmpeg -i "$m" -map_metadata 0 -acodec libopus "${m%.ogg}.opus"> /dev/null 2>&1; done 
+                            for m in $oggg; do ffmpeg -i "$m" -map_metadata 0 -c:a libopus "${m%.ogg}.opus"> /dev/null 2>&1; done 
                             enco=ac3
                             var=1
                         else
@@ -1120,7 +1180,30 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "16" ]                                   #ac3 en mp3
+        elif [ "$AUDIO" = "18" ]                                   #ogg en vorbis
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]; then
+                oggg=$(find $FILE -name "*.ogg")
+                        if [ -n "$oggg" ]; then
+                            clear
+                            echo "conversion in progress ..."
+                            for m in $oggg; do ffmpeg -i "$m" -map_metadata 0 -c:a libvorbis "${m%.ogg}.vorbis"> /dev/null 2>&1; done 
+                            enco=ac3
+                            var=1
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
+                            var=0
+                        fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$AUDIO" = "19" ]                                   #ac3 en mp3
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1128,7 +1211,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$ac33" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for f in $ac33; do ffmpeg -i "$f" -map_metadata 0 -acodec libmp3lame "${f%.ac3}.mp3"> /dev/null 2>&1; done
+                            for f in $ac33; do ffmpeg -i "$f" -map_metadata 0 -c:a libmp3lame "${f%.ac3}.mp3"> /dev/null 2>&1; done
                             enco=mp3
                             var=1
                         else
@@ -1143,7 +1226,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "17" ]                                   #ac3 en wav
+        elif [ "$AUDIO" = "20" ]                                   #ac3 en wav
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1166,7 +1249,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "18" ]                                   #ac3 en aac
+        elif [ "$AUDIO" = "21" ]                                   #ac3 en aac
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1174,7 +1257,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$ac33" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for o in $ac33; do ffmpeg -i "$o" -map_metadata 0 -acodec libfaac "${o%.ac3}.aac"> /dev/null 2>&1; done
+                            for o in $ac33; do ffmpeg -i "$o" -map_metadata 0 -c:a libfaac "${o%.ac3}.aac"> /dev/null 2>&1; done
                             enco=aac
                             var=1
                         else
@@ -1189,7 +1272,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "19" ]                                   #ac3 en ogg
+        elif [ "$AUDIO" = "22" ]                                   #ac3 en ogg
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1197,7 +1280,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$ac33" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for p in $ac33; do ffmpeg -i "$p" -map_metadata 0 -acodec libvorbis "${p%.ac3}.ogg"> /dev/null 2>&1; done
+                            for p in $ac33; do ffmpeg -i "$p" -map_metadata 0 -c:a libvorbis "${p%.ac3}.ogg"> /dev/null 2>&1; done
                             enco=ogg
                             var=1
                         else
@@ -1212,7 +1295,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "20" ]                                   #ac3 en opus
+        elif [ "$AUDIO" = "23" ]                                   #ac3 en opus
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1220,7 +1303,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$ac33" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for p in $ac33; do ffmpeg -i "$p" -map_metadata 0 -acodec libopus "${p%.ac3}.opus"> /dev/null 2>&1; done
+                            for p in $ac33; do ffmpeg -i "$p" -map_metadata 0 -c:a libopus "${p%.ac3}.opus"> /dev/null 2>&1; done
                             enco=ogg
                             var=1
                         else
@@ -1235,7 +1318,30 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "21" ]                                   #aac en wav
+        elif [ "$AUDIO" = "24" ]                                   #ac3 en vorbis
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]; then
+                ac33=$(find $FILE -name "*.ac3")
+                        if [ -n "$ac33" ]; then
+                            clear
+                            echo "conversion in progress ..."
+                            for p in $ac33; do ffmpeg -i "$p" -map_metadata 0 -c:a libvorbis "${p%.ac3}.vorbis"> /dev/null 2>&1; done
+                            enco=ogg
+                            var=1
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
+                            var=0
+                        fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$AUDIO" = "25" ]                                   #aac en wav
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1258,7 +1364,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-           elif [ "$AUDIO" = "22" ]                                   #aac en ac3
+           elif [ "$AUDIO" = "26" ]                                   #aac en ac3
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1266,7 +1372,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$aacc" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for r in $aacc; do ffmpeg -i "$r" -map_metadata 0 -acodec ac3 "${r%.aac}.ac3"> /dev/null 2>&1; done
+                            for r in $aacc; do ffmpeg -i "$r" -map_metadata 0 -c:a ac3 "${r%.aac}.ac3"> /dev/null 2>&1; done
                             enco=ac3
                             var=1
                         else
@@ -1281,7 +1387,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "23" ]                                  #aac en ogg
+        elif [ "$AUDIO" = "27" ]                                  #aac en ogg
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1289,7 +1395,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$aacc" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for s in $aacc; do ffmpeg -i "$s" -map_metadata 0 -acodec libvorbis "${s%.aac}.ogg"> /dev/null 2>&1; done
+                            for s in $aacc; do ffmpeg -i "$s" -map_metadata 0 -c:a libvorbis "${s%.aac}.ogg"> /dev/null 2>&1; done
                             enco=ogg
                             var=1
                         else
@@ -1304,7 +1410,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "24" ]                                   #aac en mp3
+        elif [ "$AUDIO" = "28" ]                                   #aac en mp3
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1312,7 +1418,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$aacc" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for e in $aacc; do ffmpeg -i "$e" -map_metadata 0 -acodec libmp3lame "${e%.aac}.mp3"> /dev/null 2>&1; done
+                            for e in $aacc; do ffmpeg -i "$e" -map_metadata 0 -c:a libmp3lame "${e%.aac}.mp3"> /dev/null 2>&1; done
                             enco=mp3
                             var=1
                         else
@@ -1327,7 +1433,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "25" ]                                   #aac en opus
+        elif [ "$AUDIO" = "29" ]                                   #aac en opus
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1335,7 +1441,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$aacc" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for e in $aacc; do ffmpeg -i "$e" -map_metadata 0 -acodec libopus "${e%.aac}.opus"> /dev/null 2>&1; done
+                            for e in $aacc; do ffmpeg -i "$e" -map_metadata 0 -c:a libopus "${e%.aac}.opus"> /dev/null 2>&1; done
                             enco=mp3
                             var=1
                         else
@@ -1350,7 +1456,30 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "26" ]                                   #flac en mp3
+       elif [ "$AUDIO" = "30" ]                                   #aac en vorbis
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]; then
+                aacc=$(find $FILE -name "*.aac")
+                        if [ -n "$aacc" ]; then
+                            clear
+                            echo "conversion in progress ..."
+                            for e in $aacc; do ffmpeg -i "$e" -map_metadata 0 -c:a libvorbis "${e%.aac}.vorbis"> /dev/null 2>&1; done
+                            enco=mp3
+                            var=1
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
+                            var=0
+                        fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$AUDIO" = "31" ]                                   #flac en mp3
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1358,7 +1487,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$flacc" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for rr in $flacc; do ffmpeg -i "$rr" -map_metadata 0 -acodec libmp3lame "${rr%.flac}.mp3"> /dev/null 2>&1; done
+                            for rr in $flacc; do ffmpeg -i "$rr" -map_metadata 0 -c:a libmp3lame "${rr%.flac}.mp3"> /dev/null 2>&1; done
                             enco=mp3
                             var=1
                         else
@@ -1373,7 +1502,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     zenity --error --text="An unexpected error has occurred"
                     var=0
                 fi;
-        elif [ "$AUDIO" = "27" ]                                   #flac en wav
+        elif [ "$AUDIO" = "32" ]                                   #flac en wav
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1396,7 +1525,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "28" ]                                   #flac en ogg
+        elif [ "$AUDIO" = "33" ]                                   #flac en ogg
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1404,7 +1533,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$flacc" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for tt in $flacc; do ffmpeg -i "$tt" -map_metadata 0 -acodec libvorbis "${tt%.flac}.ogg"> /dev/null 2>&1; done
+                            for tt in $flacc; do ffmpeg -i "$tt" -map_metadata 0 -c:a libvorbis "${tt%.flac}.ogg"> /dev/null 2>&1; done
                             enco=ogg 
                             var=1
                         else
@@ -1419,7 +1548,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "29" ]                                   #flac en ac3
+        elif [ "$AUDIO" = "34" ]                                   #flac en ac3
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then
@@ -1427,7 +1556,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$flacc" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for tt in $flacc; do ffmpeg -i "$tt" -map_metadata 0 -acodec ac3 "${tt%.flac}.ac3"> /dev/null 2>&1; done
+                            for tt in $flacc; do ffmpeg -i "$tt" -map_metadata 0 -c:a ac3 "${tt%.flac}.ac3"> /dev/null 2>&1; done
                             enco=ac3 
                             var=1
                         else
@@ -1442,7 +1571,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                     zenity --error --text="An unexpected error has occurred"
                     var=0
             fi;
-        elif [ "$AUDIO" = "30" ]                                   #flac en opus
+        elif [ "$AUDIO" = "35" ]                                   #flac en opus
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1450,7 +1579,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             if [ -n "$flacc" ]; then
                                 clear
                                 echo "conversion in progress ..."
-                                for tt in $flacc; do ffmpeg -i "$tt" -map_metadata 0 -acodec libopus "${tt%.flac}.opus"> /dev/null 2>&1; done
+                                for tt in $flacc; do ffmpeg -i "$tt" -map_metadata 0 -c:a libopus "${tt%.flac}.opus"> /dev/null 2>&1; done
                                 enco=ac3 
                                 var=1
                             else
@@ -1465,7 +1594,30 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "31" ]                                   #opus en mp3
+        elif [ "$AUDIO" = "36" ]                                   #flac en vorbis
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]; then
+                    flacc=$(find $FILE -name "*.flac")
+                            if [ -n "$flacc" ]; then
+                                clear
+                                echo "conversion in progress ..."
+                                for tt in $flacc; do ffmpeg -i "$tt" -map_metadata 0 -c:a libvorbis "${tt%.flac}.opvorbisus"> /dev/null 2>&1; done
+                                enco=ac3 
+                                var=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$AUDIO" = "37" ]                                   #opus en mp3
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1473,7 +1625,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                             if [ -n "$opuss" ]; then
                                 clear
                                 echo "conversion in progress ..."
-                                for tt in $opuss; do ffmpeg -i "$tt" -ab 320k -map_metadata 0 -acodec libmp3lame "${tt%.opus}.mp3"> /dev/null 2>&1; done
+                                for tt in $opuss; do ffmpeg -i "$tt" -ab 320k -map_metadata 0 -c:a libmp3lame "${tt%.opus}.mp3"> /dev/null 2>&1; done
                                 enco=ac3 
                                 var=1
                             else
@@ -1488,7 +1640,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "32" ]                                   #opus en ogg
+        elif [ "$AUDIO" = "38" ]                                   #opus en ogg
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1496,7 +1648,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$opuss" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for tt in $opuss; do ffmpeg -i "$tt" -ab 320k -map_metadata 0 -acodec libvorbis "${tt%.opus}.ogg"> /dev/null 2>&1; done
+                            for tt in $opuss; do ffmpeg -i "$tt" -ab 320k -map_metadata 0 -c:a libvorbis "${tt%.opus}.ogg"> /dev/null 2>&1; done
                             enco=ac3 
                             var=1
                         else
@@ -1511,7 +1663,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "33" ]                                   #opus en ac3
+        elif [ "$AUDIO" = "39" ]                                   #opus en ac3
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1519,7 +1671,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$opuss" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for tt in $opuss; do ffmpeg -i "$tt" -ab 320k -map_metadata 0 -acodec ac3 "${tt%.opus}.ac3"> /dev/null 2>&1; done
+                            for tt in $opuss; do ffmpeg -i "$tt" -ab 320k -map_metadata 0 -c:a ac3 "${tt%.opus}.ac3"> /dev/null 2>&1; done
                             enco=ac3 
                             var=1
                         else
@@ -1534,7 +1686,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "34" ]                                   #opus en aac
+        elif [ "$AUDIO" = "40" ]                                   #opus en aac
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1542,7 +1694,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$opuss" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for tt in $opuss; do ffmpeg -i "$tt" -ab 320k -map_metadata 0 -acodec libfaac "${tt%.opus}.aac"> /dev/null 2>&1; done
+                            for tt in $opuss; do ffmpeg -i "$tt" -ab 320k -map_metadata 0 -c:a libfaac "${tt%.opus}.aac"> /dev/null 2>&1; done
                             enco=ac3 
                             var=1
                         else
@@ -1557,7 +1709,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "35" ]                                   #opus en flac
+        elif [ "$AUDIO" = "41" ]                                   #opus en flac
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1565,7 +1717,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         if [ -n "$opuss" ]; then
                             clear
                             echo "conversion in progress ..."
-                            for tt in $opuss; do ffmpeg -i "$tt" -ab 320k -map_metadata 0 -acodec flac "${tt%.opus}.flac"> /dev/null 2>&1; done
+                            for tt in $opuss; do ffmpeg -i "$tt" -ab 320k -map_metadata 0 -c:a flac "${tt%.opus}.flac"> /dev/null 2>&1; done
                             enco=ac3 
                             var=1
                         else
@@ -1580,7 +1732,7 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "36" ]                                   #opus en wav
+        elif [ "$AUDIO" = "42" ]                                   #opus en wav
             then
                 FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                 if [ "$?" = "0" ]; then
@@ -1603,11 +1755,195 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 30 8
                         zenity --error --text="An unexpected error has occurred"
                         var=0
                 fi;
-        elif [ "$AUDIO" = "37" ]
+        elif [ "$AUDIO" = "43" ]                                   #opus en vorbis
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]; then
+                    opuss=$(find $FILE -name "*.opus")
+                            if [ -n "$opuss" ]; then
+                                clear
+                                echo "conversion in progress ..."
+                                for tt in $opuss; do ffmpeg -i "$tt" -ab 320k -map_metadata 0 -c:a libvorbis "${tt%.opus}.vorbis"> /dev/null 2>&1; done
+                                enco=ac3 
+                                var=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$AUDIO" = "44" ]                                   #vorbis en mp3
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]; then
+                    vorbiss=$(find $FILE -name "*.vorbis")
+                            if [ -n "$vorbiss" ]; then
+                                clear
+                                echo "conversion in progress ..."
+                                for tt in $vorbiss; do ffmpeg -i "$tt" -ab 192k -map_metadata 0 -c:a libmp3lame "${tt%.vorbis}.mp3"> /dev/null 2>&1; done
+                                enco=ac3 
+                                var=1
+                            else
+                                zenity --error --text="No compatible files found in the selected directory"
+                                var=0
+                            fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$AUDIO" = "45" ]                                   #vorbis en ogg
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]; then
+                    vorbiss=$(find $FILE -name "*.vorbis")
+                        if [ -n "$vorbiss" ]; then
+                            clear
+                            echo "conversion in progress ..."
+                            for tt in $vorbiss; do ffmpeg -i "$tt" -ab 192k -map_metadata 0 -c:a libvorbis "${tt%.vorbis}.ogg"> /dev/null 2>&1; done
+                            enco=ac3 
+                            var=1
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
+                            var=0
+                        fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$AUDIO" = "46" ]                                   #vorbis en ac3
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]; then
+                    vorbiss=$(find $FILE -name "*.vorbis")
+                        if [ -n "$vorbiss" ]; then
+                            clear
+                            echo "conversion in progress ..."
+                            for tt in $vorbiss; do ffmpeg -i "$tt" -ab 192k -map_metadata 0 -c:a ac3 "${tt%.vorbis}.ogg"> /dev/null 2>&1; done
+                            enco=ac3 
+                            var=1
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
+                            var=0
+                        fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$AUDIO" = "47" ]                                   #vorbis en aac
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]; then
+                    vorbiss=$(find $FILE -name "*.vorbis")
+                        if [ -n "$vorbiss" ]; then
+                            clear
+                            echo "conversion in progress ..."
+                            for tt in $vorbiss; do ffmpeg -i "$tt" -ab 192k -map_metadata 0 -c:a libfaac "${tt%.vorbis}.aac"> /dev/null 2>&1; done
+                            enco=ac3 
+                            var=1
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
+                            var=0
+                        fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$AUDIO" = "48" ]                                   #vorbis en flac
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]; then
+                    vorbiss=$(find $FILE -name "*.vorbis")
+                        if [ -n "$vorbiss" ]; then
+                            clear
+                            echo "conversion in progress ..."
+                            for tt in $vorbiss; do ffmpeg -i "$tt" -ab 192k -map_metadata 0 -c:a flac "${tt%.vorbis}.flac"> /dev/null 2>&1; done
+                            enco=ac3 
+                            var=1
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
+                            var=0
+                        fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$AUDIO" = "49" ]                                   #vorbis en wav
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]; then
+                    vorbiss=$(find $FILE -name "*.vorbis")
+                        if [ -n "$vorbiss" ]; then
+                            clear
+                            echo "conversion in progress ..."
+                            for tt in $vorbiss; do ffmpeg -i "$tt" -ab 192k -map_metadata 0 "${tt%.vorbis}.wav"> /dev/null 2>&1; done
+                            enco=ac3 
+                            var=1
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
+                            var=0
+                        fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$AUDIO" = "50" ]                                   #vorbis en opus
+            then
+                FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+                if [ "$?" = "0" ]; then
+                    vorbiss=$(find $FILE -name "*.vorbis")
+                        if [ -n "$vorbiss" ]; then
+                            clear
+                            echo "conversion in progress ..."
+                            for tt in $vorbiss; do ffmpeg -i "$tt" -ab 192k -map_metadata 0 -c:a libopus "${tt%.vorbis}.opus"> /dev/null 2>&1; done
+                            enco=ac3 
+                            var=1
+                        else
+                            zenity --error --text="No compatible files found in the selected directory"
+                            var=0
+                        fi;
+                elif [ "$?" = "1" ]                           
+                    then
+                        zenity --error --text="No files selected"
+                        var=0
+                else 
+                        zenity --error --text="An unexpected error has occurred"
+                        var=0
+                fi;
+        elif [ "$AUDIO" = "51" ]
             then
                var=1
         else
-            zenity --error --text="Please enter a number between 1 and 24"
+            zenity --error --text="Please enter a number between 1 and 51"
             var=0
         fi;
 done
@@ -1953,12 +2289,9 @@ done
 whiptail --textbox --title "Process finished successfully" --msgbox "Your files have been re-encoded in $encov in your current folder" 10 80
 sleep 2
 }
-
-#ffmpeg -i infile.mp4 -i infile.srt -c copy -c:s mov_text outfile.mp4
 clear
 convertisso
 sleep 1
-
 MAIN=$(whiptail --title "Convertisso menu" --menu "Choose an option" 30 80 10 \
 "1" "Convert audio file" \
 "2" "Convert video file" \
@@ -1967,27 +2300,13 @@ MAIN=$(whiptail --title "Convertisso menu" --menu "Choose an option" 30 80 10 \
 "5" "Download video" \
 "6" "EXIT" 3>&1 1>&2 2>&3)
 echo $MAIN
-
-        if [ "$MAIN" = "1" ]                                     
-            then
-                convertisso-audio
-        elif [ "$MAIN" = "2" ]                                 
-            then 
-                convertisso-video
-        elif [ "$MAIN" = "3" ]                                 
-            then 
-                convertisso-subtitle
-        elif [ "$MAIN" = "4" ]                                 
-            then 
-                convertisso-image
-        elif [ "$MAIN" = "5" ]                                 
-            then 
-                convertisso-download-video
-        elif [ "$MAIN" = "6" ]                                 
-            then 
-                exit
-        else
-        zenity --error --text="Please enter a number between 1 and 6"
-                varro=0
+        if [ "$MAIN" = "1" ];then convertisso-audio
+        elif [ "$MAIN" = "2" ];then convertisso-video
+        elif [ "$MAIN" = "3" ];then convertisso-subtitle
+        elif [ "$MAIN" = "4" ];then convertisso-image
+        elif [ "$MAIN" = "5" ];then convertisso-download-video
+        elif [ "$MAIN" = "6" ];then exit
+        else zenity --error --text="Please enter a number between 1 and 6" 
+            varro=0
         fi;
 done
