@@ -20,10 +20,8 @@
 [![repo-size](https://img.shields.io/github/repo-size/jonas52/convertisso)]()
 
 # About my project
-## The convertisso is a product of © PSociety by jonas52! Copyright (C) 2021-2022 © PSociety. All rights reserved.
 ### The script is currently in Bash and is therefore only available for Debian, Arch, Fedora. A Python version is under development.
-### For problems or ideas for additions related to my code do not hesitate to contact me: petitpierre@duck.com
-#### This script can:
+### This script can:
 - Convert your subtitle files (vtt, srt, ass, lrc). 
 - Download your favorite video from Youtoube & Dailymotion, with or without title, download only the audio or only the subtitles
 - Convert your video files (mkv, mp4, mov, avi, webm, hevc, flv). 
@@ -32,18 +30,28 @@
 # To run my script convertisso TUI (Text User Interface)
 ## Main TUI of Convertisso
 [![image](https://user-images.githubusercontent.com/83141023/210186246-9d5d2038-6759-4611-9ce6-cc97d6807979.png)](https://github.com/jonas52/convertisso/blob/main/convertisso-TUI.sh)
-- Open terminal and type this :arrow_down:
-- Dowload and lauch whit : ```sudo git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-installer.sh``` 
-- launch only the installer the first time (it allows to download the packages necessary to execute the script)then launch only the file ```sudo convertisso-TUI.sh```
-- command if you have already launched the installer ```sudo git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-TUI.sh```
+#### Open terminal and type this
+### Dowload and lauch whit : 
+>      sudo git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-installer.sh
+### Launch only the installer the first time (it allows to download the packages necessary to execute the script) then launch only the file 
+>     sudo bash convertisso-TUI.sh 
+### Command if you have already launched the installer 
+>     sudo git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-TUI.sh
+    
 - And it's all good conversions and/or video downloads
 - To exit the program or return to main menu : select EXIT
 # To run my script convertisso
-- Dowload whit : ```git clone https://github.com/jonas52/convertisso.git```
-- Place the file ```cp convertisso.sh /new/location``` in the folder where you have the files to convert
+- Dowload whit : 
+>        git clone https://github.com/jonas52/convertisso.git
+- Place the file in the folder where you have the files to convert
+>        cp convertisso.sh /new/location
 - Open the terminal and access the folder with the files to convert
-- Type bash then convertso.ch like this: ```sudo bash convertisso.sh```
+- Type bash then convertso.ch like this:
+>        sudo bash convertisso.sh
 - Convert your files or download video or subtitles or audio files
 - To exit the program type q or exit or EXIT
+# Other
+> ### For problems or ideas for additions related to my code do not hesitate to contact me: petitpierre@duck.com
+> ### The convertisso is a product of © PSociety by jonas52! Copyright (C) 2021-2022 © PSociety. All rights reserved.
 # Licence
 - This program uses the license _[General Public License v3.0](https://github.com/jonas52/convertisso/blob/main/LICENSE)_.
