@@ -51,7 +51,7 @@
 - Convert your files or download video or subtitles or audio files
 - To exit the program type q or exit or EXIT
 # Other
-> ### For problems or ideas for additions related to my code do not hesitate to contact me: petitpierre@duck.com
-> ### The convertisso is a product of © PSociety by jonas52! Copyright (C) 2021-2022 © PSociety. All rights reserved.
+> #### For problems or ideas for additions related to my code do not hesitate to contact me: petitpierre@duck.com
+> #### The convertisso is a product of © PSociety by jonas52! Copyright (C) 2021-2022 © PSociety. All rights reserved.
 # Licence
 - This program uses the license _[General Public License v3.0](https://github.com/jonas52/convertisso/blob/main/LICENSE)_.
