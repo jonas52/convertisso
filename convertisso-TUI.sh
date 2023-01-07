@@ -28,7 +28,7 @@ function convertisso-subtitle {
 clear
 varorr=0
 while [ $varorr = 0 ];do
-subtitle=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 40 90 20 \
+subtitle=$(whiptail --title "Convertisso audio menu" --ok-button "NOT-USE-PLEASE" --nocancel --menu "Choose an option" 30 90 20 \
 "1" "vtt to srt" \
 "2" "vtt to ass" \
 "3" "vtt to lrc" \
@@ -285,8 +285,8 @@ ping -c 1 8.8.8.8 > /dev/null 2>&1
 if [ $? -eq 0 ]
 then
     while [ "$varor" = 0 ];do
-        LINK=$(whiptail --title "Input" --inputbox "URL of your video" 10 60 3>&1 1>&2 2>&3)
-        DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an option" 40 90 20 \
+        LINK=$(whiptail --title "Input" --ok-button "NOT-USE-PLEASE" --nocancel --inputbox "URL of your video" 10 60 3>&1 1>&2 2>&3)
+        DOWNLOAD=$(whiptail --title "Convertisso download video menu" --menu "Choose an option" 30 90 20 \
         "1" "video without subtitle" \
         "2" "video with subtitle" \
         "3" "only audio (mp3)" \
@@ -354,7 +354,7 @@ function convertisso-video {
 clear
 varo=0
 while [ $varo = 0 ];do
-video=$(whiptail --title "Convertisso video menu" --menu "Choose an option" 40 90 20 \
+video=$(whiptail --title "Convertisso video menu" --ok-button "NOT-USE-PLEASE" --nocancel --menu "Choose an option" 30 90 20 \
 "1" "mkv to avi" \
 "2" "mkv to mov" \
 "3" "mkv to mp4" \
@@ -1254,7 +1254,7 @@ function convertisso-audio {
 clear
 var=0
 while [ $var = 0 ];do
-AUDIO=$(whiptail --title "Convertisso audio menu" --menu "Choose an option" 40 90 20 \
+AUDIO=$(whiptail --title "Convertisso audio menu" --ok-button "NOT-USE-PLEASE" --nocancel --menu "Choose an option" 30 90 20 \
 "1" "mp3 to ogg" \
 "2" "mp3 to aac" \
 "3" "mp3 to ac3" \
@@ -2318,7 +2318,8 @@ whiptail --textbox --title "Process finished successfully" --msgbox "Your files 
 function convertisso-image {
 clear
 vor=0
-image=$(whiptail --title "Convertisso image menu" --menu "Choose an option" 40 90 20 \
+while [ $vor = 0 ]; do
+image=$(whiptail --title "Convertisso image menu" --ok-button "NOT-USE-PLEASE" --nocancel --menu "Choose an option" 30 90 20 \
 "1" "png to jpg" \
 "2" "jpg to png" \
 "3" "tiff to png" \
@@ -2332,9 +2333,8 @@ image=$(whiptail --title "Convertisso image menu" --menu "Choose an option" 40 9
 "11" "svg to tiff" \
 "12" "svg to png" \
 "13" "svg to pdf" \
-"14" "heic to jpg" 
+"14" "heic to jpg" \
 "15" "EXIT" 3>&1 1>&2 2>&3)
-while [ $vor = 0 ]; do
         if [ "$image" = "1" ]                                      #png en jpg 
             then FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
             if [ "$?" = "0" ]; then pngg=$(find $FILE -name "*.png")
@@ -2605,6 +2605,9 @@ while [ $vor = 0 ]; do
         elif [ "$image" = "15" ]                               
             then
                 vor=1
+        elif [ "$image" = "0" ]                               
+            then
+                vor=1
         else    
             zenity --error --text="Please enter a number between  1 and 14"
             vor=0
@@ -2614,10 +2617,9 @@ whiptail --textbox --title "Process finished successfully" --msgbox "Your files 
 }
 clear
 
-
 convertisso
 sleep 1
-MAIN=$(whiptail --title "Convertisso menu" --menu "Choose an option" 40 90 20 \
+MAIN=$(whiptail --title "Convertisso menu" --ok-button "NOT-USE-PLEASE" --nocancel --menu "Choose an option" 30 90 20 \
 "1" "Convert audio file" \
 "2" "Convert video file" \
 "3" "Convert Video subtitle" \
