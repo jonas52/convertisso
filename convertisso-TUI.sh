@@ -292,7 +292,7 @@ then
         "3" "only audio (mp3)" \
         "4" "only the subtitle" \
         "5" "EXIT" 3>&1 1>&2 2>&3)
-        DESTINATION=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
+        DESTINATION=$(zenity --file-selection --directory --title="Select a directory where you want to store the downloaded file(s)")
         if [ "$DOWNLOAD" = "1" ]                                     #video without subtitle
             then clear
             youtube-dl -f best --add-metadata "$LINK"
@@ -346,7 +346,7 @@ then
         fi;
     done
 else
-    zenity --error --text="Your device is not connected to internet"
+    zenity --error --text="Your device is not connected to the Internet, connect your device to the Internet and try again."
     varor=1
 fi;
 }
