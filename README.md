@@ -40,8 +40,8 @@
     
 - And it's all good conversions and/or video downloads
 - To exit the program or return to main menu : select EXIT
-# To run my script convertisso
-- Dowload whit : 
+# To run my script convertisso (PLEASE USE CONVERTISSO-TUI)
+- (Dowload whit : 
 >        git clone https://github.com/jonas52/convertisso.git
 - Place the file in the folder where you have the files to convert
 >        cp convertisso.sh /new/location
@@ -49,7 +49,7 @@
 - Type bash then convertso.ch like this:
 >        sudo bash convertisso.sh
 - Convert your files or download video or subtitles or audio files
-- To exit the program type q or exit or EXIT
+- To exit the program type q or exit or EXIT)
 # Other
 > #### For problems or ideas for additions related to my code do not hesitate to contact me: petitpierre@duck.com
 > #### The convertisso is a product of © PSociety by jonas52! Copyright (C) 2021-2022 © PSociety. All rights reserved.
