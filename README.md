@@ -32,11 +32,11 @@
 [![image](https://user-images.githubusercontent.com/83141023/210186246-9d5d2038-6759-4611-9ce6-cc97d6807979.png)](https://github.com/jonas52/convertisso/blob/main/convertisso-TUI.sh)
 #### Open terminal and type this
 ### Dowload and lauch whit : 
->      sudo git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-installer.sh
+>     git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-installer.sh
 ### Launch only the installer the first time (it allows to download the packages necessary to execute the script) then launch only the file 
->     sudo bash convertisso-TUI.sh 
+>     bash convertisso-TUI.sh 
 ### Command if you have already launched the installer 
->     sudo git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-TUI.sh
+>     git clone https://github.com/jonas52/convertisso.git && cd convertisso && sudo bash convertisso-TUI.sh
     
 - And it's all good conversions and/or video downloads
 - To exit the program or return to main menu : select EXIT
