@@ -1304,7 +1304,8 @@ AUDIO=$(whiptail --title "Convertisso audio menu" --ok-button "NOT-USE-PLEASE" -
 "47" "vorbis to aac" \
 "48" "vorbis to flac" \
 "49" "vorbis to wav" \
-"50" "EXIT" 3>&1 1>&2 2>&3)
+"50" "vorbis en opus" \
+"51" "EXIT" 3>&1 1>&2 2>&3)
         if [ "$AUDIO" = "1" ]
             then FILE=$(zenity --file-selection --directory --title="Select one directory (not recusive)")
                     if [ "$?" = "0" ]; then mp33=$(find $FILE -name "*.mp3")
