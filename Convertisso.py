@@ -3,6 +3,7 @@ import os
 import subprocess
 import shutil
 import glob
+import ffmpeg
 #https://www.youtube.com/watch?v=Mx_OexsUI2M&ab_channel=RihannaVEVO
 #subprocess.run(["ping", "arg1", "arg2", ...], capture_output=True)
 subprocess.run(["echo", "-n", "-e", "\033]0;Convertisso\007"])
@@ -69,3 +70,49 @@ def convertisso_download_video():
         print("Your device is not connected to the Internet, connect your device to the Internet and try again.")
 
 convertisso_download_video()
+
+# def convertisso_subtitle():
+
+#     while True:
+#         if i==1:
+#             print("hello world")
+
+
+
+def convertisso_subtitle():
+     while True:
+        if video == "1":  # mkv en avi
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
+                if mkv_files:
+                    print("Conversion in progress ...")
+                    for t in mkv_files:
+                        subprocess.run(["ffmpeg", "-i", t, "-codec", "copy", f"{t[:-4]}.avi"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "avi"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif video == "2":  # mkv en avi
+            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                mkv_files = glob.glob(f"{filetoconvers}/**/*.mkv", recursive=True)
+                if mkv_files:
+                    print("Conversion in progress ...")
+                    for t in mkv_files:
+                        subprocess.run(["ffmpeg", "-i", t, "-codec", "copy", f"{t[:-4]}.avi"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "avi"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "An unexpected error has occurred")
+            continue
