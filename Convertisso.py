@@ -71,8 +71,6 @@ def convertisso_download_video():
     else:
         print("Your device is not connected to the Internet, connect your device to the Internet and try again.")
 
-convertisso_download_video()
-
 # def convertisso_subtitle():
 
 #     while True:
@@ -80,7 +78,7 @@ convertisso_download_video()
 #             print("hello world")
 
 
-def convertissso_subtitle():
+def convertissso_video():
     video=1
     while True:
         if video == 1:  # mkv en avi
@@ -90,7 +88,7 @@ def convertissso_subtitle():
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
                 else:
@@ -99,15 +97,15 @@ def convertissso_subtitle():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 2:  # mkv en avi
+        elif video == 2:  # mkv en mov
             filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mkv_files = glob.glob(f"{filetoconvers}/**/*.mkv", recursive=True)
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "avi"
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "mov"
                     break
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
@@ -122,7 +120,7 @@ def convertissso_subtitle():
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
                 else:
@@ -138,7 +136,7 @@ def convertissso_subtitle():
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
-                        subprocess.run(f"ffmpeg -i t -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
                 else:
@@ -154,7 +152,7 @@ def convertissso_subtitle():
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
-                        subprocess.run(f"ffmpeg -i t -c:v flv -c:a mp3 {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
                 else:
@@ -170,7 +168,7 @@ def convertissso_subtitle():
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
-                        subprocess.run(f"ffmpeg -i t -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
                 else:
@@ -186,7 +184,7 @@ def convertissso_subtitle():
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
                 else:
@@ -202,7 +200,7 @@ def convertissso_subtitle():
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
                 else:
@@ -218,7 +216,7 @@ def convertissso_subtitle():
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
                 else:
@@ -234,7 +232,7 @@ def convertissso_subtitle():
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
-                        subprocess.run(f"ffmpeg -i t -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} zz-c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
                 else:
@@ -250,7 +248,7 @@ def convertissso_subtitle():
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
-                        subprocess.run(f"ffmpeg -i t -c:v libvpx -c:a libvorbis {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
                 else:
@@ -266,7 +264,7 @@ def convertissso_subtitle():
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
-                        subprocess.run(f"ffmpeg -i t -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
                 else:
@@ -282,7 +280,7 @@ def convertissso_subtitle():
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
                 else:
@@ -298,7 +296,7 @@ def convertissso_subtitle():
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
                 else:
@@ -314,7 +312,7 @@ def convertissso_subtitle():
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
                 else:
@@ -330,7 +328,7 @@ def convertissso_subtitle():
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
-                        subprocess.run(f"ffmpeg -i t -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
                 else:
@@ -346,7 +344,7 @@ def convertissso_subtitle():
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
-                        subprocess.run(f"ffmpeg -i t -c:v flv -c:a mp3 {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
                 else:
@@ -362,7 +360,7 @@ def convertissso_subtitle():
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
-                        subprocess.run(f"ffmpeg -i t -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
                 else:
@@ -378,7 +376,7 @@ def convertissso_subtitle():
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
                 else:
@@ -394,7 +392,7 @@ def convertissso_subtitle():
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
                 else:
@@ -410,7 +408,7 @@ def convertissso_subtitle():
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
                 else:
@@ -426,7 +424,7 @@ def convertissso_subtitle():
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
-                        subprocess.run(f"ffmpeg -i t -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
                 else:
@@ -442,7 +440,7 @@ def convertissso_subtitle():
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
-                        subprocess.run(f"ffmpeg -i t -c:v flv -c:a mp3 {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
                 else:
@@ -458,7 +456,7 @@ def convertissso_subtitle():
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
-                        subprocess.run(f"ffmpeg -i t -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
                 else:
@@ -474,7 +472,7 @@ def convertissso_subtitle():
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-5]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
                 else:
@@ -490,7 +488,7 @@ def convertissso_subtitle():
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-5]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
                 else:
@@ -506,7 +504,7 @@ def convertissso_subtitle():
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-5]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
                 else:
@@ -522,7 +520,7 @@ def convertissso_subtitle():
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-5]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
                 else:
@@ -538,7 +536,7 @@ def convertissso_subtitle():
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
-                        subprocess.run(f"ffmpeg -i t -c:v flv -c:a mp3 {t[:-5]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-5]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
                 else:
@@ -554,7 +552,7 @@ def convertissso_subtitle():
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
-                        subprocess.run(f"ffmpeg -i t -c:v libx265 -c:a aac {t[:-5]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-5]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
                 else:
@@ -570,7 +568,7 @@ def convertissso_subtitle():
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-5]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
                 else:
@@ -586,7 +584,7 @@ def convertissso_subtitle():
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-5]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
                 else:
@@ -602,7 +600,7 @@ def convertissso_subtitle():
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-5]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
                 else:
@@ -618,7 +616,7 @@ def convertissso_subtitle():
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-5]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
                 else:
@@ -634,7 +632,7 @@ def convertissso_subtitle():
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
-                        subprocess.run(f"ffmpeg -i t -c:v flv -c:a mp3 {t[:-5]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-5]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
                 else:
@@ -650,7 +648,7 @@ def convertissso_subtitle():
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
-                        subprocess.run(f"ffmpeg -i t -c:v libvpx -c:a libvorbis {t[:-5]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-5]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
                 else:
@@ -666,7 +664,7 @@ def convertissso_subtitle():
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
                 else:
@@ -682,7 +680,7 @@ def convertissso_subtitle():
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
                 else:
@@ -698,7 +696,7 @@ def convertissso_subtitle():
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
                 else:
@@ -714,7 +712,7 @@ def convertissso_subtitle():
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
-                        subprocess.run(f"ffmpeg -i t -codec copy {t[:-4]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
                 else:
@@ -730,7 +728,7 @@ def convertissso_subtitle():
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
-                        subprocess.run(f"ffmpeg -i t -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
                 else:
@@ -746,7 +744,7 @@ def convertissso_subtitle():
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
-                        subprocess.run(f"ffmpeg -i t -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
                 else:
@@ -758,5 +756,213 @@ def convertissso_subtitle():
         else:
             QMessageBox.critical(None, "Error", "An unexpected error has occurred")
             continue
+        
+        
+def convertissso_subtitle():
+    video=1
+    while True:
+        if video == 1:  #vtt en srt 
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                vtt_files = glob.glob(f"{file}/**/*.vtt", recursive=True)
+                if vtt_files:
+                    print("Conversion in progress ...")
+                    for t in vtt_files:
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.srt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "srt"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif video == 2:  #vtt en ass
+            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                vtt_files = glob.glob(f"{filetoconvers}/**/*.vtt", recursive=True)
+                if vtt_files:
+                    print("Conversion in progress ...")
+                    for t in vtt_files:
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.ass", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "ass"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        if video == 3:  # vtt en lrc
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                vtt_files = glob.glob(f"{file}/**/*.vtt", recursive=True)
+                if vtt_files:
+                    print("Conversion in progress ...")
+                    for t in vtt_files:
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.lrc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "lrc"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif video == 4:  # srt en vtt
+            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                srt_files = glob.glob(f"{filetoconvers}/**/*.srt", recursive=True)
+                if srt_files:
+                    print("Conversion in progress ...")
+                    for t in mkv_files:
+                        subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.vtt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "vtt"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif video == 5:  # srt en ass
+            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                srt_files = glob.glob(f"{filetoconvers}/**/*.srt", recursive=True)
+                if srt_files:
+                    print("Conversion in progress ...")
+                    for t in srt_files:
+                        subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-4]}.ass", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "ass"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif video == 6:  # srt en lrc
+            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                srt_files = glob.glob(f"{filetoconvers}/**/*.srt", recursive=True)
+                if srt_files:
+                    print("Conversion in progress ...")
+                    for t in srt_files:
+                        subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.lrc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "lrc"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue        
+        elif video == 7:    #ass en srt 
+            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                ass_files = glob.glob(f"{filetoconvers}/**/*.ass", recursive=True)
+                if ass_files:
+                    print("Conversion in progress ...")
+                    for t in ass_files:
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.srt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "srt"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif video == 8:    #ass en lrc 
+            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                ass_files = glob.glob(f"{filetoconvers}/**/*.ass", recursive=True)
+                if ass_files:
+                    print("Conversion in progress ...")
+                    for t in ass_files:
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.lrc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "lrc"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif video == 9:    #ass en vtt 
+            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                ass_files = glob.glob(f"{filetoconvers}/**/*.ass", recursive=True)
+                if ass_files:
+                    print("Conversion in progress ...")
+                    for t in ass_files:
+                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.vtt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "vtt"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif video == 10:    #lrc en srt 
+            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                lrc_files = glob.glob(f"{filetoconvers}/**/*.lrc", recursive=True)
+                if lrc_files:
+                    print("Conversion in progress ...")
+                    for t in lrc_files:
+                        subprocess.run(f"ffmpeg -i {t} zz-c:v libvpx -c:a libvorbis {t[:-4]}.srt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "srt"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue        
+        elif video == 11:    #lrc en ass 
+            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                lrc_files = glob.glob(f"{filetoconvers}/**/*.lrc", recursive=True)
+                if lrc_files:
+                    print("Conversion in progress ...")
+                    for t in lrc_files:
+                        subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.ass", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "ass"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue         
+        elif video == 12:    #lrc en vtt 
+            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                lrc_files = glob.glob(f"{filetoconvers}/**/*.lrc", recursive=True)
+                if lrc_files:
+                    print("Conversion in progress ...")
+                    for t in lrc_files:
+                        subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.vtt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    encov = "vtt"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue         
+        else:
+            QMessageBox.critical(None, "Error", "An unexpected error has occurred")
+            continue
 app.exit()
-convertissso_subtitle()
+
+asd=int(input("Entrer le bon numero: 1=download, 2=video"))
+
+if asd == 1:
+    convertisso_download_video()
+elif asd == 2:
+    convertissso_video()
+else:
+    print("erreur")
