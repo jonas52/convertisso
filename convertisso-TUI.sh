@@ -5,6 +5,7 @@
 #---[Author of this file]---------------------------------------------------#
 #  Jonas Petitpierre ~  @jonas52 -> https://github.com/jonas52
                                                        #
+
 echo -n -e "\033]0;Convertisso\007"
 function convertisso {
 echo -e "\n"
@@ -293,9 +294,10 @@ then
         "4" "only the subtitle" \
         "5" "EXIT" 3>&1 1>&2 2>&3)
         DESTINATION=$(zenity --file-selection --directory --title="Select a directory where you want to store the downloaded file(s)")
+        NAME=$(whiptail --title "Input" --ok-button "NOT-USE-PLEASE" --nocancel --inputbox "Enter the name that the file will have once uploaded" 10 60 3>&1 1>&2 2>&3)
         if [ "$DOWNLOAD" = "1" ]                                     #video without subtitle
             then clear
-            youtube-dl -f best --add-metadata "$LINK"
+            yt-dlp -f best --add-metadata -o "$NAME" "$LINK"
             while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
             mv *.mp4 $DESTINATION > /dev/null 2>&1
             mv *.mkv $DESTINATION > /dev/null 2>&1
@@ -304,7 +306,7 @@ then
             varor=1
         elif [ "$DOWNLOAD" = "2" ]                                     #video with subtitle
             then clear
-            youtube-dl --write-srt --all-subs --add-metadata "$LINK"
+            yt-dlp --write-srt --all-subs --add-metadata -o "$NAME" "$LINK"
             while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
             mv *.mp4 $DESTINATION > /dev/null 2>&1
             mv *.mkv $DESTINATION > /dev/null 2>&1
@@ -317,7 +319,7 @@ then
             varor=1   
         elif [ "$DOWNLOAD" = "3" ]                                     #only audio (mp3)
             then clear
-            youtube-dl -x --audio-format best --add-metadata "$LINK"
+            yt-dlp -x --audio-format best --add-metadata -o "$NAME" "$LINK"
             while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
             mv *.mp3 $DESTINATION > /dev/null 2>&1
             mv *.aac $DESTINATION > /dev/null 2>&1
@@ -331,7 +333,7 @@ then
             varor=1
         elif [ "$DOWNLOAD" = "4" ]                                     #only the subtitle 
             then clear
-            youtube-dl --all-subs -w --skip-download -q --add-metadata "$LINK"
+            yt-dlp --all-subs -w --skip-download -q --add-metadata -o "$NAME" "$LINK"
             while [ $? = "1" ] ;do zenity --error --text="Please retry INVALIDE link" varor=0; done
             varor=1
             mv *.srt $DESTINATION > /dev/null 2>&1
