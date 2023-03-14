@@ -13,11 +13,11 @@
 [![Supported OS](https://img.shields.io/badge/Supported%20OS-Linux-brightgreen)]()
 [![distribution support](https://img.shields.io/badge/Supported%20Distribution-Debian,%20Arch,%20Fedora-brightgreen)]()
 [![Licence](https://img.shields.io/badge/License-GNU%20GPL--3.0-important)](https://github.com/jonas52/convertisso/blob/BETA/LICENSE)
-[![last-commit](https://img.shields.io/github/last-commit/jonas52/convertisso/BETA)]
+[![last-commit](https://img.shields.io/github/last-commit/jonas52/convertisso/BETA)]()
 [![total](https://img.shields.io/github/downloads/jonas52/convertisso/total)]()
-[![watchers](https://img.shields.io/github/watchers/jonas52/convertisso/BETA)]()
-[![languages](https://img.shields.io/github/languages/count/jonas52/convertisso/BETA)]()
-[![repo-size](https://img.shields.io/github/repo-size/jonas52/convertisso/BETA)]()
+[![watchers](https://img.shields.io/github/watchers/jonas52/convertisso)]()
+[![languages](https://img.shields.io/github/languages/count/jonas52/convertisso)]()
+[![repo-size](https://img.shields.io/github/repo-size/jonas52/convertisso)]()
 
 # About my project (be careful this part is not finished)
 ### The script is currently in Python and is therefore only available for Debian, Arch, Fedora.
