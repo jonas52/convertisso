@@ -1,9 +1,10 @@
-#pip install youtube-dl
+#pip install yt-dlp
 import os
 import subprocess
 import shutil
 import glob
 import ffmpeg
+import yt_dlp
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox
 import sys
 #https://www.youtube.com/watch?v=Mx_OexsUI2M&ab_channel=RihannaVEVO
@@ -40,27 +41,28 @@ def convertisso_download_video():
             while True:
                     userchoice = int(input("Choose how your video will be downloaded.   : "))
                     userchoicelink = input("Copy the link(URL) of the video and paste it here.  ->  ")
+                    name=input("enter the name that the file will have once uploaded. ->  ")
                     destination = input("Enter the destination folder where you want to download the video. ->  ")
                     if userchoice == 1:
-                        subprocess.run(['youtube-dl', '-f', 'best', '--add-metadata', userchoicelink])
+                        subprocess.run('yt-dlp -f bv*+ba --add-metadata -o "%s" "%s"' % (name,userchoicelink), shell=True)
                         for extension in ["*.mp4", "*.mkv", "*.webm", "*.flv"]:
                             for filename in glob.glob(extension):
                                 shutil.move(filename, destination)
                         break
                     elif userchoice == 2:
-                        subprocess.run(['youtube-dl', '--write-srt', '--all-subs', '--add-metadata', userchoicelink])
+                        subprocess.run('yt-dlp --write-srt --all-subs --add-metadata -o "%s" "%s"' % (name,userchoicelink), shell=True)
                         for extension in ["*.mp4", "*.mkv", "*.webm", "*.flv", "*.srt", "*.ass", "*.vtt", "*.lrc"]:
                             for filename in glob.glob(extension):
                                 shutil.move(filename, destination)
                         break
                     elif userchoice == 3:
-                        subprocess.run(['youtube-dl', '-x', '--audio-format', 'best','--add-metadata', userchoicelink])
+                        subprocess.run('yt-dlp -x --audio-format best --add-metadata -o "%s" "%s"' % (name,userchoicelink), shell=True)
                         for extension in ["*.mp3", "*.aac", "*.flac", "*.m4a", "*.ogg", "*.wav", "*.opus", "*.vorbis"]:
                             for filename in glob.glob(extension):
                                 shutil.move(filename, destination)
                         break
                     elif userchoice == 4:
-                        subprocess.run(['youtube-dl', '--all-subs', '--skip-download','--add-metadata', userchoicelink])
+                        subprocess.run('yt-dlp --all-subs --skip-download --add-metadata -o "%s" "%s"' % (name,userchoicelink), shell=True)
                         for extension in ["*.srt", "*.ass", "*.vtt", "*.lrc"]:
                             for filename in glob.glob(extension):
                                 shutil.move(filename, destination)
@@ -1764,13 +1766,13 @@ def convertissso_audio():
             continue    
 app.exit()
 
-asd=int(input("Entrer le bon numero: 1=download, 2=video"))
+asd=int(input("Entrer le bon numero: 1=download, 2=video, 2=audio. ->  "))
 
 if asd == 1:
     convertisso_download_video()
 elif asd == 2:
     convertissso_video()
-elif asd == 2:
+elif asd == 3:
     convertissso_audio()
 else:
     print("erreur")
