@@ -1,4 +1,6 @@
 #pip install yt-dlp
+#pip install AudioSegment    
+#pip install pydub 
 import os
 import subprocess
 import shutil
@@ -7,6 +9,7 @@ import ffmpeg
 import yt_dlp
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox
 import sys
+from pydub import AudioSegment
 #https://www.youtube.com/watch?v=Mx_OexsUI2M&ab_channel=RihannaVEVO
 #subprocess.run(["ping", "arg1", "arg2", ...], capture_output=True)
 subprocess.run(["echo", "-n", "-e", "\033]0;Convertisso\007"])
@@ -44,25 +47,57 @@ def convertisso_download_video():
                     name=input("enter the name that the file will have once uploaded. ->  ")
                     destination = input("Enter the destination folder where you want to download the video. ->  ")
                     if userchoice == 1:
-                        subprocess.run('yt-dlp -f bv*+ba --add-metadata -o "%s" "%s"' % (name,userchoicelink), shell=True)
+                        ydl_opts = {
+                            'format': 'bv*+ba',
+                            'addmetadata': True,
+                            'outtmpl': "name"
+                        }
+                        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                            ydl.download([userchoicelink])
                         for extension in ["*.mp4", "*.mkv", "*.webm", "*.flv"]:
                             for filename in glob.glob(extension):
                                 shutil.move(filename, destination)
                         break
                     elif userchoice == 2:
-                        subprocess.run('yt-dlp --write-srt --all-subs --add-metadata -o "%s" "%s"' % (name,userchoicelink), shell=True)
+                        ydl_opts = {
+                            'format': 'bv*+ba',
+                            'addmetadata': True,
+                            'outtmpl': destination + '/%(title)s.%(ext)s',
+                            'allsubtitles': True,
+                            'writeautomaticsub': True
+                        }
+                        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                            ydl.download([userchoicelink])                        
                         for extension in ["*.mp4", "*.mkv", "*.webm", "*.flv", "*.srt", "*.ass", "*.vtt", "*.lrc"]:
                             for filename in glob.glob(extension):
                                 shutil.move(filename, destination)
                         break
                     elif userchoice == 3:
-                        subprocess.run('yt-dlp -x --audio-format best --add-metadata -o "%s" "%s"' % (name,userchoicelink), shell=True)
+                        ydl_opts = {
+                            'x': True,
+                            'audio-format': 'best',
+                            'audio-quality': 'best',
+                            'addmetadata': True,
+                            'outtmpl': name
+                        }                       
+                        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                            ydl.download([userchoicelink])
                         for extension in ["*.mp3", "*.aac", "*.flac", "*.m4a", "*.ogg", "*.wav", "*.opus", "*.vorbis"]:
                             for filename in glob.glob(extension):
                                 shutil.move(filename, destination)
                         break
                     elif userchoice == 4:
-                        subprocess.run('yt-dlp --all-subs --skip-download --add-metadata -o "%s" "%s"' % (name,userchoicelink), shell=True)
+                        ydl_opts = {
+                            'skip_download': True,
+                            'addmetadata': True,
+                            'outtmpl': destination + '/%(title)s.%(ext)s',
+                            'allsubtitles': True,
+                            'writeautomaticsub': True
+                        }          
+                        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                            info_dict = ydl.extract_info(userchoicelink, download=False)
+                            filename = ydl.prepare_filename(info_dict)
+                            ydl.process_info(info_dict)
                         for extension in ["*.srt", "*.ass", "*.vtt", "*.lrc"]:
                             for filename in glob.glob(extension):
                                 shutil.move(filename, destination)
@@ -959,7 +994,7 @@ def convertissso_subtitle():
             continue
         
 def convertissso_audio():
-    audio=1
+    audio=43
     while True:
         if audio == 1:  # mp3 en ogg
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
@@ -1602,46 +1637,55 @@ def convertissso_audio():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif audio == 41:  # opus en flac
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                opus_files = glob.glob(f"{filetoconvers}/**/*.opus", recursive=True)
-                if opus_files:
-                    print("Conversion in progress ...")
-                    for t in opus_files:
-                        subprocess.run(f"ffmpeg -i {t} -ab 320k -map_metadata 0 -c:a flac {t[:-5]}.flac", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "flac"
-                    break
+                file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                if file:
+                    opus_files = glob.glob(f"{file}/**/*.opus", recursive=True)
+                    if opus_files:
+                        print("Conversion in progress ...")
+                        for t in opus_files:
+                            out_filename = os.path.splitext(t)[0] + '.flac'
+                            stream = ffmpeg.input(t)
+                            stream = ffmpeg.output(stream, out_filename, acodec='flac', map_metadata=0)
+                            ffmpeg.run(stream)
+                        encov = "flac"
+                        break
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        continue
                 else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    QMessageBox.critical(None, "Error", "No files selected")
                     continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
         elif audio == 42:  # opus en wav
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                opus_files = glob.glob(f"{filetoconvers}/**/*.opus", recursive=True)
-                if opus_files:
-                    print("Conversion in progress ...")
-                    for t in opus_files:
-                        subprocess.run(f"ffmpeg -i {t} -ab 320k -map_metadata 0 {t[:-5]}.wav", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "wav"
-                    break
+                file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                if file:
+                    opus_files = glob.glob(f"{file}/**/*.opus", recursive=True)
+                    if opus_files:
+                        print("Conversion in progress ...")
+                        for t in opus_files:
+                            out_filename = os.path.splitext(t)[0] + '.wav'
+                            stream = ffmpeg.input(t)
+                            stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                            ffmpeg.run(stream)
+                        encov = "wav"
+                        break
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        continue
                 else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue        
-        elif audio == 43:  # opus en vorbis
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                    QMessageBox.critical(None, "Error", "No files selected")
+                    continue      
+        elif audio == 43:  # opus en ogg
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                opus_files = glob.glob(f"{filetoconvers}/**/*.opus", recursive=True)
+                opus_files = glob.glob(f"{file}/**/*.opus", recursive=True)
                 if opus_files:
                     print("Conversion in progress ...")
                     for t in opus_files:
-                        subprocess.run(f"ffmpeg -i {t} -ab 320k -map_metadata 0 -c:a libvorbis {t[:-5]}.vorbis", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "vorbis"
+                        out_filename = os.path.splitext(t)[0].replace("'", "-'").replace(" ", "_") + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, ab='320k', map_metadata=0, acodec='libvorbis')
+                        ffmpeg.run(stream)
+                    encov = "ogg"
                     break
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
