@@ -795,7 +795,7 @@ def convertissso_video():
             continue
         
 def convertissso_subtitle():
-    video=1
+    video=40
     while True:
         if video == 1:  #vtt en srt 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
@@ -1621,13 +1621,16 @@ def convertissso_audio():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif audio == 40:  # opus en aac
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                opus_files = glob.glob(f"{filetoconvers}/**/*.opus", recursive=True)
+                opus_files = glob.glob(f"{file}/**/*.opus", recursive=True)
                 if opus_files:
                     print("Conversion in progress ...")
                     for t in opus_files:
-                        subprocess.run(f"ffmpeg -i {t} -ab 320k -map_metadata 0 -c:a aac {t[:-5]}.aac", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        out_filename = os.path.splitext(t)[0] + '.aac'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, ab='320k', acodec='aac', map_metadata=0)
+                        ffmpeg.run(stream)
                     encov = "aac"
                     break
                 else:
