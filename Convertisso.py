@@ -994,7 +994,7 @@ def convertissso_subtitle():
             continue
         
 def convertissso_audio():
-    audio=43
+    audio=39
     while True:
         if audio == 1:  # mp3 en ogg
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
@@ -1611,7 +1611,10 @@ def convertissso_audio():
                 if opus_files:
                     print("Conversion in progress ...")
                     for t in opus_files:
-                        subprocess.run(f"ffmpeg -i {t} -ab 320k -map_metadata 0 -c:a ac3 {t[:-5]}.ac3", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        out_filename = os.path.splitext(t)[0] + '.ac3'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, ab='320k', acodec='ac3', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "ac3"
                     break
                 else:
@@ -1630,7 +1633,7 @@ def convertissso_audio():
                         out_filename = os.path.splitext(t)[0] + '.aac'
                         stream = ffmpeg.input(t)
                         stream = ffmpeg.output(stream, out_filename, ab='320k', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "aac"
                     break
                 else:
