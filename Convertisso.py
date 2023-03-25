@@ -10,6 +10,7 @@ import yt_dlp
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox
 import sys
 from pydub import AudioSegment
+from urllib import request
 #https://www.youtube.com/watch?v=Mx_OexsUI2M&ab_channel=RihannaVEVO
 #subprocess.run(["ping", "arg1", "arg2", ...], capture_output=True)
 subprocess.run(["echo", "-n", "-e", "\033]0;Convertisso\007"])
@@ -39,7 +40,7 @@ convertisso()
      
 app = QApplication(sys.argv)
 def convertisso_download_video():
-    response = subprocess.call(['ping', '-c', '1', '1.1.1.1'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    response = request.urlopen('https://google.com', timeout=4)
     if response == 0:
             while True:
                     userchoice = int(input("Choose how your video will be downloaded.   : "))
@@ -972,11 +973,10 @@ def convertissso_subtitle():
                 if vtt_files:
                     print("Conversion in progress ...")
                     for t in vtt_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.srt'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} {t[:-4]}.srt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "srt"
                     break
                 else:
