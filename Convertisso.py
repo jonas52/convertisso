@@ -128,7 +128,7 @@ def convertissso_video():
                     for t in mkv_files:
                         out_filename = os.path.splitext(t)[0] + '.avi'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='copy', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libmp3lame', b:a='320k', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                     encov = "avi"
                     break
