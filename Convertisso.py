@@ -126,11 +126,10 @@ def convertissso_video():
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.avi'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
                 else:
@@ -586,11 +585,10 @@ def convertissso_video():
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.hevc'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, vcodec='libx265', acodec='aac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
                 else:
@@ -992,11 +990,10 @@ def convertissso_subtitle():
                 if vtt_files:
                     print("Conversion in progress ...")
                     for t in vtt_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.ass'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} {t[:-4]}.ass", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "ass"
                     break
                 else:
@@ -1012,11 +1009,10 @@ def convertissso_subtitle():
                 if vtt_files:
                     print("Conversion in progress ...")
                     for t in vtt_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.lrc'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} {t[:-4]}.lrc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "lrc"
                     break
                 else:
@@ -1032,11 +1028,10 @@ def convertissso_subtitle():
                 if srt_files:
                     print("Conversion in progress ...")
                     for t in srt_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.vtt'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} {t[:-4]}.vtt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "vtt"
                     break
                 else:
@@ -1052,11 +1047,10 @@ def convertissso_subtitle():
                 if srt_files:
                     print("Conversion in progress ...")
                     for t in srt_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.ass'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} {t[:-4]}.ass", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "ass"
                     break
                 else:
@@ -1072,11 +1066,10 @@ def convertissso_subtitle():
                 if srt_files:
                     print("Conversion in progress ...")
                     for t in srt_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.lrc'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} {t[:-4]}.lrc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "lrc"
                     break
                 else:
@@ -1092,11 +1085,10 @@ def convertissso_subtitle():
                 if ass_files:
                     print("Conversion in progress ...")
                     for t in ass_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.srt'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} {t[:-4]}.srt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "srt"
                     break
                 else:
@@ -1112,11 +1104,10 @@ def convertissso_subtitle():
                 if ass_files:
                     print("Conversion in progress ...")
                     for t in ass_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.lrc'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} {t[:-4]}.lrc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "lrc"
                     break
                 else:
@@ -1132,11 +1123,10 @@ def convertissso_subtitle():
                 if ass_files:
                     print("Conversion in progress ...")
                     for t in ass_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.vtt'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} {t[:-4]}.vtt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "vtt"
                     break
                 else:
@@ -1152,11 +1142,10 @@ def convertissso_subtitle():
                 if lrc_files:
                     print("Conversion in progress ...")
                     for t in lrc_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.srt'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} {t[:-4]}.srt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "srt"
                     break
                 else:
@@ -1172,11 +1161,10 @@ def convertissso_subtitle():
                 if lrc_files:
                     print("Conversion in progress ...")
                     for t in lrc_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.ass'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} {t[:-4]}.ass", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "ass"
                     break
                 else:
@@ -1192,11 +1180,10 @@ def convertissso_subtitle():
                 if lrc_files:
                     print("Conversion in progress ...")
                     for t in lrc_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.vtt'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} {t[:-4]}.vtt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "vtt"
                     break
                 else:
