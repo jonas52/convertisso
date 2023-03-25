@@ -125,6 +125,10 @@ def convertissso_video():
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
@@ -135,12 +139,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 2:  # mkv en mov
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mkv_files = glob.glob(f"{filetoconvers}/**/*.mkv", recursive=True)
+                mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
@@ -157,6 +165,10 @@ def convertissso_video():
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
@@ -167,12 +179,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 4:  # mkv en webm
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mkv_files = glob.glob(f"{filetoconvers}/**/*.mkv", recursive=True)
+                mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
@@ -183,12 +199,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 5:  # mkv en flv
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mkv_files = glob.glob(f"{filetoconvers}/**/*.mkv", recursive=True)
+                mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
@@ -199,12 +219,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 6:  # mkv en hevc
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mkv_files = glob.glob(f"{filetoconvers}/**/*.mkv", recursive=True)
+                mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
@@ -215,12 +239,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
         elif video == 7:    #mp4 en mkv 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mp4_files = glob.glob(f"{filetoconvers}/**/*.mp4", recursive=True)
+                mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
@@ -231,12 +259,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 8:    #mp4 en mov 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mp4_files = glob.glob(f"{filetoconvers}/**/*.mp4", recursive=True)
+                mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
@@ -247,12 +279,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 9:    #mp4 en avi 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mp4_files = glob.glob(f"{filetoconvers}/**/*.mp4", recursive=True)
+                mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
@@ -263,12 +299,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 10:    #mp4 en webm 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mp4_files = glob.glob(f"{filetoconvers}/**/*.mp4", recursive=True)
+                mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} zz-c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
@@ -279,12 +319,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
         elif video == 11:    #mp4 en flv 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mp4_files = glob.glob(f"{filetoconvers}/**/*.mp4", recursive=True)
+                mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
@@ -295,12 +339,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
         elif video == 12:    #mp4 en hevc 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mp4_files = glob.glob(f"{filetoconvers}/**/*.mp4", recursive=True)
+                mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
@@ -311,12 +359,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
         elif video == 13:    #mov en mkv 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mov_files = glob.glob(f"{filetoconvers}/**/*.mov", recursive=True)
+                mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
@@ -327,12 +379,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 14:    #mov en mp4 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mov_files = glob.glob(f"{filetoconvers}/**/*.mov", recursive=True)
+                mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
@@ -343,12 +399,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 15:    #mov en avi 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mov_files = glob.glob(f"{filetoconvers}/**/*.mov", recursive=True)
+                mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
@@ -359,12 +419,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 16:    #mov en webm 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mov_files = glob.glob(f"{filetoconvers}/**/*.mov", recursive=True)
+                mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
@@ -375,12 +439,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
         elif video == 17:    #mov en flv 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mov_files = glob.glob(f"{filetoconvers}/**/*.mov", recursive=True)
+                mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
@@ -391,12 +459,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
         elif video == 18:    #mov en hevc 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mov_files = glob.glob(f"{filetoconvers}/**/*.mov", recursive=True)
+                mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
@@ -407,12 +479,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 19:    #avi en mkv 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                avi_files = glob.glob(f"{filetoconvers}/**/*.avi", recursive=True)
+                avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
@@ -423,12 +499,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 20:    #avi en mp4 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                avi_files = glob.glob(f"{filetoconvers}/**/*.avi", recursive=True)
+                avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
@@ -439,12 +519,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 21:    #avi en mov 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                avi_files = glob.glob(f"{filetoconvers}/**/*.avi", recursive=True)
+                avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
@@ -455,12 +539,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 22:    #avi en webm 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                avi_files = glob.glob(f"{filetoconvers}/**/*.avi", recursive=True)
+                avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
@@ -471,12 +559,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
         elif video == 23:    #avi en flv 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                avi_files = glob.glob(f"{filetoconvers}/**/*.avi", recursive=True)
+                avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
@@ -487,12 +579,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
         elif video == 24:    #avi en hevc 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                avi_files = glob.glob(f"{filetoconvers}/**/*.avi", recursive=True)
+                avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
@@ -503,12 +599,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 25:    #webm en avi 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                webm_files = glob.glob(f"{filetoconvers}/**/*.webm", recursive=True)
+                webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
@@ -519,12 +619,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 26:    #webm en mkv 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                webm_files = glob.glob(f"{filetoconvers}/**/*.webm", recursive=True)
+                webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
@@ -535,12 +639,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 27:    #webm en mov 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                webm_files = glob.glob(f"{filetoconvers}/**/*.webm", recursive=True)
+                webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
@@ -551,12 +659,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 28:    #webm en mp4 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                webm_files = glob.glob(f"{filetoconvers}/**/*.webm", recursive=True)
+                webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
@@ -567,12 +679,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
         elif video == 29:    #webm en flv 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                webm_files = glob.glob(f"{filetoconvers}/**/*.webm", recursive=True)
+                webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-5]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
@@ -583,12 +699,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
         elif video == 30:    #webm en hevc 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                webm_files = glob.glob(f"{filetoconvers}/**/*.webm", recursive=True)
+                webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-5]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
@@ -599,12 +719,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 31:    #hevc en avi 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                hevc_files = glob.glob(f"{filetoconvers}/**/*.hevc", recursive=True)
+                hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
@@ -615,12 +739,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 32:    #hevc en mkv 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                hevc_files = glob.glob(f"{filetoconvers}/**/*.hevc", recursive=True)
+                hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
@@ -631,12 +759,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 33:    #hevc en mov 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                hevc_files = glob.glob(f"{filetoconvers}/**/*.hevc", recursive=True)
+                hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
@@ -647,12 +779,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 34:    #hevc en mp4 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                hevc_files = glob.glob(f"{filetoconvers}/**/*.hevc", recursive=True)
+                hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
@@ -663,12 +799,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
         elif video == 35:    #hevc en flv 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                hevc_files = glob.glob(f"{filetoconvers}/**/*.hevc", recursive=True)
+                hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-5]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
@@ -679,12 +819,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
         elif video == 36:    #hevc en webm 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                hevc_files = glob.glob(f"{filetoconvers}/**/*.hevc", recursive=True)
+                hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-5]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
@@ -695,12 +839,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 37:    #flv en avi 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                flv_files = glob.glob(f"{filetoconvers}/**/*.flv", recursive=True)
+                flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
@@ -711,12 +859,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 38:    #flv en mkv 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                flv_files = glob.glob(f"{filetoconvers}/**/*.flv", recursive=True)
+                flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
@@ -727,12 +879,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 39:    #flv en mov 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                flv_files = glob.glob(f"{filetoconvers}/**/*.flv", recursive=True)
+                flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
@@ -743,12 +899,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 40:    #flv en mp4 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                flv_files = glob.glob(f"{filetoconvers}/**/*.flv", recursive=True)
+                flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
@@ -759,12 +919,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
         elif video == 41:    #flv en hevc 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                flv_files = glob.glob(f"{filetoconvers}/**/*.flv", recursive=True)
+                flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
@@ -775,12 +939,16 @@ def convertissso_video():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
         elif video == 42:    #flv en webm 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                flv_files = glob.glob(f"{filetoconvers}/**/*.flv", recursive=True)
+                flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
@@ -804,6 +972,10 @@ def convertissso_subtitle():
                 if vtt_files:
                     print("Conversion in progress ...")
                     for t in vtt_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} {t[:-4]}.srt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "srt"
                     break
@@ -814,12 +986,16 @@ def convertissso_subtitle():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 2:  #vtt en ass
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                vtt_files = glob.glob(f"{filetoconvers}/**/*.vtt", recursive=True)
+                vtt_files = glob.glob(f"{file}/**/*.vtt", recursive=True)
                 if vtt_files:
                     print("Conversion in progress ...")
                     for t in vtt_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} {t[:-4]}.ass", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "ass"
                     break
@@ -836,6 +1012,10 @@ def convertissso_subtitle():
                 if vtt_files:
                     print("Conversion in progress ...")
                     for t in vtt_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} {t[:-4]}.lrc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "lrc"
                     break
@@ -846,12 +1026,16 @@ def convertissso_subtitle():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 4:  # srt en vtt
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                srt_files = glob.glob(f"{filetoconvers}/**/*.srt", recursive=True)
+                srt_files = glob.glob(f"{file}/**/*.srt", recursive=True)
                 if srt_files:
                     print("Conversion in progress ...")
                     for t in srt_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} {t[:-4]}.vtt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "vtt"
                     break
@@ -862,12 +1046,16 @@ def convertissso_subtitle():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 5:  # srt en ass
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                srt_files = glob.glob(f"{filetoconvers}/**/*.srt", recursive=True)
+                srt_files = glob.glob(f"{file}/**/*.srt", recursive=True)
                 if srt_files:
                     print("Conversion in progress ...")
                     for t in srt_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} {t[:-4]}.ass", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "ass"
                     break
@@ -878,12 +1066,16 @@ def convertissso_subtitle():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 6:  # srt en lrc
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                srt_files = glob.glob(f"{filetoconvers}/**/*.srt", recursive=True)
+                srt_files = glob.glob(f"{file}/**/*.srt", recursive=True)
                 if srt_files:
                     print("Conversion in progress ...")
                     for t in srt_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} {t[:-4]}.lrc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "lrc"
                     break
@@ -894,12 +1086,16 @@ def convertissso_subtitle():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
         elif video == 7:    #ass en srt 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                ass_files = glob.glob(f"{filetoconvers}/**/*.ass", recursive=True)
+                ass_files = glob.glob(f"{file}/**/*.ass", recursive=True)
                 if ass_files:
                     print("Conversion in progress ...")
                     for t in ass_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} {t[:-4]}.srt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "srt"
                     break
@@ -910,12 +1106,16 @@ def convertissso_subtitle():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 8:    #ass en lrc 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                ass_files = glob.glob(f"{filetoconvers}/**/*.ass", recursive=True)
+                ass_files = glob.glob(f"{file}/**/*.ass", recursive=True)
                 if ass_files:
                     print("Conversion in progress ...")
                     for t in ass_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} {t[:-4]}.lrc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "lrc"
                     break
@@ -926,12 +1126,16 @@ def convertissso_subtitle():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 9:    #ass en vtt 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                ass_files = glob.glob(f"{filetoconvers}/**/*.ass", recursive=True)
+                ass_files = glob.glob(f"{file}/**/*.ass", recursive=True)
                 if ass_files:
                     print("Conversion in progress ...")
                     for t in ass_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} {t[:-4]}.vtt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "vtt"
                     break
@@ -942,12 +1146,16 @@ def convertissso_subtitle():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif video == 10:    #lrc en srt 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                lrc_files = glob.glob(f"{filetoconvers}/**/*.lrc", recursive=True)
+                lrc_files = glob.glob(f"{file}/**/*.lrc", recursive=True)
                 if lrc_files:
                     print("Conversion in progress ...")
                     for t in lrc_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} {t[:-4]}.srt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "srt"
                     break
@@ -958,12 +1166,16 @@ def convertissso_subtitle():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
         elif video == 11:    #lrc en ass 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                lrc_files = glob.glob(f"{filetoconvers}/**/*.lrc", recursive=True)
+                lrc_files = glob.glob(f"{file}/**/*.lrc", recursive=True)
                 if lrc_files:
                     print("Conversion in progress ...")
                     for t in lrc_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} {t[:-4]}.ass", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "ass"
                     break
@@ -974,12 +1186,16 @@ def convertissso_subtitle():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
         elif video == 12:    #lrc en vtt 
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                lrc_files = glob.glob(f"{filetoconvers}/**/*.lrc", recursive=True)
+                lrc_files = glob.glob(f"{file}/**/*.lrc", recursive=True)
                 if lrc_files:
                     print("Conversion in progress ...")
                     for t in lrc_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                         subprocess.run(f"ffmpeg -i {t} {t[:-4]}.vtt", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "vtt"
                     break
@@ -994,7 +1210,7 @@ def convertissso_subtitle():
             continue
         
 def convertissso_audio():
-    audio=39
+
     while True:
         if audio == 1:  # mp3 en ogg
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
@@ -1003,7 +1219,10 @@ def convertissso_audio():
                 if mp3_files:
                     print("Conversion in progress ...")
                     for t in mp3_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libvorbis {t[:-4]}.ogg", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "ogg"
                     break
                 else:
@@ -1013,13 +1232,16 @@ def convertissso_audio():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif audio == 2:  # mp3 en aac
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mp3_files = glob.glob(f"{filetoconvers}/**/*.mp3", recursive=True)
+                mp3_files = glob.glob(f"{file}/**/*.mp3", recursive=True)
                 if mp3_files:
                     print("Conversion in progress ...")
                     for t in mp3_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a aac {t[:-4]}.aac", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        out_filename = os.path.splitext(t)[0] + '.aac'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='aac', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "aac"
                     break
                 else:
@@ -1035,7 +1257,10 @@ def convertissso_audio():
                 if mp3_files:
                     print("Conversion in progress ...")
                     for t in mp3_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 {t[:-4]}.wav", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        out_filename = os.path.splitext(t)[0] + '.wav'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "wav"
                     break
                 else:
@@ -1045,13 +1270,16 @@ def convertissso_audio():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif audio == 4:  # mp3 en ac3
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mp3_files = glob.glob(f"{filetoconvers}/**/*.mp3", recursive=True)
+                mp3_files = glob.glob(f"{file}/**/*.mp3", recursive=True)
                 if mp3_files:
                     print("Conversion in progress ...")
                     for t in mp3_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a ac3 {t[:-4]}.ac3", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        out_filename = os.path.splitext(t)[0] + '.ac3'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='ac3', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "ac3"
                     break
                 else:
@@ -1061,30 +1289,17 @@ def convertissso_audio():
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
         elif audio == 5:  # mp3 en opus
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                mp3_files = glob.glob(f"{filetoconvers}/**/*.mp3", recursive=True)
+                mp3_files = glob.glob(f"{file}/**/*.mp3", recursive=True)
                 if mp3_files:
                     print("Conversion in progress ...")
                     for t in mp3_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libopus {t[:-4]}.opus", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        out_filename = os.path.splitext(t)[0] + '.opus'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libopus', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "opus"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 6:  # mp3 en vorbis
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mp3_files = glob.glob(f"{filetoconvers}/**/*.mp3", recursive=True)
-                if mp3_files:
-                    print("Conversion in progress ...")
-                    for t in mp3_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libvorbis {t[:-4]}.vorbis", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "vorbis"
                     break
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
@@ -1092,110 +1307,17 @@ def convertissso_audio():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue                
-        elif audio == 7:  # wav en mp3
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                wav_files = glob.glob(f"{filetoconvers}/**/*.wav", recursive=True)
-                if wav_files:
-                    print("Conversion in progress ...")
-                    for t in wav_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -f mp3 {t[:-4]}.mp3", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "mp3"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue 
-        elif audio == 8:  # wav en ogg
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                wav_files = glob.glob(f"{filetoconvers}/**/*.wav", recursive=True)
-                if wav_files:
-                    print("Conversion in progress ...")
-                    for t in wav_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libvorbis {t[:-4]}.ogg", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "ogg"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        if audio == 9:  # wav en aac
+        elif audio == 6:  # wav en mp3
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 wav_files = glob.glob(f"{file}/**/*.wav", recursive=True)
                 if wav_files:
                     print("Conversion in progress ...")
                     for t in wav_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a aac {t[:-4]}.aac", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "aac"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 10:  # wav en ac3
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                wav_files = glob.glob(f"{filetoconvers}/**/*.wav", recursive=True)
-                if wav_files:
-                    print("Conversion in progress ...")
-                    for t in wav_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a ac3 {t[:-4]}.ac3", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "ac3"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 11:  # wav en opus
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                wav_files = glob.glob(f"{filetoconvers}/**/*.wav", recursive=True)
-                if wav_files:
-                    print("Conversion in progress ...")
-                    for t in wav_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libopus {t[:-4]}.opus", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "opus"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 12:  # wav en vorbis
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                wav_files = glob.glob(f"{filetoconvers}/**/*.wav", recursive=True)
-                if wav_files:
-                    print("Conversion in progress ...")
-                    for t in wav_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libvorbis {t[:-4]}.vorbis", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "vorbis"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 13:  # ogg en mp3
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                ogg_files = glob.glob(f"{filetoconvers}/**/*.ogg", recursive=True)
-                if ogg_files:
-                    print("Conversion in progress ...")
-                    for t in ogg_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libmp3lame {t[:-4]}.mp3", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        out_filename = os.path.splitext(t)[0] + '.mp3'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libmp3lame', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "mp3"
                     break
                 else:
@@ -1204,14 +1326,17 @@ def convertissso_audio():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue 
-        elif audio == 14:  # ogg en wav
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        elif audio == 7:  # wav en ogg
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                ogg_files = glob.glob(f"{filetoconvers}/**/*.ogg", recursive=True)
-                if ogg_files:
+                wav_files = glob.glob(f"{file}/**/*.wav", recursive=True)
+                if wav_files:
                     print("Conversion in progress ...")
-                    for t in ogg_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 {t[:-4]}.ogg", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    for t in wav_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "ogg"
                     break
                 else:
@@ -1220,78 +1345,74 @@ def convertissso_audio():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        if audio == 15:  # ogg en aac
+        if audio == 8:  # wav en aac
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                wav_files = glob.glob(f"{file}/**/*.wav", recursive=True)
+                if wav_files:
+                    print("Conversion in progress ...")
+                    for t in wav_files:
+                        out_filename = os.path.splitext(t)[0] + '.aac'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='aac', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "aac"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif audio == 9:  # wav en ac3
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                wav_files = glob.glob(f"{file}/**/*.wav", recursive=True)
+                if wav_files:
+                    print("Conversion in progress ...")
+                    for t in wav_files:
+                        out_filename = os.path.splitext(t)[0] + '.ac3'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='ac3', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "ac3"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif audio == 10:  # wav en opus
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                wav_files = glob.glob(f"{file}/**/*.wav", recursive=True)
+                if wav_files:
+                    print("Conversion in progress ...")
+                    for t in wav_files:
+                        out_filename = os.path.splitext(t)[0] + '.opus'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libopus', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "opus"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif audio == 11:  # ogg en mp3
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 ogg_files = glob.glob(f"{file}/**/*.ogg", recursive=True)
                 if ogg_files:
                     print("Conversion in progress ...")
                     for t in ogg_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a aac {t[:-4]}.aac", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "aac"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 16:  # ogg en ac3
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                ogg_files = glob.glob(f"{filetoconvers}/**/*.ogg", recursive=True)
-                if ogg_files:
-                    print("Conversion in progress ...")
-                    for t in ogg_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a ac3 {t[:-4]}.ac3", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "ac3"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 17:  # ogg en opus
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                ogg_files = glob.glob(f"{filetoconvers}/**/*.ogg", recursive=True)
-                if ogg_files:
-                    print("Conversion in progress ...")
-                    for t in ogg_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libopus {t[:-4]}.opus", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "opus"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 18:  # ogg en vorbis
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                ogg_files = glob.glob(f"{filetoconvers}/**/*.ogg", recursive=True)
-                if ogg_files:
-                    print("Conversion in progress ...")
-                    for t in ogg_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libvorbis {t[:-4]}.vorbis", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "vorbis"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 19:  # ac3 en mp3
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                ac3_files = glob.glob(f"{filetoconvers}/**/*.ac3", recursive=True)
-                if ac3_files:
-                    print("Conversion in progress ...")
-                    for t in ac3_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libmp3lame {t[:-4]}.mp3", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        out_filename = os.path.splitext(t)[0] + '.mp3'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libmp3lame', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "mp3"
                     break
                 else:
@@ -1300,15 +1421,18 @@ def convertissso_audio():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue 
-        elif audio == 20:  # ac3 en wav
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        elif audio == 12:  # ogg en wav
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                ac3_files = glob.glob(f"{filetoconvers}/**/*.ac3", recursive=True)
-                if ac3_files:
+                ogg_files = glob.glob(f"{file}/**/*.ogg", recursive=True)
+                if ogg_files:
                     print("Conversion in progress ...")
-                    for t in ac3_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 {t[:-4]}.wav", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "wav"
+                    for t in ogg_files:
+                        out_filename = os.path.splitext(t)[0] + '.wav'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "ogg"
                     break
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
@@ -1316,14 +1440,112 @@ def convertissso_audio():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        if audio == 21:  # ac3 en aac
+        if audio == 13:  # ogg en aac
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                ogg_files = glob.glob(f"{file}/**/*.ogg", recursive=True)
+                if ogg_files:
+                    print("Conversion in progress ...")
+                    for t in ogg_files:
+                        out_filename = os.path.splitext(t)[0] + '.aac'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='aac', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "aac"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif audio == 14:  # ogg en ac3
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                ogg_files = glob.glob(f"{file}/**/*.ogg", recursive=True)
+                if ogg_files:
+                    print("Conversion in progress ...")
+                    for t in ogg_files:
+                        out_filename = os.path.splitext(t)[0] + '.ac3'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='ac3', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "ac3"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif audio == 15:  # ogg en opus
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                ogg_files = glob.glob(f"{file}/**/*.ogg", recursive=True)
+                if ogg_files:
+                    print("Conversion in progress ...")
+                    for t in ogg_files:
+                        out_filename = os.path.splitext(t)[0] + '.opus'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libopus', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "opus"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif audio == 16:  # ac3 en mp3
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 ac3_files = glob.glob(f"{file}/**/*.ac3", recursive=True)
                 if ac3_files:
                     print("Conversion in progress ...")
                     for t in ac3_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a aac {t[:-4]}.aac", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        out_filename = os.path.splitext(t)[0] + '.mp3'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libmp3lame', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "mp3"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue 
+        elif audio == 17:  # ac3 en wav
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                ac3_files = glob.glob(f"{file}/**/*.ac3", recursive=True)
+                if ac3_files:
+                    print("Conversion in progress ...")
+                    for t in ac3_files:
+                        out_filename = os.path.splitext(t)[0] + '.wav'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "wav"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        if audio == 18:  # ac3 en aac
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                ac3_files = glob.glob(f"{file}/**/*.ac3", recursive=True)
+                if ac3_files:
+                    print("Conversion in progress ...")
+                    for t in ac3_files:
+                        out_filename = os.path.splitext(t)[0] + '.aac'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='aac', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "aac"
                     break
                 else:
@@ -1332,14 +1554,17 @@ def convertissso_audio():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif audio == 22:  # ac3 en ogg
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        elif audio == 19:  # ac3 en ogg
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                ac3_files = glob.glob(f"{filetoconvers}/**/*.ac3", recursive=True)
+                ac3_files = glob.glob(f"{file}/**/*.ac3", recursive=True)
                 if ac3_files:
                     print("Conversion in progress ...")
                     for t in ac3_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libvorbis {t[:-4]}.ogg", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "ogg"
                     break
                 else:
@@ -1348,14 +1573,17 @@ def convertissso_audio():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif audio == 23:  # ac3 en opus
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        elif audio == 20:  # ac3 en opus
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                ac3_files = glob.glob(f"{filetoconvers}/**/*.ac3", recursive=True)
+                ac3_files = glob.glob(f"{file}/**/*.ac3", recursive=True)
                 if ac3_files:
                     print("Conversion in progress ...")
                     for t in ac3_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libopus {t[:-4]}.opus", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        out_filename = os.path.splitext(t)[0] + '.opus'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libopus', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "opus"
                     break
                 else:
@@ -1363,143 +1591,18 @@ def convertissso_audio():
                     continue
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 24:  # ac3 en vorbis
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                ac3_files = glob.glob(f"{filetoconvers}/**/*.ac3", recursive=True)
-                if ac3_files:
-                    print("Conversion in progress ...")
-                    for t in ac3_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libvorbis {t[:-4]}.vorbis", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "vorbis"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue             
-        elif audio == 25:  # aac en wav
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                aac_files = glob.glob(f"{filetoconvers}/**/*.aac", recursive=True)
-                if aac_files:
-                    print("Conversion in progress ...")
-                    for t in aac_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 {t[:-4]}.wav", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "wav"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue 
-        elif audio == 26:  # aac en ac3
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                aac_files = glob.glob(f"{filetoconvers}/**/*.aac", recursive=True)
-                if aac_files:
-                    print("Conversion in progress ...")
-                    for t in aac_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a ac3 {t[:-4]}.ac3", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "ac3"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        if audio == 27:  # aac en ogg
+                continue           
+        elif audio == 21:  # aac en wav
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 aac_files = glob.glob(f"{file}/**/*.aac", recursive=True)
                 if aac_files:
                     print("Conversion in progress ...")
                     for t in aac_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libvorbis {t[:-4]}.ogg", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "ogg"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 28:  # aac en mp3
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                aac_files = glob.glob(f"{filetoconvers}/**/*.aac", recursive=True)
-                if aac_files:
-                    print("Conversion in progress ...")
-                    for t in aac_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libmp3lame {t[:-4]}.mp3", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "mp3"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 29:  # aac en opus
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                aac_files = glob.glob(f"{filetoconvers}/**/*.aac", recursive=True)
-                if aac_files:
-                    print("Conversion in progress ...")
-                    for t in aac_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libopus {t[:-4]}.opus", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "opus"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 30:  # aac en vorbis
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                aac_files = glob.glob(f"{filetoconvers}/**/*.aac", recursive=True)
-                if aac_files:
-                    print("Conversion in progress ...")
-                    for t in aac_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libvorbis {t[:-4]}.vorbis", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "vorbis"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 31:  # flac en mp3
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                flac_files = glob.glob(f"{filetoconvers}/**/*.flac", recursive=True)
-                if flac_files:
-                    print("Conversion in progress ...")
-                    for t in flac_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libmp3lame {t[:-5]}.mp3", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "mp3"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue 
-        elif audio == 32:  # flac en wav
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                flac_files = glob.glob(f"{filetoconvers}/**/*.flac", recursive=True)
-                if flac_files:
-                    print("Conversion in progress ...")
-                    for t in flac_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 {t[:-5]}.wav", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                        out_filename = os.path.splitext(t)[0] + '.wav'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "wav"
                     break
                 else:
@@ -1507,31 +1610,18 @@ def convertissso_audio():
                     continue
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        if audio == 33:  # flac en ogg
+                continue 
+        elif audio == 22:  # aac en ac3
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                flac_files = glob.glob(f"{file}/**/*.flac", recursive=True)
-                if flac_files:
+                aac_files = glob.glob(f"{file}/**/*.aac", recursive=True)
+                if aac_files:
                     print("Conversion in progress ...")
-                    for t in flac_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libvorbis {t[:-5]}.ogg", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "ogg"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif audio == 34:  # flac en ac3
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                flac_files = glob.glob(f"{filetoconvers}/**/*.flac", recursive=True)
-                if flac_files:
-                    print("Conversion in progress ...")
-                    for t in flac_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a ac3 {t[:-5]}.ac3", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    for t in aac_files:
+                        out_filename = os.path.splitext(t)[0] + '.ac3'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='ac3', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "ac3"
                     break
                 else:
@@ -1540,14 +1630,55 @@ def convertissso_audio():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif audio == 35:  # flac en opus
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if audio == 23:  # aac en ogg
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                flac_files = glob.glob(f"{filetoconvers}/**/*.flac", recursive=True)
-                if flac_files:
+                aac_files = glob.glob(f"{file}/**/*.aac", recursive=True)
+                if aac_files:
                     print("Conversion in progress ...")
-                    for t in flac_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libopus {t[:-5]}.opus", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                    for t in aac_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "ogg"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif audio == 24:  # aac en mp3
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                aac_files = glob.glob(f"{file}/**/*.aac", recursive=True)
+                if aac_files:
+                    print("Conversion in progress ...")
+                    for t in aac_files:
+                        out_filename = os.path.splitext(t)[0] + '.mp3'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libmp3lame', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "mp3"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif audio == 25:  # aac en opus
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                aac_files = glob.glob(f"{file}/**/*.aac", recursive=True)
+                if aac_files:
+                    print("Conversion in progress ...")
+                    for t in aac_files:
+                        out_filename = os.path.splitext(t)[0] + 'opus'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libopus', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "opus"
                     break
                 else:
@@ -1556,15 +1687,37 @@ def convertissso_audio():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif audio == 36:  # flac en vorbis
-            filetoconvers = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        elif audio == 26:  # flac en mp3
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                flac_files = glob.glob(f"{filetoconvers}/**/*.flac", recursive=True)
+                flac_files = glob.glob(f"{file}/**/*.flac", recursive=True)
                 if flac_files:
                     print("Conversion in progress ...")
                     for t in flac_files:
-                        subprocess.run(f"ffmpeg -i {t} -map_metadata 0 -c:a libvorbis {t[:-5]}.vorbis", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                    encov = "vorbis"
+                        out_filename = os.path.splitext(t)[0] + '.mp3'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libmp3lame', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "mp3"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue 
+        elif audio == 27:  # flac en wav
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                flac_files = glob.glob(f"{file}/**/*.flac", recursive=True)
+                if flac_files:
+                    print("Conversion in progress ...")
+                    for t in flac_files:
+                        out_filename = os.path.splitext(t)[0] + '.wav'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "wav"
                     break
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
@@ -1572,10 +1725,67 @@ def convertissso_audio():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif audio == 37:  # opus en mp3
+        if audio == 28:  # flac en ogg
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
-                opus_files = glob.glob(f"{filetoconvers}/**/*.opus", recursive=True)
+                flac_files = glob.glob(f"{file}/**/*.flac", recursive=True)
+                if flac_files:
+                    print("Conversion in progress ...")
+                    for t in flac_files:
+                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "ogg"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif audio == 29:  # flac en ac3
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                flac_files = glob.glob(f"{file}/**/*.flac", recursive=True)
+                if flac_files:
+                    print("Conversion in progress ...")
+                    for t in flac_files:
+                        out_filename = os.path.splitext(t)[0] + '.ac3'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='ac3', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "ac3"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif audio == 30:  # flac en opus
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                flac_files = glob.glob(f"{file}/**/*.flac", recursive=True)
+                if flac_files:
+                    print("Conversion in progress ...")
+                    for t in flac_files:
+                        out_filename = os.path.splitext(t)[0] + '.opus'
+                        stream = ffmpeg.input(t)
+                        stream = ffmpeg.output(stream, out_filename, acodec='libopus', map_metadata=0)
+                        ffmpeg.run(stream, quiet=True)
+                    encov = "opus"
+                    break
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    continue
+            else:
+                QMessageBox.critical(None, "Error", "No files selected")
+                continue
+        elif audio == 31:  # opus en mp3
+            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+            if file:
+                opus_files = glob.glob(f"{file}/**/*.opus", recursive=True)
                 if opus_files:
                     print("Conversion in progress ...")
                     for t in opus_files:
@@ -1591,7 +1801,7 @@ def convertissso_audio():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue 
-        if audio == 39:  # opus en ac3
+        if audio == 32:  # opus en ac3
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 opus_files = glob.glob(f"{file}/**/*.opus", recursive=True)
@@ -1610,7 +1820,7 @@ def convertissso_audio():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif audio == 40:  # opus en aac
+        elif audio == 33:  # opus en aac
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 opus_files = glob.glob(f"{file}/**/*.opus", recursive=True)
@@ -1629,7 +1839,7 @@ def convertissso_audio():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif audio == 41:  # opus en flac
+        elif audio == 34:  # opus en flac
                 file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
                 if file:
                     opus_files = glob.glob(f"{file}/**/*.opus", recursive=True)
@@ -1639,7 +1849,7 @@ def convertissso_audio():
                             out_filename = os.path.splitext(t)[0] + '.flac'
                             stream = ffmpeg.input(t)
                             stream = ffmpeg.output(stream, out_filename, acodec='flac', map_metadata=0)
-                            ffmpeg.run(stream)
+                            ffmpeg.run(stream, quiet=True)
                         encov = "flac"
                         break
                     else:
@@ -1648,7 +1858,7 @@ def convertissso_audio():
                 else:
                     QMessageBox.critical(None, "Error", "No files selected")
                     continue
-        elif audio == 42:  # opus en wav
+        elif audio == 35:  # opus en wav
                 file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
                 if file:
                     opus_files = glob.glob(f"{file}/**/*.opus", recursive=True)
@@ -1658,7 +1868,7 @@ def convertissso_audio():
                             out_filename = os.path.splitext(t)[0] + '.wav'
                             stream = ffmpeg.input(t)
                             stream = ffmpeg.output(stream, out_filename, map_metadata=0)
-                            ffmpeg.run(stream)
+                            ffmpeg.run(stream, quiet=True)
                         encov = "wav"
                         break
                     else:
@@ -1667,7 +1877,7 @@ def convertissso_audio():
                 else:
                     QMessageBox.critical(None, "Error", "No files selected")
                     continue      
-        elif audio == 43:  # opus en ogg
+        elif audio == 36:  # opus en ogg
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 opus_files = glob.glob(f"{file}/**/*.opus", recursive=True)
@@ -1677,7 +1887,7 @@ def convertissso_audio():
                         out_filename = os.path.splitext(t)[0].replace("'", "-'").replace(" ", "_") + '.ogg'
                         stream = ffmpeg.input(t)
                         stream = ffmpeg.output(stream, out_filename, ab='320k', map_metadata=0, acodec='libvorbis')
-                        ffmpeg.run(stream)
+                        ffmpeg.run(stream, quiet=True)
                     encov = "ogg"
                     break
                 else:
@@ -1691,7 +1901,7 @@ def convertissso_audio():
             continue    
 app.exit()
 
-asd=int(input("Entrer le bon numero: 1=download, 2=video, 2=audio. ->  "))
+asd=int(input("Entrer le bon numero: 1=download, 2=video, 3=audio. ->  "))
 
 if asd == 1:
     convertisso_download_video()
