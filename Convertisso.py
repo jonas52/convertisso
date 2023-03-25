@@ -1901,7 +1901,7 @@ def convertissso_audio():
             continue    
 app.exit()
 
-asd=int(input("Entrer le bon numero: 1=download, 2=video, 3=audio. ->  "))
+asd=int(input("Entrer le bon numero: 1=download, 2=video, 3=audio, 4=subtitle. ->  "))
 
 if asd == 1:
     convertisso_download_video()
@@ -1909,5 +1909,7 @@ elif asd == 2:
     convertissso_video()
 elif asd == 3:
     convertissso_audio()
+elif asd == 4:
+    convertissso_subtitle()
 else:
     print("erreur")
