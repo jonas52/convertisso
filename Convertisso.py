@@ -41,7 +41,7 @@ convertisso()
 app = QApplication(sys.argv)
 def convertisso_download_video():
     response = request.urlopen('https://google.com', timeout=4)
-    if response == 0:
+    if response == True:
             while True:
                     userchoice = int(input("Choose how your video will be downloaded.   : "))
                     userchoicelink = input("Copy the link(URL) of the video and paste it here.  ->  ")
@@ -119,7 +119,7 @@ def convertisso_download_video():
 def convertissso_video():
     video=7
     while True:
-        if video == 1:  # mkv en avi
+        if video == 1:  # mkv en avi ----------------------------------------------------------------------------------------Problème convertion impossible a revoir
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
@@ -145,11 +145,10 @@ def convertissso_video():
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mov'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
                 else:
@@ -165,11 +164,10 @@ def convertissso_video():
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mp4'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
                 else:
@@ -185,11 +183,10 @@ def convertissso_video():
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.webm'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
                 else:
@@ -205,11 +202,10 @@ def convertissso_video():
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.flv'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
                 else:
@@ -225,11 +221,10 @@ def convertissso_video():
                 if mkv_files:
                     print("Conversion in progress ...")
                     for t in mkv_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.hevc'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
                 else:
@@ -264,11 +259,10 @@ def convertissso_video():
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mov'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
                 else:
@@ -284,11 +278,10 @@ def convertissso_video():
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.avi'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
                 else:
@@ -304,11 +297,10 @@ def convertissso_video():
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.webm'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} zz-c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
                 else:
@@ -324,11 +316,10 @@ def convertissso_video():
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.flv'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
                 else:
@@ -344,11 +335,10 @@ def convertissso_video():
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.hevc'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
                 else:
@@ -364,11 +354,10 @@ def convertissso_video():
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mkv'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
                 else:
@@ -384,11 +373,10 @@ def convertissso_video():
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mp4'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
                 else:
@@ -404,11 +392,10 @@ def convertissso_video():
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.avi'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
                 else:
@@ -424,11 +411,10 @@ def convertissso_video():
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.webm'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
                 else:
@@ -444,11 +430,10 @@ def convertissso_video():
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.flv'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
                 else:
@@ -464,11 +449,10 @@ def convertissso_video():
                 if mov_files:
                     print("Conversion in progress ...")
                     for t in mov_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.hevc'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
                 else:
@@ -484,11 +468,10 @@ def convertissso_video():
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mkv'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
                 else:
@@ -504,11 +487,10 @@ def convertissso_video():
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mp4'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
                 else:
@@ -524,11 +506,10 @@ def convertissso_video():
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mov'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
                 else:
@@ -544,11 +525,10 @@ def convertissso_video():
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.webm'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
                 else:
@@ -564,11 +544,10 @@ def convertissso_video():
                 if avi_files:
                     print("Conversion in progress ...")
                     for t in avi_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.flv'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-4]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
                 else:
@@ -603,11 +582,10 @@ def convertissso_video():
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.avi'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
                 else:
@@ -623,11 +601,10 @@ def convertissso_video():
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mkv'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
                 else:
@@ -643,11 +620,10 @@ def convertissso_video():
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mov'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
                 else:
@@ -663,11 +639,10 @@ def convertissso_video():
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mp4'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
                 else:
@@ -683,11 +658,10 @@ def convertissso_video():
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.flv'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-5]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
                 else:
@@ -703,11 +677,10 @@ def convertissso_video():
                 if webm_files:
                     print("Conversion in progress ...")
                     for t in webm_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.hevc'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-5]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
                 else:
@@ -723,11 +696,10 @@ def convertissso_video():
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.avi'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
                 else:
@@ -743,11 +715,10 @@ def convertissso_video():
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mkv'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
                 else:
@@ -763,11 +734,10 @@ def convertissso_video():
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mov'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
                 else:
@@ -783,11 +753,10 @@ def convertissso_video():
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mp4'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-5]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
                 else:
@@ -803,11 +772,10 @@ def convertissso_video():
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.flv'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v flv -c:a mp3 {t[:-5]}.flv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "flv"
                     break
                 else:
@@ -823,11 +791,10 @@ def convertissso_video():
                 if hevc_files:
                     print("Conversion in progress ...")
                     for t in hevc_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.webm'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-5]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
                 else:
@@ -843,11 +810,10 @@ def convertissso_video():
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.avi'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.avi", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "avi"
                     break
                 else:
@@ -863,11 +829,10 @@ def convertissso_video():
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mkv'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
                 else:
@@ -883,11 +848,10 @@ def convertissso_video():
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mov'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mov", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mov"
                     break
                 else:
@@ -903,11 +867,10 @@ def convertissso_video():
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mp4'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mp4", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mp4"
                     break
                 else:
@@ -923,11 +886,10 @@ def convertissso_video():
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.hevc'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v libx265 -c:a aac {t[:-4]}.hevc", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "hevc"
                     break
                 else:
@@ -943,11 +905,10 @@ def convertissso_video():
                 if flv_files:
                     print("Conversion in progress ...")
                     for t in flv_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.webm'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -c:v libvpx -c:a libvorbis {t[:-4]}.webm", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "webm"
                     break
                 else:
@@ -1196,7 +1157,7 @@ def convertissso_subtitle():
             continue
         
 def convertissso_audio():
-audio = 1
+    audio=1
     while True:
         if audio == 1:  # mp3 en ogg
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
