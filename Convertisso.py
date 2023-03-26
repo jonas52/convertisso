@@ -117,7 +117,7 @@ def convertisso_download_video():
 
 
 def convertissso_video():
-    video=1
+    video=7
     while True:
         if video == 1:  # mkv en avi
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
@@ -128,7 +128,7 @@ def convertissso_video():
                     for t in mkv_files:
                         out_filename = os.path.splitext(t)[0] + '.avi'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', audio_bitrate='320k', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy',  map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                     encov = "avi"
                     break
@@ -245,11 +245,10 @@ def convertissso_video():
                 if mp4_files:
                     print("Conversion in progress ...")
                     for t in mp4_files:
-                        out_filename = os.path.splitext(t)[0] + '.ogg'
+                        out_filename = os.path.splitext(t)[0] + '.mkv'
                         stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
-                        subprocess.run(f"ffmpeg -i {t} -codec copy {t[:-4]}.mkv", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                     encov = "mkv"
                     break
                 else:
@@ -1197,7 +1196,7 @@ def convertissso_subtitle():
             continue
         
 def convertissso_audio():
-
+audio = 1
     while True:
         if audio == 1:  # mp3 en ogg
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
