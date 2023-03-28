@@ -178,9 +178,60 @@ def convertisso_download_video():
 
 
 def convertissso_video():
+    app = QApplication(sys.argv)
+    class convertissso_video_GUI(QWidget):
+        def __init__(self):
+            super().__init__()
+
+            self.initUI()
+
+        def initUI(self):
+            self.setWindowTitle('Convertisso video')
+            self.setGeometry(100, 100, 700, 400)
+
+            self.path_label = QLabel(self)
+            self.path_label.setText('Chose directory (its store your(s) file(s) to convert):')
+            self.path_label.move(50, 50)
+
+            self.path_input = QLineEdit(self)
+            self.path_input.move(250, 300)
+            self.path_input.resize(300, 30)
+            self.path_input.text()
+
+            self.choose_path_button = QPushButton('Select one directory (not recursive)', self)
+            self.choose_path_button.move(550, 300)
+            self.choose_path_button.clicked.connect(self.choose_folder)
+
+            self.convertvideo_label = QLabel(self)
+            self.convertvideo_label.setText('Choose convert option:')
+            self.convertvideo_label.move(50, 150)
+
+            self.convertvideo_choice = QComboBox(self)
+            self.convertvideo_choice.addItem('Video Only')
+            self.convertvideo_choice.addItem('Video + Subtitles')
+            self.convertvideo_choice.addItem('Audio Only')
+            self.convertvideo_choice.addItem('Subtitles Only')
+            self.convertvideo_choice.move(250, 200)
+            self.convertvideo_choice.resize(200, 30)
+            self.convertvideo_choice.currentIndexChanged.connect(self.setconvertvideoOption)
+
+            self.convertvideo_button = QPushButton('Convert', self)
+            self.convertvideo_button.move(300, 350)
+            self.convertvideo_button.clicked.connect(self.convertvideo_video)
+
+        def choose_folder(self):
+            folder_path = QFileDialog.getExistingDirectory(self, 'Select one directory (not recursive)')
+            self.destination_input.setText(folder_path)
+
+        def setDownloadOption(self, index):
+            self.download_option = self.download_choice.itemText(index)
+
+    window = YoutubeDownloader()
+    window.show()
+    app.exec_()
     video=7
     while True:
-        if video == 1:  # mkv en avi ----------------------------------------------------------------------------------------Problème convertion impossible a revoir
+        if self.convertsubtitle_option == 1:  # mkv en avi ----------------------------------------------------------------------------------------Problème convertion impossible a revoir
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
@@ -199,7 +250,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 2:  # mkv en mov
+        elif self.convertsubtitle_option == 2:  # mkv en mov
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
@@ -218,7 +269,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        if video == 3:  # mkv en mp4
+        if self.convertsubtitle_option == 3:  # mkv en mp4
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
@@ -237,7 +288,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 4:  # mkv en webm
+        elif self.convertsubtitle_option == 4:  # mkv en webm
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
@@ -256,7 +307,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 5:  # mkv en flv
+        elif self.convertsubtitle_option == 5:  # mkv en flv
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
@@ -275,7 +326,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 6:  # mkv en hevc
+        elif self.convertsubtitle_option == 6:  # mkv en hevc
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
@@ -294,7 +345,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
-        elif video == 7:    #mp4 en mkv 
+        elif self.convertsubtitle_option == 7:    #mp4 en mkv 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
@@ -313,7 +364,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 8:    #mp4 en mov 
+        elif self.convertsubtitle_option == 8:    #mp4 en mov 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
@@ -332,7 +383,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 9:    #mp4 en avi 
+        elif self.convertsubtitle_option == 9:    #mp4 en avi 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
@@ -351,7 +402,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 10:    #mp4 en webm 
+        elif self.convertsubtitle_option == 10:    #mp4 en webm 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
@@ -370,7 +421,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
-        elif video == 11:    #mp4 en flv 
+        elif self.convertsubtitle_option == 11:    #mp4 en flv 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
@@ -389,7 +440,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
-        elif video == 12:    #mp4 en hevc 
+        elif self.convertsubtitle_option == 12:    #mp4 en hevc 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
@@ -408,7 +459,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
-        elif video == 13:    #mov en mkv 
+        elif self.convertsubtitle_option == 13:    #mov en mkv 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
@@ -427,7 +478,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 14:    #mov en mp4 
+        elif self.convertsubtitle_option == 14:    #mov en mp4 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
@@ -446,7 +497,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 15:    #mov en avi 
+        elif self.convertsubtitle_option == 15:    #mov en avi 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
@@ -465,7 +516,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 16:    #mov en webm 
+        elif self.convertsubtitle_option == 16:    #mov en webm 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
@@ -484,7 +535,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
-        elif video == 17:    #mov en flv 
+        elif self.convertsubtitle_option == 17:    #mov en flv 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
@@ -503,7 +554,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
-        elif video == 18:    #mov en hevc 
+        elif self.convertsubtitle_option == 18:    #mov en hevc 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
@@ -522,7 +573,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 19:    #avi en mkv 
+        elif self.convertsubtitle_option == 19:    #avi en mkv 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
@@ -541,7 +592,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 20:    #avi en mp4 
+        elif self.convertsubtitle_option == 20:    #avi en mp4 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
@@ -560,7 +611,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 21:    #avi en mov 
+        elif self.convertsubtitle_option == 21:    #avi en mov 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
@@ -579,7 +630,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 22:    #avi en webm 
+        elif self.convertsubtitle_option == 22:    #avi en webm 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
@@ -598,7 +649,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
-        elif video == 23:    #avi en flv 
+        elif self.convertsubtitle_option == 23:    #avi en flv 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
@@ -617,7 +668,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
-        elif video == 24:    #avi en hevc 
+        elif self.convertsubtitle_option == 24:    #avi en hevc 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
@@ -636,7 +687,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 25:    #webm en avi 
+        elif self.convertsubtitle_option == 25:    #webm en avi 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
@@ -655,7 +706,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 26:    #webm en mkv 
+        elif self.convertsubtitle_option == 26:    #webm en mkv 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
@@ -674,7 +725,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 27:    #webm en mov 
+        elif self.convertsubtitle_option == 27:    #webm en mov 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
@@ -693,7 +744,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 28:    #webm en mp4 
+        elif self.convertsubtitle_option == 28:    #webm en mp4 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
@@ -712,7 +763,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
-        elif video == 29:    #webm en flv 
+        elif self.convertsubtitle_option == 29:    #webm en flv 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
@@ -731,7 +782,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
-        elif video == 30:    #webm en hevc 
+        elif self.convertsubtitle_option == 30:    #webm en hevc 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
@@ -750,7 +801,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 31:    #hevc en avi 
+        elif self.convertsubtitle_option == 31:    #hevc en avi 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
@@ -769,7 +820,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 32:    #hevc en mkv 
+        elif self.convertsubtitle_option == 32:    #hevc en mkv 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
@@ -788,7 +839,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 33:    #hevc en mov 
+        elif self.convertsubtitle_option == 33:    #hevc en mov 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
@@ -807,7 +858,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 34:    #hevc en mp4 
+        elif self.convertsubtitle_option == 34:    #hevc en mp4 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
@@ -826,7 +877,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
-        elif video == 35:    #hevc en flv 
+        elif self.convertsubtitle_option == 35:    #hevc en flv 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
@@ -845,7 +896,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
-        elif video == 36:    #hevc en webm 
+        elif self.convertsubtitle_option == 36:    #hevc en webm 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
@@ -864,7 +915,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 37:    #flv en avi 
+        elif self.convertsubtitle_option == 37:    #flv en avi 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
@@ -883,7 +934,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 38:    #flv en mkv 
+        elif self.convertsubtitle_option == 38:    #flv en mkv 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
@@ -902,7 +953,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 39:    #flv en mov 
+        elif self.convertsubtitle_option == 39:    #flv en mov 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
@@ -921,7 +972,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 40:    #flv en mp4 
+        elif self.convertsubtitle_option == 40:    #flv en mp4 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
@@ -940,7 +991,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
-        elif video == 41:    #flv en hevc 
+        elif self.convertsubtitle_option == 41:    #flv en hevc 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
@@ -959,7 +1010,7 @@ def convertissso_video():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
-        elif video == 42:    #flv en webm 
+        elif self.convertsubtitle_option == 42:    #flv en webm 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
@@ -983,9 +1034,64 @@ def convertissso_video():
             continue
         
 def convertissso_subtitle():
+    app = QApplication(sys.argv)
+    class Convertissosubtitle(QWidget):
+        def __init__(self):
+            super().__init__()
+
+            self.initUI()
+
+        def initUI(self):
+            self.setWindowTitle('Convertisso subtitle')
+            self.setGeometry(100, 100, 700, 400)
+
+            self.path_label = QLabel(self)
+            self.path_label.setText('Chose directory (its store your(s) file(s) to convert):')
+            self.path_label.move(50, 50)
+
+            self.path_input = QLineEdit(self)
+            self.path_input.move(250, 300)
+            self.path_input.resize(300, 30)
+            self.path_input.text()
+
+            self.choose_path_button = QPushButton('Select a directory', self)
+            self.choose_path_button.move(550, 300)
+            self.choose_path_button.clicked.connect(self.choose_folder)
+
+            self.convertsubtitle_label = QLabel(self)
+            self.convertsubtitle_label.setText('Choose a convert option:')
+            self.convertsubtitle_label.move(50, 150)
+
+            self.convertsubtitle_choice = QComboBox(self)
+            self.convertsubtitle_choice.addItem('vtt to srt')
+            self.convertsubtitle_choice.addItem('vtt to ass')
+            self.convertsubtitle_choice.addItem('vtt to lrc')
+            self.convertsubtitle_choice.addItem('srt to vtt')
+            self.convertsubtitle_choice.addItem('srt to ass')
+            self.convertsubtitle_choice.addItem('srt to lrc')
+            self.convertsubtitle_choice.addItem('ass to srt')
+            self.convertsubtitle_choice.addItem('ass to lrc')
+            self.convertsubtitle_choice.addItem('ass to vtt')
+            self.convertsubtitle_choice.addItem('lrc to srt')
+            self.convertsubtitle_choice.addItem('lrc to ass')
+            self.convertsubtitle_choice.addItem('lrc to vtt')
+            self.convertsubtitle_choice.move(250, 200)
+            self.convertsubtitle_choice.resize(200, 30)
+            self.convertsubtitle_choice.currentIndexChanged.connect(self.setconvertsubtitleOption)
+
+            self.convertsubtitle_button = QPushButton('Convert', self)
+            self.convertsubtitle_button.move(300, 350)
+            self.convertsubtitle_button.clicked.connect(self.convertsubtitle_video)
+
+        def choose_folder(self):
+            folder_path = QFileDialog.getExistingDirectory(self, 'Select a directory')
+            self.path_input.setText(folder_path)
+
+        def setconvertsubtitleOption(self, index):
+            self.convertsubtitle_option = self.convertsubtitle_choice.itemText(index)
     video=40
     while True:
-        if video == 1:  #vtt en srt 
+        if self.convertsubtitle_option == 'vtt to srt':  #vtt en srt 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 vtt_files = glob.glob(f"{file}/**/*.vtt", recursive=True)
@@ -1004,7 +1110,7 @@ def convertissso_subtitle():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 2:  #vtt en ass
+        elif self.convertsubtitle_option == 'vtt to ass':  #vtt en ass
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 vtt_files = glob.glob(f"{file}/**/*.vtt", recursive=True)
@@ -1023,7 +1129,7 @@ def convertissso_subtitle():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        if video == 3:  # vtt en lrc
+        if self.convertsubtitle_option == 'vtt en lrc':  # vtt en lrc
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 vtt_files = glob.glob(f"{file}/**/*.vtt", recursive=True)
@@ -1042,7 +1148,7 @@ def convertissso_subtitle():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 4:  # srt en vtt
+        elif self.convertsubtitle_option == 4:  # srt en vtt
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 srt_files = glob.glob(f"{file}/**/*.srt", recursive=True)
@@ -1061,7 +1167,7 @@ def convertissso_subtitle():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 5:  # srt en ass
+        elif self.convertsubtitle_option == 5:  # srt en ass
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 srt_files = glob.glob(f"{file}/**/*.srt", recursive=True)
@@ -1080,7 +1186,7 @@ def convertissso_subtitle():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 6:  # srt en lrc
+        elif self.convertsubtitle_option == 6:  # srt en lrc
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 srt_files = glob.glob(f"{file}/**/*.srt", recursive=True)
@@ -1099,7 +1205,7 @@ def convertissso_subtitle():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
-        elif video == 7:    #ass en srt 
+        elif self.convertsubtitle_option == 7:    #ass en srt 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 ass_files = glob.glob(f"{file}/**/*.ass", recursive=True)
@@ -1118,7 +1224,7 @@ def convertissso_subtitle():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 8:    #ass en lrc 
+        elif self.convertsubtitle_option == 8:    #ass en lrc 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 ass_files = glob.glob(f"{file}/**/*.ass", recursive=True)
@@ -1137,7 +1243,7 @@ def convertissso_subtitle():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 9:    #ass en vtt 
+        elif self.convertsubtitle_option == 9:    #ass en vtt 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 ass_files = glob.glob(f"{file}/**/*.ass", recursive=True)
@@ -1156,7 +1262,7 @@ def convertissso_subtitle():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue
-        elif video == 10:    #lrc en srt 
+        elif self.convertsubtitle_option == 10:    #lrc en srt 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 lrc_files = glob.glob(f"{file}/**/*.lrc", recursive=True)
@@ -1175,7 +1281,7 @@ def convertissso_subtitle():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue        
-        elif video == 11:    #lrc en ass 
+        elif self.convertsubtitle_option == 11:    #lrc en ass 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 lrc_files = glob.glob(f"{file}/**/*.lrc", recursive=True)
@@ -1194,7 +1300,7 @@ def convertissso_subtitle():
             else:
                 QMessageBox.critical(None, "Error", "No files selected")
                 continue         
-        elif video == 12:    #lrc en vtt 
+        elif self.convertsubtitle_option == 12:    #lrc en vtt 
             file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
             if file:
                 lrc_files = glob.glob(f"{file}/**/*.lrc", recursive=True)
@@ -1216,6 +1322,9 @@ def convertissso_subtitle():
         else:
             QMessageBox.critical(None, "Error", "An unexpected error has occurred")
             continue
+window = Convertissosubtitle()
+window.show()
+app.exec_()
         
 def convertissso_audio():
     audio=1
