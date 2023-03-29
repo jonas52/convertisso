@@ -39,136 +39,131 @@ convertisso()
 #     while True:
 #         if i==1:
 #             print("hello world")
-     
 app = QApplication(sys.argv)
-def convertisso_download_video():
-    app = QApplication(sys.argv)
-    class YoutubeDownloader(QWidget):
-        def __init__(self):
-            super().__init__()
+class YoutubeDownloader(QWidget):
+    def __init__(self):
+        super().__init__()
 
-            self.initUI()
+        self.initUI()
 
-        def initUI(self):
-            self.setWindowTitle('Youtube Downloader')
-            self.setGeometry(100, 100, 700, 400)
+    def initUI(self):
+        self.setWindowTitle('Youtube Downloader')
+        self.setGeometry(100, 100, 700, 400)
 
-            self.link_label = QLabel(self)
-            self.link_label.setText('Enter video link:')        
-            self.link_label.move(50, 50)
-            
-            self.link_input = QLineEdit(self)
-            self.link_input.move(250, 50)
-            self.link_input.resize(300, 30)
-            self.link_input.text()
+        self.link_label = QLabel(self)
+        self.link_label.setText('Enter video link:')        
+        self.link_label.move(50, 50)
+        
+        self.link_input = QLineEdit(self)
+        self.link_input.move(250, 50)
+        self.link_input.resize(300, 30)
+        self.link_input.text()
 
-            self.name_label = QLabel(self)
-            self.name_label.setText('Enter the name of the file:')
-            self.name_label.move(50, 100)
+        self.name_label = QLabel(self)
+        self.name_label.setText('Enter the name of the file:')
+        self.name_label.move(50, 100)
 
-            self.name_input = QLineEdit(self)
-            self.name_input.move(250, 100)
-            self.name_input.resize(300, 30)
-            self.name_input.text()
+        self.name_input = QLineEdit(self)
+        self.name_input.move(250, 100)
+        self.name_input.resize(300, 30)
+        self.name_input.text()
 
-            self.destination_label = QLabel(self)
-            self.destination_label.setText('Enter destination folder:')
-            self.destination_label.move(50, 300)
+        self.destination_label = QLabel(self)
+        self.destination_label.setText('Enter destination folder:')
+        self.destination_label.move(50, 300)
 
-            self.destination_input = QLineEdit(self)
-            self.destination_input.move(250, 300)
-            self.destination_input.resize(300, 30)
-            self.destination_input.text()
+        self.destination_input = QLineEdit(self)
+        self.destination_input.move(250, 300)
+        self.destination_input.resize(300, 30)
+        self.destination_input.text()
 
-            self.choose_destination_button = QPushButton('Choose Folder', self)
-            self.choose_destination_button.move(550, 300)
-            self.choose_destination_button.clicked.connect(self.choose_folder)
+        self.choose_destination_button = QPushButton('Choose Folder', self)
+        self.choose_destination_button.move(550, 300)
+        self.choose_destination_button.clicked.connect(self.choose_folder)
 
-            self.download_label = QLabel(self)
-            self.download_label.setText('Choose download option:')
-            self.download_label.move(50, 150)
+        self.download_label = QLabel(self)
+        self.download_label.setText('Choose download option:')
+        self.download_label.move(50, 150)
 
-            self.download_choice = QComboBox(self)
-            self.download_choice.addItem('Video Only')
-            self.download_choice.addItem('Video + Subtitles')
-            self.download_choice.addItem('Audio Only')
-            self.download_choice.addItem('Subtitles Only')
-            self.download_choice.move(250, 200)
-            self.download_choice.resize(200, 30)
-            self.download_choice.currentIndexChanged.connect(self.setDownloadOption)
+        self.download_choice = QComboBox(self)
+        self.download_choice.addItem('Video Only')
+        self.download_choice.addItem('Video + Subtitles')
+        self.download_choice.addItem('Audio Only')
+        self.download_choice.addItem('Subtitles Only')
+        self.download_choice.move(250, 200)
+        self.download_choice.resize(200, 30)
+        self.download_choice.currentIndexChanged.connect(self.setDownloadOption)
 
-            self.download_button = QPushButton('Download', self)
-            self.download_button.move(300, 350)
-            self.download_button.clicked.connect(self.download_video)
+        self.download_button = QPushButton('Download', self)
+        self.download_button.move(300, 350)
+        self.download_button.clicked.connect(self.download_video)
 
-        def choose_folder(self):
-            folder_path = QFileDialog.getExistingDirectory(self, 'Select Folder')
-            self.destination_input.setText(folder_path)
+    def choose_folder(self):
+        folder_path = QFileDialog.getExistingDirectory(self, 'Select Folder')
+        self.destination_input.setText(folder_path)
 
-        def setDownloadOption(self, index):
-            self.download_option = self.download_choice.itemText(index)
+    def setDownloadOption(self, index):
+        self.download_option = self.download_choice.itemText(index)
 
-        def download_video(self):
-            if self.download_option == 'Video Only':
-                            ydl_opts = {
-                                'format': 'bv+ba',
-                                'addmetadata': True,
-                                'outtmpl': self.name_input.text()
-                            }
-                            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                                ydl.download([self.link_input.text()])
-                            for extension in ["*.mp4", "*.mkv", "*.webm", "*.flv"]:
-                                for filename in glob.glob(extension):
-                                    shutil.move(filename, self.destination_input.text())
-            if self.download_option == 'Video + Subtitles':
-                            ydl_opts = {
-                                'format': 'bv+ba',
-                                'addmetadata': True,
-                                'outtmpl': self.destination_input.text() + '/%(title)s.%(ext)s',
-                                'allsubtitles': True,
-                                'writeautomaticsub': True
-                            }
-                            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                                ydl.download([self.link_input.text()])                        
-                            for extension in ["*.mp4", "*.mkv", "*.webm", "*.flv", "*.srt", "*.ass", "*.vtt", "*.lrc"]:
-                                for filename in glob.glob(extension):
-                                    shutil.move(filename, self.destination_input.text())
-            if self.download_option == 'Audio Only':
-                            ydl_opts = {
-                                'format': 'bestaudio',
-                                'addmetadata': True,
-                                'postprocessors': [{
-                                'key': 'FFmpegExtractAudio',
-                                'preferredcodec': 'mp3',
-                                'preferredquality': '320',
-                                }],
-                                'outtmpl': self.name_input.text()
-                            }                       
-                            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                                ydl.download([self.link_input.text()])
-                            for extension in ["*.mp3", "*.aac", "*.flac", "*.m4a", "*.ogg", "*.wav", "*.opus", "*.vorbis"]:
-                                for filename in glob.glob(extension):
-                                    shutil.move(filename, self.destination_input.text())
-            if self.download_option == 'Subtitles Only':
-                            ydl_opts = {
-                                'skip_download': True,
-                                'addmetadata': True,
-                                'outtmpl': self.destination_input.text() + '/%(title)s.%(ext)s',
-                                'allsubtitles': True,
-                                'writeautomaticsub': True
-                            }          
-                            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                                info_dict = ydl.extract_info(self.link_input.text(), download=False)
-                                filename = ydl.prepare_filename(info_dict)
-                                ydl.process_info(info_dict)
-                            for extension in ["*.srt", "*.ass", "*.vtt", "*.lrc"]:
-                                for filename in glob.glob(extension):
-                                    shutil.move(filename, self.destination_input.text())
-            else:
-                            print("Please enter a number between 1 and 4")
-    window = YoutubeDownloader()
-    window.show()
-    app.exec_()
+    def download_video(self):
+        if self.download_option == 'Video Only':
+                        ydl_opts = {
+                            'format': 'bv+ba',
+                            'addmetadata': True,
+                            'outtmpl': self.name_input.text()
+                        }
+                        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                            ydl.download([self.link_input.text()])
+                        for extension in ["*.mp4", "*.mkv", "*.webm", "*.flv"]:
+                            for filename in glob.glob(extension):
+                                shutil.move(filename, self.destination_input.text())
+        if self.download_option == 'Video + Subtitles':
+                        ydl_opts = {
+                            'format': 'bv+ba',
+                            'addmetadata': True,
+                            'outtmpl': self.destination_input.text() + '/%(title)s.%(ext)s',
+                            'allsubtitles': True,
+                            'writeautomaticsub': True
+                        }
+                        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                            ydl.download([self.link_input.text()])                        
+                        for extension in ["*.mp4", "*.mkv", "*.webm", "*.flv", "*.srt", "*.ass", "*.vtt", "*.lrc"]:
+                            for filename in glob.glob(extension):
+                                shutil.move(filename, self.destination_input.text())
+        if self.download_option == 'Audio Only':
+                        ydl_opts = {
+                            'format': 'bestaudio',
+                            'addmetadata': True,
+                            'postprocessors': [{
+                            'key': 'FFmpegExtractAudio',
+                            'preferredcodec': 'mp3',
+                            'preferredquality': '320',
+                            }],
+                            'outtmpl': self.name_input.text()
+                        }                       
+                        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                            ydl.download([self.link_input.text()])
+                        for extension in ["*.mp3", "*.aac", "*.flac", "*.m4a", "*.ogg", "*.wav", "*.opus", "*.vorbis"]:
+                            for filename in glob.glob(extension):
+                                shutil.move(filename, self.destination_input.text())
+        if self.download_option == 'Subtitles Only':
+                        ydl_opts = {
+                            'skip_download': True,
+                            'addmetadata': True,
+                            'outtmpl': self.destination_input.text() + '/%(title)s.%(ext)s',
+                            'allsubtitles': True,
+                            'writeautomaticsub': True
+                        }          
+                        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                            info_dict = ydl.extract_info(self.link_input.text(), download=False)
+                            filename = ydl.prepare_filename(info_dict)
+                            ydl.process_info(info_dict)
+                        for extension in ["*.srt", "*.ass", "*.vtt", "*.lrc"]:
+                            for filename in glob.glob(extension):
+                                shutil.move(filename, self.destination_input.text())
+        else:
+                        print("Please enter a number between 1 and 4")
+
 
 # def convertisso_subtitle():
 
@@ -176,862 +171,856 @@ def convertisso_download_video():
 #         if i==1:
 #             print("hello world")
 
+class convertissso_video_GUI(QWidget):
+    def __init__(self):
+        super().__init__()
 
-def convertissso_video():
-    app = QApplication(sys.argv)
-    class convertissso_video_GUI(QWidget):
-        def __init__(self):
-            super().__init__()
+        self.initUI()
 
-            self.initUI()
+    def initUI(self):
+        self.setWindowTitle('Convertisso video')
+        self.setGeometry(100, 100, 700, 400)
 
-        def initUI(self):
-            self.setWindowTitle('Convertisso video')
-            self.setGeometry(100, 100, 700, 400)
+        self.path_label = QLabel(self)
+        self.path_label.setText('Chose directory (its store your(s) file(s) to convert):')
+        self.path_label.move(50, 50)
 
-            self.path_label = QLabel(self)
-            self.path_label.setText('Chose directory (its store your(s) file(s) to convert):')
-            self.path_label.move(50, 50)
+        self.path_input = QLineEdit(self)
+        self.path_input.move(250, 300)
+        self.path_input.resize(300, 30)
+        self.path_input.text()
 
-            self.path_input = QLineEdit(self)
-            self.path_input.move(250, 300)
-            self.path_input.resize(300, 30)
-            self.path_input.text()
+        self.choose_path_button = QPushButton('Select one directory (not recursive)', self)
+        self.choose_path_button.move(550, 300)
+        self.choose_path_button.clicked.connect(self.choose_folder)
 
-            self.choose_path_button = QPushButton('Select one directory (not recursive)', self)
-            self.choose_path_button.move(550, 300)
-            self.choose_path_button.clicked.connect(self.choose_folder)
+        self.convertvideo_label = QLabel(self)
+        self.convertvideo_label.setText('Choose convert option:')
+        self.convertvideo_label.move(50, 150)
 
-            self.convertvideo_label = QLabel(self)
-            self.convertvideo_label.setText('Choose convert option:')
-            self.convertvideo_label.move(50, 150)
+        self.convertvideo_choice = QComboBox(self)
+        self.convertvideo_choice.addItem('Video Only')
+        self.convertvideo_choice.addItem('Video + Subtitles')
+        self.convertvideo_choice.addItem('Audio Only')
+        self.convertvideo_choice.addItem('Subtitles Only')
+        self.convertvideo_choice.move(250, 200)
+        self.convertvideo_choice.resize(200, 30)
+        self.convertvideo_choice.currentIndexChanged.connect(self.setconvertvideoOption)
 
-            self.convertvideo_choice = QComboBox(self)
-            self.convertvideo_choice.addItem('Video Only')
-            self.convertvideo_choice.addItem('Video + Subtitles')
-            self.convertvideo_choice.addItem('Audio Only')
-            self.convertvideo_choice.addItem('Subtitles Only')
-            self.convertvideo_choice.move(250, 200)
-            self.convertvideo_choice.resize(200, 30)
-            self.convertvideo_choice.currentIndexChanged.connect(self.setconvertvideoOption)
+        self.convertvideo_button = QPushButton('Convert', self)
+        self.convertvideo_button.move(300, 350)
+        self.convertvideo_button.clicked.connect(self.convertvideo_video)
 
-            self.convertvideo_button = QPushButton('Convert', self)
-            self.convertvideo_button.move(300, 350)
-            self.convertvideo_button.clicked.connect(self.convertvideo_video)
+    def choose_folder(self):
+        folder_path = QFileDialog.getExistingDirectory(self, 'Select one directory (not recursive)')
+        self.destination_input.setText(folder_path)
 
-        def choose_folder(self):
-            folder_path = QFileDialog.getExistingDirectory(self, 'Select one directory (not recursive)')
-            self.destination_input.setText(folder_path)
+    def setDownloadOption(self, index):
+        self.download_option = self.download_choice.itemText(index)
 
-        def setDownloadOption(self, index):
-            self.download_option = self.download_choice.itemText(index)
-
-    window = YoutubeDownloader()
-    window.show()
-    app.exec_()
-    video=7
-    while True:
-        if self.convertsubtitle_option == 1:  # mkv en avi ----------------------------------------------------------------------------------------Problème convertion impossible a revoir
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
-                if mkv_files:
-                    print("Conversion in progress ...")
-                    for t in mkv_files:
-                        out_filename = os.path.splitext(t)[0] + '.avi'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy',  map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "avi"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
+video=7
+while True:
+    if self.convertsubtitle_option == 1:  # mkv en avi ----------------------------------------------------------------------------------------Problème convertion impossible a revoir
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
+            if mkv_files:
+                print("Conversion in progress ...")
+                for t in mkv_files:
+                    out_filename = os.path.splitext(t)[0] + '.avi'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy',  map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "avi"
+                break
             else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 2:  # mkv en mov
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
-                if mkv_files:
-                    print("Conversion in progress ...")
-                    for t in mkv_files:
-                        out_filename = os.path.splitext(t)[0] + '.mov'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mov"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        if self.convertsubtitle_option == 3:  # mkv en mp4
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
-                if mkv_files:
-                    print("Conversion in progress ...")
-                    for t in mkv_files:
-                        out_filename = os.path.splitext(t)[0] + '.mp4'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mp4"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 4:  # mkv en webm
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
-                if mkv_files:
-                    print("Conversion in progress ...")
-                    for t in mkv_files:
-                        out_filename = os.path.splitext(t)[0] + '.webm'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "webm"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 5:  # mkv en flv
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
-                if mkv_files:
-                    print("Conversion in progress ...")
-                    for t in mkv_files:
-                        out_filename = os.path.splitext(t)[0] + '.flv'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "flv"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 6:  # mkv en hevc
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
-                if mkv_files:
-                    print("Conversion in progress ...")
-                    for t in mkv_files:
-                        out_filename = os.path.splitext(t)[0] + '.hevc'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "hevc"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue        
-        elif self.convertsubtitle_option == 7:    #mp4 en mkv 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
-                if mp4_files:
-                    print("Conversion in progress ...")
-                    for t in mp4_files:
-                        out_filename = os.path.splitext(t)[0] + '.mkv'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mkv"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 8:    #mp4 en mov 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
-                if mp4_files:
-                    print("Conversion in progress ...")
-                    for t in mp4_files:
-                        out_filename = os.path.splitext(t)[0] + '.mov'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mov"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 9:    #mp4 en avi 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
-                if mp4_files:
-                    print("Conversion in progress ...")
-                    for t in mp4_files:
-                        out_filename = os.path.splitext(t)[0] + '.avi'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "avi"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 10:    #mp4 en webm 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
-                if mp4_files:
-                    print("Conversion in progress ...")
-                    for t in mp4_files:
-                        out_filename = os.path.splitext(t)[0] + '.webm'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "webm"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue        
-        elif self.convertsubtitle_option == 11:    #mp4 en flv 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
-                if mp4_files:
-                    print("Conversion in progress ...")
-                    for t in mp4_files:
-                        out_filename = os.path.splitext(t)[0] + '.flv'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "flv"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue         
-        elif self.convertsubtitle_option == 12:    #mp4 en hevc 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
-                if mp4_files:
-                    print("Conversion in progress ...")
-                    for t in mp4_files:
-                        out_filename = os.path.splitext(t)[0] + '.hevc'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "hevc"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue         
-        elif self.convertsubtitle_option == 13:    #mov en mkv 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
-                if mov_files:
-                    print("Conversion in progress ...")
-                    for t in mov_files:
-                        out_filename = os.path.splitext(t)[0] + '.mkv'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mkv"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 14:    #mov en mp4 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
-                if mov_files:
-                    print("Conversion in progress ...")
-                    for t in mov_files:
-                        out_filename = os.path.splitext(t)[0] + '.mp4'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mp4"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 15:    #mov en avi 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
-                if mov_files:
-                    print("Conversion in progress ...")
-                    for t in mov_files:
-                        out_filename = os.path.splitext(t)[0] + '.avi'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "avi"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 16:    #mov en webm 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
-                if mov_files:
-                    print("Conversion in progress ...")
-                    for t in mov_files:
-                        out_filename = os.path.splitext(t)[0] + '.webm'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "webm"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue        
-        elif self.convertsubtitle_option == 17:    #mov en flv 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
-                if mov_files:
-                    print("Conversion in progress ...")
-                    for t in mov_files:
-                        out_filename = os.path.splitext(t)[0] + '.flv'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "flv"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue         
-        elif self.convertsubtitle_option == 18:    #mov en hevc 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
-                if mov_files:
-                    print("Conversion in progress ...")
-                    for t in mov_files:
-                        out_filename = os.path.splitext(t)[0] + '.hevc'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "hevc"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 19:    #avi en mkv 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
-                if avi_files:
-                    print("Conversion in progress ...")
-                    for t in avi_files:
-                        out_filename = os.path.splitext(t)[0] + '.mkv'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mkv"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 20:    #avi en mp4 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
-                if avi_files:
-                    print("Conversion in progress ...")
-                    for t in avi_files:
-                        out_filename = os.path.splitext(t)[0] + '.mp4'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "avi"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 21:    #avi en mov 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
-                if avi_files:
-                    print("Conversion in progress ...")
-                    for t in avi_files:
-                        out_filename = os.path.splitext(t)[0] + '.mov'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mov"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 22:    #avi en webm 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
-                if avi_files:
-                    print("Conversion in progress ...")
-                    for t in avi_files:
-                        out_filename = os.path.splitext(t)[0] + '.webm'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "webm"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue        
-        elif self.convertsubtitle_option == 23:    #avi en flv 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
-                if avi_files:
-                    print("Conversion in progress ...")
-                    for t in avi_files:
-                        out_filename = os.path.splitext(t)[0] + '.flv'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "flv"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue         
-        elif self.convertsubtitle_option == 24:    #avi en hevc 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
-                if avi_files:
-                    print("Conversion in progress ...")
-                    for t in avi_files:
-                        out_filename = os.path.splitext(t)[0] + '.hevc'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, vcodec='libx265', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "hevc"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 25:    #webm en avi 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
-                if webm_files:
-                    print("Conversion in progress ...")
-                    for t in webm_files:
-                        out_filename = os.path.splitext(t)[0] + '.avi'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "avi"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 26:    #webm en mkv 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
-                if webm_files:
-                    print("Conversion in progress ...")
-                    for t in webm_files:
-                        out_filename = os.path.splitext(t)[0] + '.mkv'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mkv"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 27:    #webm en mov 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
-                if webm_files:
-                    print("Conversion in progress ...")
-                    for t in webm_files:
-                        out_filename = os.path.splitext(t)[0] + '.mov'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mov"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 28:    #webm en mp4 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
-                if webm_files:
-                    print("Conversion in progress ...")
-                    for t in webm_files:
-                        out_filename = os.path.splitext(t)[0] + '.mp4'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mp4"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue        
-        elif self.convertsubtitle_option == 29:    #webm en flv 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
-                if webm_files:
-                    print("Conversion in progress ...")
-                    for t in webm_files:
-                        out_filename = os.path.splitext(t)[0] + '.flv'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "flv"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue         
-        elif self.convertsubtitle_option == 30:    #webm en hevc 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
-                if webm_files:
-                    print("Conversion in progress ...")
-                    for t in webm_files:
-                        out_filename = os.path.splitext(t)[0] + '.hevc'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "hevc"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 31:    #hevc en avi 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
-                if hevc_files:
-                    print("Conversion in progress ...")
-                    for t in hevc_files:
-                        out_filename = os.path.splitext(t)[0] + '.avi'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "avi"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 32:    #hevc en mkv 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
-                if hevc_files:
-                    print("Conversion in progress ...")
-                    for t in hevc_files:
-                        out_filename = os.path.splitext(t)[0] + '.mkv'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mkv"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 33:    #hevc en mov 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
-                if hevc_files:
-                    print("Conversion in progress ...")
-                    for t in hevc_files:
-                        out_filename = os.path.splitext(t)[0] + '.mov'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mov"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 34:    #hevc en mp4 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
-                if hevc_files:
-                    print("Conversion in progress ...")
-                    for t in hevc_files:
-                        out_filename = os.path.splitext(t)[0] + '.mp4'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mp4"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue        
-        elif self.convertsubtitle_option == 35:    #hevc en flv 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
-                if hevc_files:
-                    print("Conversion in progress ...")
-                    for t in hevc_files:
-                        out_filename = os.path.splitext(t)[0] + '.flv'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "flv"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue         
-        elif self.convertsubtitle_option == 36:    #hevc en webm 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
-                if hevc_files:
-                    print("Conversion in progress ...")
-                    for t in hevc_files:
-                        out_filename = os.path.splitext(t)[0] + '.webm'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "webm"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 37:    #flv en avi 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
-                if flv_files:
-                    print("Conversion in progress ...")
-                    for t in flv_files:
-                        out_filename = os.path.splitext(t)[0] + '.avi'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "avi"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 38:    #flv en mkv 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
-                if flv_files:
-                    print("Conversion in progress ...")
-                    for t in flv_files:
-                        out_filename = os.path.splitext(t)[0] + '.mkv'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mkv"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 39:    #flv en mov 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
-                if flv_files:
-                    print("Conversion in progress ...")
-                    for t in flv_files:
-                        out_filename = os.path.splitext(t)[0] + '.mov'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mov"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 40:    #flv en mp4 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
-                if flv_files:
-                    print("Conversion in progress ...")
-                    for t in flv_files:
-                        out_filename = os.path.splitext(t)[0] + '.mp4'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "mp4"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue        
-        elif self.convertsubtitle_option == 41:    #flv en hevc 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
-                if flv_files:
-                    print("Conversion in progress ...")
-                    for t in flv_files:
-                        out_filename = os.path.splitext(t)[0] + '.hevc'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "hevc"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue         
-        elif self.convertsubtitle_option == 42:    #flv en webm 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
-                if flv_files:
-                    print("Conversion in progress ...")
-                    for t in flv_files:
-                        out_filename = os.path.splitext(t)[0] + '.webm'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "webm"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                 continue
         else:
-            QMessageBox.critical(None, "Error", "An unexpected error has occurred")
+            QMessageBox.critical(None, "Error", "No files selected")
             continue
+    elif self.convertsubtitle_option == 2:  # mkv en mov
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
+            if mkv_files:
+                print("Conversion in progress ...")
+                for t in mkv_files:
+                    out_filename = os.path.splitext(t)[0] + '.mov'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mov"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    if self.convertsubtitle_option == 3:  # mkv en mp4
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
+            if mkv_files:
+                print("Conversion in progress ...")
+                for t in mkv_files:
+                    out_filename = os.path.splitext(t)[0] + '.mp4'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mp4"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 4:  # mkv en webm
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
+            if mkv_files:
+                print("Conversion in progress ...")
+                for t in mkv_files:
+                    out_filename = os.path.splitext(t)[0] + '.webm'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "webm"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 5:  # mkv en flv
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
+            if mkv_files:
+                print("Conversion in progress ...")
+                for t in mkv_files:
+                    out_filename = os.path.splitext(t)[0] + '.flv'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "flv"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 6:  # mkv en hevc
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mkv_files = glob.glob(f"{file}/**/*.mkv", recursive=True)
+            if mkv_files:
+                print("Conversion in progress ...")
+                for t in mkv_files:
+                    out_filename = os.path.splitext(t)[0] + '.hevc'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "hevc"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue        
+    elif self.convertsubtitle_option == 7:    #mp4 en mkv 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
+            if mp4_files:
+                print("Conversion in progress ...")
+                for t in mp4_files:
+                    out_filename = os.path.splitext(t)[0] + '.mkv'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename, vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mkv"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 8:    #mp4 en mov 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
+            if mp4_files:
+                print("Conversion in progress ...")
+                for t in mp4_files:
+                    out_filename = os.path.splitext(t)[0] + '.mov'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mov"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 9:    #mp4 en avi 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
+            if mp4_files:
+                print("Conversion in progress ...")
+                for t in mp4_files:
+                    out_filename = os.path.splitext(t)[0] + '.avi'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "avi"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 10:    #mp4 en webm 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
+            if mp4_files:
+                print("Conversion in progress ...")
+                for t in mp4_files:
+                    out_filename = os.path.splitext(t)[0] + '.webm'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "webm"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue        
+    elif self.convertsubtitle_option == 11:    #mp4 en flv 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
+            if mp4_files:
+                print("Conversion in progress ...")
+                for t in mp4_files:
+                    out_filename = os.path.splitext(t)[0] + '.flv'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "flv"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue         
+    elif self.convertsubtitle_option == 12:    #mp4 en hevc 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mp4_files = glob.glob(f"{file}/**/*.mp4", recursive=True)
+            if mp4_files:
+                print("Conversion in progress ...")
+                for t in mp4_files:
+                    out_filename = os.path.splitext(t)[0] + '.hevc'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "hevc"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue         
+    elif self.convertsubtitle_option == 13:    #mov en mkv 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
+            if mov_files:
+                print("Conversion in progress ...")
+                for t in mov_files:
+                    out_filename = os.path.splitext(t)[0] + '.mkv'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mkv"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 14:    #mov en mp4 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
+            if mov_files:
+                print("Conversion in progress ...")
+                for t in mov_files:
+                    out_filename = os.path.splitext(t)[0] + '.mp4'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mp4"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 15:    #mov en avi 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
+            if mov_files:
+                print("Conversion in progress ...")
+                for t in mov_files:
+                    out_filename = os.path.splitext(t)[0] + '.avi'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "avi"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 16:    #mov en webm 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
+            if mov_files:
+                print("Conversion in progress ...")
+                for t in mov_files:
+                    out_filename = os.path.splitext(t)[0] + '.webm'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "webm"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue        
+    elif self.convertsubtitle_option == 17:    #mov en flv 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
+            if mov_files:
+                print("Conversion in progress ...")
+                for t in mov_files:
+                    out_filename = os.path.splitext(t)[0] + '.flv'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "flv"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue         
+    elif self.convertsubtitle_option == 18:    #mov en hevc 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            mov_files = glob.glob(f"{file}/**/*.mov", recursive=True)
+            if mov_files:
+                print("Conversion in progress ...")
+                for t in mov_files:
+                    out_filename = os.path.splitext(t)[0] + '.hevc'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "hevc"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 19:    #avi en mkv 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
+            if avi_files:
+                print("Conversion in progress ...")
+                for t in avi_files:
+                    out_filename = os.path.splitext(t)[0] + '.mkv'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mkv"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 20:    #avi en mp4 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
+            if avi_files:
+                print("Conversion in progress ...")
+                for t in avi_files:
+                    out_filename = os.path.splitext(t)[0] + '.mp4'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "avi"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 21:    #avi en mov 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
+            if avi_files:
+                print("Conversion in progress ...")
+                for t in avi_files:
+                    out_filename = os.path.splitext(t)[0] + '.mov'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mov"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 22:    #avi en webm 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
+            if avi_files:
+                print("Conversion in progress ...")
+                for t in avi_files:
+                    out_filename = os.path.splitext(t)[0] + '.webm'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "webm"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue        
+    elif self.convertsubtitle_option == 23:    #avi en flv 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
+            if avi_files:
+                print("Conversion in progress ...")
+                for t in avi_files:
+                    out_filename = os.path.splitext(t)[0] + '.flv'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "flv"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue         
+    elif self.convertsubtitle_option == 24:    #avi en hevc 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            avi_files = glob.glob(f"{file}/**/*.avi", recursive=True)
+            if avi_files:
+                print("Conversion in progress ...")
+                for t in avi_files:
+                    out_filename = os.path.splitext(t)[0] + '.hevc'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename, vcodec='libx265', acodec='aac', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "hevc"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 25:    #webm en avi 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
+            if webm_files:
+                print("Conversion in progress ...")
+                for t in webm_files:
+                    out_filename = os.path.splitext(t)[0] + '.avi'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "avi"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 26:    #webm en mkv 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
+            if webm_files:
+                print("Conversion in progress ...")
+                for t in webm_files:
+                    out_filename = os.path.splitext(t)[0] + '.mkv'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mkv"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 27:    #webm en mov 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
+            if webm_files:
+                print("Conversion in progress ...")
+                for t in webm_files:
+                    out_filename = os.path.splitext(t)[0] + '.mov'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mov"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 28:    #webm en mp4 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
+            if webm_files:
+                print("Conversion in progress ...")
+                for t in webm_files:
+                    out_filename = os.path.splitext(t)[0] + '.mp4'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mp4"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue        
+    elif self.convertsubtitle_option == 29:    #webm en flv 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
+            if webm_files:
+                print("Conversion in progress ...")
+                for t in webm_files:
+                    out_filename = os.path.splitext(t)[0] + '.flv'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "flv"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue         
+    elif self.convertsubtitle_option == 30:    #webm en hevc 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            webm_files = glob.glob(f"{file}/**/*.webm", recursive=True)
+            if webm_files:
+                print("Conversion in progress ...")
+                for t in webm_files:
+                    out_filename = os.path.splitext(t)[0] + '.hevc'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "hevc"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 31:    #hevc en avi 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
+            if hevc_files:
+                print("Conversion in progress ...")
+                for t in hevc_files:
+                    out_filename = os.path.splitext(t)[0] + '.avi'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "avi"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 32:    #hevc en mkv 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
+            if hevc_files:
+                print("Conversion in progress ...")
+                for t in hevc_files:
+                    out_filename = os.path.splitext(t)[0] + '.mkv'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mkv"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 33:    #hevc en mov 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
+            if hevc_files:
+                print("Conversion in progress ...")
+                for t in hevc_files:
+                    out_filename = os.path.splitext(t)[0] + '.mov'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mov"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 34:    #hevc en mp4 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
+            if hevc_files:
+                print("Conversion in progress ...")
+                for t in hevc_files:
+                    out_filename = os.path.splitext(t)[0] + '.mp4'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mp4"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue        
+    elif self.convertsubtitle_option == 35:    #hevc en flv 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
+            if hevc_files:
+                print("Conversion in progress ...")
+                for t in hevc_files:
+                    out_filename = os.path.splitext(t)[0] + '.flv'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "flv"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue         
+    elif self.convertsubtitle_option == 36:    #hevc en webm 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            hevc_files = glob.glob(f"{file}/**/*.hevc", recursive=True)
+            if hevc_files:
+                print("Conversion in progress ...")
+                for t in hevc_files:
+                    out_filename = os.path.splitext(t)[0] + '.webm'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "webm"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 37:    #flv en avi 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
+            if flv_files:
+                print("Conversion in progress ...")
+                for t in flv_files:
+                    out_filename = os.path.splitext(t)[0] + '.avi'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "avi"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 38:    #flv en mkv 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
+            if flv_files:
+                print("Conversion in progress ...")
+                for t in flv_files:
+                    out_filename = os.path.splitext(t)[0] + '.mkv'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mkv"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 39:    #flv en mov 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
+            if flv_files:
+                print("Conversion in progress ...")
+                for t in flv_files:
+                    out_filename = os.path.splitext(t)[0] + '.mov'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mov"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    elif self.convertsubtitle_option == 40:    #flv en mp4 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
+            if flv_files:
+                print("Conversion in progress ...")
+                for t in flv_files:
+                    out_filename = os.path.splitext(t)[0] + '.mp4'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "mp4"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue        
+    elif self.convertsubtitle_option == 41:    #flv en hevc 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
+            if flv_files:
+                print("Conversion in progress ...")
+                for t in flv_files:
+                    out_filename = os.path.splitext(t)[0] + '.hevc'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "hevc"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue         
+    elif self.convertsubtitle_option == 42:    #flv en webm 
+        file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+        if file:
+            flv_files = glob.glob(f"{file}/**/*.flv", recursive=True)
+            if flv_files:
+                print("Conversion in progress ...")
+                for t in flv_files:
+                    out_filename = os.path.splitext(t)[0] + '.webm'
+                    stream = ffmpeg.input(t)
+                    stream = ffmpeg.output(stream, out_filename,  vcodec='copy', acodec='copy', map_metadata=0)
+                    ffmpeg.run(stream, quiet=True)
+                encov = "webm"
+                break
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                continue
+        else:
+            QMessageBox.critical(None, "Error", "No files selected")
+            continue
+    else:
+        QMessageBox.critical(None, "Error", "An unexpected error has occurred")
+        continue
         
 class Convertissosubtitle(QWidget):
     app = QApplication(sys.argv)
@@ -2020,7 +2009,9 @@ app.exit()
 asd=int(input("Entrer le bon numero: 1=download, 2=video, 3=audio, 4=subtitle. ->  "))
 
 if asd == 1:
-    convertisso_download_video()
+    YoutubeDownloader()
+    window = YoutubeDownloader()
+    window.show()()
 elif asd == 2:
     convertissso_video()
 elif asd == 3:
