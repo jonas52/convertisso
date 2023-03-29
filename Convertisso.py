@@ -1033,295 +1033,294 @@ def convertissso_video():
             QMessageBox.critical(None, "Error", "An unexpected error has occurred")
             continue
         
-def convertissso_subtitle():
+class Convertissosubtitle(QWidget):
     app = QApplication(sys.argv)
-    class Convertissosubtitle(QWidget):
-        def __init__(self):
-            super().__init__()
+    def __init__(self):
+        super().__init__()
 
-            self.initUI()
+        self.initUI()
 
-        def initUI(self):
-            self.setWindowTitle('Convertisso subtitle')
-            self.setGeometry(100, 100, 700, 400)
+    def initUI(self):
+        self.setWindowTitle('Convertisso subtitle')
+        self.setGeometry(100, 100, 700, 400)
 
-            self.path_label = QLabel(self)
-            self.path_label.setText('Chose directory (its store your(s) file(s) to convert):')
-            self.path_label.move(50, 50)
+        self.path_label = QLabel(self)
+        self.path_label.setText('Chose directory (its store your(s) file(s) to convert):')
+        self.path_label.move(50, 50)
 
-            self.path_input = QLineEdit(self)
-            self.path_input.move(250, 300)
-            self.path_input.resize(300, 30)
-            self.path_input.text()
+        self.path_input = QLineEdit(self)
+        self.path_input.move(250, 300)
+        self.path_input.resize(300, 30)
+        self.path_input.text()
 
-            self.choose_path_button = QPushButton('Select a directory', self)
-            self.choose_path_button.move(550, 300)
-            self.choose_path_button.clicked.connect(self.choose_folder)
+        self.choose_path_button = QPushButton('Select a directory', self)
+        self.choose_path_button.move(550, 300)
+        self.choose_path_button.clicked.connect(self.choose_folder)
 
-            self.convertsubtitle_label = QLabel(self)
-            self.convertsubtitle_label.setText('Choose a convert option:')
-            self.convertsubtitle_label.move(50, 150)
+        self.convertsubtitle_label = QLabel(self)
+        self.convertsubtitle_label.setText('Choose a convert option:')
+        self.convertsubtitle_label.move(50, 150)
 
-            self.convertsubtitle_choice = QComboBox(self)
-            self.convertsubtitle_choice.addItem('vtt to srt')
-            self.convertsubtitle_choice.addItem('vtt to ass')
-            self.convertsubtitle_choice.addItem('vtt to lrc')
-            self.convertsubtitle_choice.addItem('srt to vtt')
-            self.convertsubtitle_choice.addItem('srt to ass')
-            self.convertsubtitle_choice.addItem('srt to lrc')
-            self.convertsubtitle_choice.addItem('ass to srt')
-            self.convertsubtitle_choice.addItem('ass to lrc')
-            self.convertsubtitle_choice.addItem('ass to vtt')
-            self.convertsubtitle_choice.addItem('lrc to srt')
-            self.convertsubtitle_choice.addItem('lrc to ass')
-            self.convertsubtitle_choice.addItem('lrc to vtt')
-            self.convertsubtitle_choice.move(250, 200)
-            self.convertsubtitle_choice.resize(200, 30)
-            self.convertsubtitle_choice.currentIndexChanged.connect(self.setconvertsubtitleOption)
+        self.convertsubtitle_choice = QComboBox(self)
+        self.convertsubtitle_choice.addItem('vtt to srt')
+        self.convertsubtitle_choice.addItem('vtt to ass')
+        self.convertsubtitle_choice.addItem('vtt to lrc')
+        self.convertsubtitle_choice.addItem('srt to vtt')
+        self.convertsubtitle_choice.addItem('srt to ass')
+        self.convertsubtitle_choice.addItem('srt to lrc')
+        self.convertsubtitle_choice.addItem('ass to srt')
+        self.convertsubtitle_choice.addItem('ass to lrc')
+        self.convertsubtitle_choice.addItem('ass to vtt')
+        self.convertsubtitle_choice.addItem('lrc to srt')
+        self.convertsubtitle_choice.addItem('lrc to ass')
+        self.convertsubtitle_choice.addItem('lrc to vtt')
+        self.convertsubtitle_choice.move(250, 200)
+        self.convertsubtitle_choice.resize(200, 30)
+        self.convertsubtitle_choice.currentIndexChanged.connect(self.setconvertsubtitleOption)
 
-            self.convertsubtitle_button = QPushButton('Convert', self)
-            self.convertsubtitle_button.move(300, 350)
-            self.convertsubtitle_button.clicked.connect(self.convertsubtitle_video)
+        self.convertsubtitle_button = QPushButton('Convert', self)
+        self.convertsubtitle_button.move(300, 350)
+        self.convertsubtitle_button.clicked.connect(self.convertisso_subtitle)
 
-        def choose_folder(self):
-            folder_path = QFileDialog.getExistingDirectory(self, 'Select a directory')
-            self.path_input.setText(folder_path)
+    def choose_folder(self):
+        folder_path = QFileDialog.getExistingDirectory(self, 'Select a directory')
+        self.path_input.setText(folder_path)
 
-        def setconvertsubtitleOption(self, index):
-            self.convertsubtitle_option = self.convertsubtitle_choice.itemText(index)
-    video=40
-    while True:
-        if self.convertsubtitle_option == 'vtt to srt':  #vtt en srt 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                vtt_files = glob.glob(f"{file}/**/*.vtt", recursive=True)
-                if vtt_files:
-                    print("Conversion in progress ...")
-                    for t in vtt_files:
-                        out_filename = os.path.splitext(t)[0] + '.srt'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "srt"
-                    break
+    def setconvertsubtitleOption(self, index):
+        self.convertsubtitle_option = self.convertsubtitle_choice.itemText(index)
+    def convertisso_subtitle(self):
+        while True:
+            if self.convertsubtitle_option == 'vtt to srt':  #vtt en srt 
+                file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                if file:
+                    vtt_files = glob.glob(f"{file}/**/*.vtt", recursive=True)
+                    if vtt_files:
+                        print("Conversion in progress ...")
+                        for t in vtt_files:
+                            out_filename = os.path.splitext(t)[0] + '.srt'
+                            stream = ffmpeg.input(t)
+                            stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                        encov = "srt"
+                        break
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        continue
                 else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    QMessageBox.critical(None, "Error", "No files selected")
                     continue
+            elif self.convertsubtitle_option == 'vtt to ass':  #vtt en ass
+                file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                if file:
+                    vtt_files = glob.glob(f"{file}/**/*.vtt", recursive=True)
+                    if vtt_files:
+                        print("Conversion in progress ...")
+                        for t in vtt_files:
+                            out_filename = os.path.splitext(t)[0] + '.ass'
+                            stream = ffmpeg.input(t)
+                            stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                        encov = "ass"
+                        break
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        continue
+                else:
+                    QMessageBox.critical(None, "Error", "No files selected")
+                    continue
+            if self.convertsubtitle_option == 'vtt en lrc':  # vtt en lrc
+                file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                if file:
+                    vtt_files = glob.glob(f"{file}/**/*.vtt", recursive=True)
+                    if vtt_files:
+                        print("Conversion in progress ...")
+                        for t in vtt_files:
+                            out_filename = os.path.splitext(t)[0] + '.lrc'
+                            stream = ffmpeg.input(t)
+                            stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                        encov = "lrc"
+                        break
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        continue
+                else:
+                    QMessageBox.critical(None, "Error", "No files selected")
+                    continue
+            elif self.convertsubtitle_option == 4:  # srt en vtt
+                file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                if file:
+                    srt_files = glob.glob(f"{file}/**/*.srt", recursive=True)
+                    if srt_files:
+                        print("Conversion in progress ...")
+                        for t in srt_files:
+                            out_filename = os.path.splitext(t)[0] + '.vtt'
+                            stream = ffmpeg.input(t)
+                            stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                        encov = "vtt"
+                        break
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        continue
+                else:
+                    QMessageBox.critical(None, "Error", "No files selected")
+                    continue
+            elif self.convertsubtitle_option == 5:  # srt en ass
+                file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                if file:
+                    srt_files = glob.glob(f"{file}/**/*.srt", recursive=True)
+                    if srt_files:
+                        print("Conversion in progress ...")
+                        for t in srt_files:
+                            out_filename = os.path.splitext(t)[0] + '.ass'
+                            stream = ffmpeg.input(t)
+                            stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                        encov = "ass"
+                        break
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        continue
+                else:
+                    QMessageBox.critical(None, "Error", "No files selected")
+                    continue
+            elif self.convertsubtitle_option == 6:  # srt en lrc
+                file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                if file:
+                    srt_files = glob.glob(f"{file}/**/*.srt", recursive=True)
+                    if srt_files:
+                        print("Conversion in progress ...")
+                        for t in srt_files:
+                            out_filename = os.path.splitext(t)[0] + '.lrc'
+                            stream = ffmpeg.input(t)
+                            stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                        encov = "lrc"
+                        break
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        continue
+                else:
+                    QMessageBox.critical(None, "Error", "No files selected")
+                    continue        
+            elif self.convertsubtitle_option == 7:    #ass en srt 
+                file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                if file:
+                    ass_files = glob.glob(f"{file}/**/*.ass", recursive=True)
+                    if ass_files:
+                        print("Conversion in progress ...")
+                        for t in ass_files:
+                            out_filename = os.path.splitext(t)[0] + '.srt'
+                            stream = ffmpeg.input(t)
+                            stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                        encov = "srt"
+                        break
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        continue
+                else:
+                    QMessageBox.critical(None, "Error", "No files selected")
+                    continue
+            elif self.convertsubtitle_option == 8:    #ass en lrc 
+                file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                if file:
+                    ass_files = glob.glob(f"{file}/**/*.ass", recursive=True)
+                    if ass_files:
+                        print("Conversion in progress ...")
+                        for t in ass_files:
+                            out_filename = os.path.splitext(t)[0] + '.lrc'
+                            stream = ffmpeg.input(t)
+                            stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                        encov = "lrc"
+                        break
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        continue
+                else:
+                    QMessageBox.critical(None, "Error", "No files selected")
+                    continue
+            elif self.convertsubtitle_option == 9:    #ass en vtt 
+                file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                if file:
+                    ass_files = glob.glob(f"{file}/**/*.ass", recursive=True)
+                    if ass_files:
+                        print("Conversion in progress ...")
+                        for t in ass_files:
+                            out_filename = os.path.splitext(t)[0] + '.vtt'
+                            stream = ffmpeg.input(t)
+                            stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                        encov = "vtt"
+                        break
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        continue
+                else:
+                    QMessageBox.critical(None, "Error", "No files selected")
+                    continue
+            elif self.convertsubtitle_option == 10:    #lrc en srt 
+                file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                if file:
+                    lrc_files = glob.glob(f"{file}/**/*.lrc", recursive=True)
+                    if lrc_files:
+                        print("Conversion in progress ...")
+                        for t in lrc_files:
+                            out_filename = os.path.splitext(t)[0] + '.srt'
+                            stream = ffmpeg.input(t)
+                            stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                        encov = "srt"
+                        break
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        continue
+                else:
+                    QMessageBox.critical(None, "Error", "No files selected")
+                    continue        
+            elif self.convertsubtitle_option == 11:    #lrc en ass 
+                file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                if file:
+                    lrc_files = glob.glob(f"{file}/**/*.lrc", recursive=True)
+                    if lrc_files:
+                        print("Conversion in progress ...")
+                        for t in lrc_files:
+                            out_filename = os.path.splitext(t)[0] + '.ass'
+                            stream = ffmpeg.input(t)
+                            stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                        encov = "ass"
+                        break
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        continue
+                else:
+                    QMessageBox.critical(None, "Error", "No files selected")
+                    continue         
+            elif self.convertsubtitle_option == 12:    #lrc en vtt 
+                file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
+                if file:
+                    lrc_files = glob.glob(f"{file}/**/*.lrc", recursive=True)
+                    if lrc_files:
+                        print("Conversion in progress ...")
+                        for t in lrc_files:
+                            out_filename = os.path.splitext(t)[0] + '.vtt'
+                            stream = ffmpeg.input(t)
+                            stream = ffmpeg.output(stream, out_filename, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                        encov = "vtt"
+                        break
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        continue
+                else:
+                    QMessageBox.critical(None, "Error", "No files selected")
+                    continue         
             else:
-                QMessageBox.critical(None, "Error", "No files selected")
+                QMessageBox.critical(None, "Error", "An unexpected error has occurred")
                 continue
-        elif self.convertsubtitle_option == 'vtt to ass':  #vtt en ass
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                vtt_files = glob.glob(f"{file}/**/*.vtt", recursive=True)
-                if vtt_files:
-                    print("Conversion in progress ...")
-                    for t in vtt_files:
-                        out_filename = os.path.splitext(t)[0] + '.ass'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "ass"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        if self.convertsubtitle_option == 'vtt en lrc':  # vtt en lrc
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                vtt_files = glob.glob(f"{file}/**/*.vtt", recursive=True)
-                if vtt_files:
-                    print("Conversion in progress ...")
-                    for t in vtt_files:
-                        out_filename = os.path.splitext(t)[0] + '.lrc'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "lrc"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 4:  # srt en vtt
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                srt_files = glob.glob(f"{file}/**/*.srt", recursive=True)
-                if srt_files:
-                    print("Conversion in progress ...")
-                    for t in srt_files:
-                        out_filename = os.path.splitext(t)[0] + '.vtt'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "vtt"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 5:  # srt en ass
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                srt_files = glob.glob(f"{file}/**/*.srt", recursive=True)
-                if srt_files:
-                    print("Conversion in progress ...")
-                    for t in srt_files:
-                        out_filename = os.path.splitext(t)[0] + '.ass'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "ass"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 6:  # srt en lrc
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                srt_files = glob.glob(f"{file}/**/*.srt", recursive=True)
-                if srt_files:
-                    print("Conversion in progress ...")
-                    for t in srt_files:
-                        out_filename = os.path.splitext(t)[0] + '.lrc'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "lrc"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue        
-        elif self.convertsubtitle_option == 7:    #ass en srt 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                ass_files = glob.glob(f"{file}/**/*.ass", recursive=True)
-                if ass_files:
-                    print("Conversion in progress ...")
-                    for t in ass_files:
-                        out_filename = os.path.splitext(t)[0] + '.srt'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "srt"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 8:    #ass en lrc 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                ass_files = glob.glob(f"{file}/**/*.ass", recursive=True)
-                if ass_files:
-                    print("Conversion in progress ...")
-                    for t in ass_files:
-                        out_filename = os.path.splitext(t)[0] + '.lrc'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "lrc"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 9:    #ass en vtt 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                ass_files = glob.glob(f"{file}/**/*.ass", recursive=True)
-                if ass_files:
-                    print("Conversion in progress ...")
-                    for t in ass_files:
-                        out_filename = os.path.splitext(t)[0] + '.vtt'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "vtt"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue
-        elif self.convertsubtitle_option == 10:    #lrc en srt 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                lrc_files = glob.glob(f"{file}/**/*.lrc", recursive=True)
-                if lrc_files:
-                    print("Conversion in progress ...")
-                    for t in lrc_files:
-                        out_filename = os.path.splitext(t)[0] + '.srt'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "srt"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue        
-        elif self.convertsubtitle_option == 11:    #lrc en ass 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                lrc_files = glob.glob(f"{file}/**/*.lrc", recursive=True)
-                if lrc_files:
-                    print("Conversion in progress ...")
-                    for t in lrc_files:
-                        out_filename = os.path.splitext(t)[0] + '.ass'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "ass"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue         
-        elif self.convertsubtitle_option == 12:    #lrc en vtt 
-            file = QFileDialog.getExistingDirectory(None, "Select one directory (not recursive)")
-            if file:
-                lrc_files = glob.glob(f"{file}/**/*.lrc", recursive=True)
-                if lrc_files:
-                    print("Conversion in progress ...")
-                    for t in lrc_files:
-                        out_filename = os.path.splitext(t)[0] + '.vtt'
-                        stream = ffmpeg.input(t)
-                        stream = ffmpeg.output(stream, out_filename, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                    encov = "vtt"
-                    break
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    continue
-            else:
-                QMessageBox.critical(None, "Error", "No files selected")
-                continue         
-        else:
-            QMessageBox.critical(None, "Error", "An unexpected error has occurred")
-            continue
 window = Convertissosubtitle()
 window.show()
 app.exec_()
