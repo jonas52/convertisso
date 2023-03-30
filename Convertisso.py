@@ -117,7 +117,7 @@ class YoutubeDownloader(QWidget):
                         for extension in ["*.mp4", "*.mkv", "*.webm", "*.flv"]:
                             for filename in glob.glob(extension):
                                 shutil.move(filename, self.destination_input.text())
-        if self.download_option == 'Video + Subtitles':
+        elif self.download_option == 'Video + Subtitles':
                         ydl_opts = {
                             'format': 'bv+ba',
                             'addmetadata': True,
@@ -132,21 +132,21 @@ class YoutubeDownloader(QWidget):
                                 shutil.move(filename, self.destination_input.text())
         if self.download_option == 'Audio Only':
                         ydl_opts = {
-                            'format': 'bestaudio',
-                            'addmetadata': True,
-                            'postprocessors': [{
-                            'key': 'FFmpegExtractAudio',
-                            'preferredcodec': 'mp3',
-                            'preferredquality': '320',
-                            }],
-                            'outtmpl': self.name_input.text()
-                        }                       
+                                    'format': 'bestaudio/best',
+                                    'postprocessors': [{
+                                        'key': 'FFmpegExtractAudio',
+                                        'preferredcodec': 'flac',
+                                        'preferredquality': 'lossless',
+                                    }],
+                                    'addmetadata': True,
+                                    'outtmpl': self.name_input.text() + '.%(ext)s'
+                        }
                         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                             ydl.download([self.link_input.text()])
                         for extension in ["*.mp3", "*.aac", "*.flac", "*.m4a", "*.ogg", "*.wav", "*.opus", "*.vorbis"]:
                             for filename in glob.glob(extension):
                                 shutil.move(filename, self.destination_input.text())
-        if self.download_option == 'Subtitles Only':
+        elif self.download_option == 'Subtitles Only':
                         ydl_opts = {
                             'skip_download': True,
                             'addmetadata': True,
