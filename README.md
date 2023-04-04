@@ -27,14 +27,14 @@
 - Convert your video files (mkv, mp4, mov, avi, webm, hevc, flv). 
 - Convert your audio files (mp3, wav, ogg, ac3, aac, flac, opus, vorbis). -ogg, vorbis, opus + m4a
 - Convert your photo files (png, jpg, tiff, pdf, svg, pdf, gif, heic). -> coming soon
-## Main TUI of Convertisso
+## Main GUI of Convertisso
 coming soon
 # To run my script convertisso GUI whit QT
 #### Open terminal and type this
 ### Dowload and lauch whit : 
 >     git clone https://github.com/jonas52/convertisso.git && cd convertisso && python3 convertisso.py
 - And it's all good conversions and/or video downloads
-- To exit the program or return to main menu : select EXIT
+- To exit the program alt F4 or the cross of the right top.
 # Other
 > #### For problems or ideas for additions related to my code do not hesitate to contact me: petitpierre@duck.com
 > #### The convertisso is a product of © PSociety by jonas52! Copyright (C) 2022-2023 © PSociety. All rights reserved.
