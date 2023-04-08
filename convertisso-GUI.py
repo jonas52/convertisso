@@ -2,6 +2,7 @@
 #a ajouter pop-up pour la convertion reussi
 # installer
 # enlever le sub process
+#option pour sans ffmpeg avec yt_dlp
 import os
 import subprocess
 import shutil
