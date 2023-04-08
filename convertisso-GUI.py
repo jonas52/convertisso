@@ -191,15 +191,15 @@ class AudioTab(QWidget):
     
 
     def convertaudio(self):
-        if self.convertaudio_choice == 'mp3 to ogg':
+        if self.convert_audio_choice == 'mp3 to ogg':
                 mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
                 if mp3_files:
                     print("Conversion in progress ...")
                     for mp3_file in mp3_files:
-                        mp3_file = os.path.splitext(mp3_file)[0] + '.ogg'
+                        ogg_file = os.path.splitext(mp3_file)[0] + '.ogg'
                     try:
                         stream = ffmpeg.input(mp3_file)
-                        stream = ffmpeg.output(stream, mp3_file, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -209,15 +209,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'mp3 to aac':
+        elif self.convert_audio_choice == 'mp3 to aac':
                 mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
                 if mp3_files:
                     print("Conversion in progress ...")
                     for mp3_file in mp3_files:
-                        mp3_file = os.path.splitext(mp3_file)[0] + '.aac'
+                        aac_file = os.path.splitext(mp3_file)[0] + '.aac'
                     try:
                         stream = ffmpeg.input(mp3_file)
-                        stream = ffmpeg.output(stream, mp3_file, acodec='aac', map_metadata=0)
+                        stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -227,15 +227,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'mp3 to wav':
+        elif self.convert_audio_choice == 'mp3 to wav':
                 mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
                 if mp3_files:
                     print("Conversion in progress ...")
                     for mp3_file in mp3_files:
-                        mp3_file = os.path.splitext(mp3_file)[0] + '.wav'
+                        wav_file = os.path.splitext(mp3_file)[0] + '.wav'
                     try:
                         stream = ffmpeg.input(mp3_file)
-                        stream = ffmpeg.output(stream, mp3_file, map_metadata=0)
+                        stream = ffmpeg.output(stream, wav_file, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -245,15 +245,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'mp3 to ac3':
+        elif self.convert_audio_choice == 'mp3 to ac3':
                 mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
                 if mp3_files:
                     print("Conversion in progress ...")
                     for mp3_file in mp3_files:
-                        mp3_file = os.path.splitext(mp3_file)[0] + '.ac3'
+                        ac3_file = os.path.splitext(mp3_file)[0] + '.ac3'
                     try:
                         stream = ffmpeg.input(mp3_file)
-                        stream = ffmpeg.output(stream, mp3_file, acodec='ac3', map_metadata=0)
+                        stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -263,15 +263,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'mp3 to opus':
+        elif self.convert_audio_choice == 'mp3 to opus':
                 mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
                 if mp3_files:
                     print("Conversion in progress ...")
                     for mp3_file in mp3_files:
-                        mp3_file = os.path.splitext(mp3_file)[0] + '.opus'
+                        opus_file = os.path.splitext(mp3_file)[0] + '.opus'
                     try:
                         stream = ffmpeg.input(mp3_file)
-                        stream = ffmpeg.output(stream, mp3_file, acodec='libopus', map_metadata=0)
+                        stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -281,15 +281,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'mp3 to m4a':
+        elif self.convert_audio_choice == 'mp3 to m4a':
                 mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
                 if mp3_files:
                     print("Conversion in progress ...")
                     for mp3_file in mp3_files:
-                        mp3_file = os.path.splitext(mp3_file)[0] + '.m4a'
+                        m4a_file = os.path.splitext(mp3_file)[0] + '.m4a'
                     try:
                         stream = ffmpeg.input(mp3_file)
-                        stream = ffmpeg.output(stream, mp3_file, acodec='alac', map_metadata=0)
+                        stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -299,15 +299,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'wav to ogg':
+        elif self.convert_audio_choice == 'wav to ogg':
                 wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
                 if wav_files:
                     print("Conversion in progress ...")
                     for wav_file in wav_files:
-                        wav_file = os.path.splitext(wav_file)[0] + '.ogg'
+                        ogg_file = os.path.splitext(wav_file)[0] + '.ogg'
                     try:
                         stream = ffmpeg.input(wav_file)
-                        stream = ffmpeg.output(stream, wav_file, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -317,15 +317,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'wav to aac':
+        elif self.convert_audio_choice == 'wav to aac':
                 wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
                 if wav_files:
                     print("Conversion in progress ...")
                     for wav_file in wav_files:
-                        wav_file = os.path.splitext(wav_file)[0] + '.aac'
+                        aac_file = os.path.splitext(wav_file)[0] + '.aac'
                     try:
                         stream = ffmpeg.input(wav_file)
-                        stream = ffmpeg.output(stream, wav_file, acodec='aac', map_metadata=0)
+                        stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -335,15 +335,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'wav to mp3':
+        elif self.convert_audio_choice == 'wav to mp3':
                 wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
                 if wav_files:
                     print("Conversion in progress ...")
                     for wav_file in wav_files:
-                        wav_file = os.path.splitext(wav_file)[0] + '.wav'
+                        mp3_file = os.path.splitext(wav_file)[0] + '.mp3'
                     try:
                         stream = ffmpeg.input(wav_file)
-                        stream = ffmpeg.output(stream, wav_file, acodec='libmp3lame', map_metadata=0)
+                        stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -353,15 +353,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'wav to ac3':
+        elif self.convert_audio_choice == 'wav to ac3':
                 wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
                 if wav_files:
                     print("Conversion in progress ...")
                     for wav_file in wav_files:
-                        wav_file = os.path.splitext(wav_file)[0] + '.ac3'
+                        ac3_file = os.path.splitext(wav_file)[0] + '.ac3'
                     try:
                         stream = ffmpeg.input(wav_file)
-                        stream = ffmpeg.output(stream, wav_file, acodec='ac3', map_metadata=0)
+                        stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -371,15 +371,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'wav to opus':
+        elif self.convert_audio_choice == 'wav to opus':
                 wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
                 if wav_files:
                     print("Conversion in progress ...")
                     for wav_file in wav_files:
-                        wav_file = os.path.splitext(wav_file)[0] + '.opus'
+                        opus_file = os.path.splitext(wav_file)[0] + '.opus'
                     try:
                         stream = ffmpeg.input(wav_file)
-                        stream = ffmpeg.output(stream, wav_file, acodec='libopus', map_metadata=0)
+                        stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -389,15 +389,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'wav to m4a':
+        elif self.convert_audio_choice == 'wav to m4a':
                 wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
                 if wav_files:
                     print("Conversion in progress ...")
                     for wav_file in wav_files:
-                        wav_file = os.path.splitext(wav_file)[0] + '.m4a'
+                        m4a_file = os.path.splitext(wav_file)[0] + '.m4a'
                     try:
                         stream = ffmpeg.input(wav_file)
-                        stream = ffmpeg.output(stream, wav_file, acodec='alac', map_metadata=0)
+                        stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -407,15 +407,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'ogg to wav':
+        elif self.convert_audio_choice == 'ogg to wav':
                 ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
                 if ogg_files:
                     print("Conversion in progress ...")
                     for ogg_file in ogg_files:
-                        ogg_file = os.path.splitext(ogg_file)[0] + '.ogg'
+                        wav_file = os.path.splitext(ogg_file)[0] + '.wav'
                     try:
                         stream = ffmpeg.input(ogg_file)
-                        stream = ffmpeg.output(stream, ogg_file, map_metadata=0)
+                        stream = ffmpeg.output(stream, wav_file, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -425,15 +425,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'ogg to aac':
+        elif self.convert_audio_choice == 'ogg to aac':
                 ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
                 if ogg_files:
                     print("Conversion in progress ...")
                     for ogg_file in ogg_files:
-                        ogg_file = os.path.splitext(ogg_file)[0] + '.aac'
+                        aac_file = os.path.splitext(ogg_file)[0] + '.aac'
                     try:
                         stream = ffmpeg.input(ogg_file)
-                        stream = ffmpeg.output(stream, ogg_file, acodec='aac', map_metadata=0)
+                        stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -443,15 +443,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'ogg to mp3':
+        elif self.convert_audio_choice == 'ogg to mp3':
                 ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
                 if ogg_files:
                     print("Conversion in progress ...")
                     for ogg_file in ogg_files:
-                        ogg_file = os.path.splitext(ogg_file)[0] + '.ogg'
+                        mp3_file = os.path.splitext(ogg_file)[0] + '.mp3'
                     try:
                         stream = ffmpeg.input(ogg_file)
-                        stream = ffmpeg.output(stream, ogg_file, acodec='libmp3lame', map_metadata=0)
+                        stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -461,15 +461,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'ogg to ac3':
+        elif self.convert_audio_choice == 'ogg to ac3':
                 ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
                 if ogg_files:
                     print("Conversion in progress ...")
                     for ogg_file in ogg_files:
-                        ogg_file = os.path.splitext(ogg_file)[0] + '.ac3'
+                        ac3_file = os.path.splitext(ogg_file)[0] + '.ac3'
                     try:
                         stream = ffmpeg.input(ogg_file)
-                        stream = ffmpeg.output(stream, ogg_file, acodec='ac3', map_metadata=0)
+                        stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -479,15 +479,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'ogg to opus':
+        elif self.convert_audio_choice == 'ogg to opus':
                 ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
                 if ogg_files:
                     print("Conversion in progress ...")
                     for ogg_file in ogg_files:
-                        ogg_file = os.path.splitext(ogg_file)[0] + '.opus'
+                        opus_file = os.path.splitext(ogg_file)[0] + '.opus'
                     try:
                         stream = ffmpeg.input(ogg_file)
-                        stream = ffmpeg.output(stream, ogg_file, acodec='libopus', map_metadata=0)
+                        stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -497,15 +497,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'ogg to m4a':
+        elif self.convert_audio_choice == 'ogg to m4a':
                 ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
                 if ogg_files:
                     print("Conversion in progress ...")
                     for ogg_file in ogg_files:
-                        ogg_file = os.path.splitext(ogg_file)[0] + '.m4a'
+                        m4a_file = os.path.splitext(ogg_file)[0] + '.m4a'
                     try:
                         stream = ffmpeg.input(ogg_file)
-                        stream = ffmpeg.output(stream, ogg_file, acodec='alac', map_metadata=0)
+                        stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -515,15 +515,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'ac3 to wav':
+        elif self.convert_audio_choice == 'ac3 to wav':
                 ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
                 if ac3_files:
                     print("Conversion in progress ...")
                     for ac3_file in ac3_files:
-                        ac3_file = os.path.splitext(ac3_file)[0] + '.ac3'
+                        wav_file = os.path.splitext(ac3_file)[0] + '.wav'
                     try:
                         stream = ffmpeg.input(ac3_file)
-                        stream = ffmpeg.output(stream, ac3_file, map_metadata=0)
+                        stream = ffmpeg.output(stream, wav_file, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -533,15 +533,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'ac3 to aac':
+        elif self.convert_audio_choice == 'ac3 to aac':
                 ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
                 if ac3_files:
                     print("Conversion in progress ...")
                     for ac3_file in ac3_files:
-                        ac3_file = os.path.splitext(ac3_file)[0] + '.aac'
+                        aac_file = os.path.splitext(ac3_file)[0] + '.aac'
                     try:
                         stream = ffmpeg.input(ac3_file)
-                        stream = ffmpeg.output(stream, ac3_file, acodec='aac', map_metadata=0)
+                        stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -551,15 +551,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'ac3 to mp3':
+        elif self.convert_audio_choice == 'ac3 to mp3':
                 ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
                 if ac3_files:
                     print("Conversion in progress ...")
                     for ac3_file in ac3_files:
-                        ac3_file = os.path.splitext(ac3_file)[0] + '.ac3'
+                        mp3_file = os.path.splitext(ac3_file)[0] + '.mp3'
                     try:
                         stream = ffmpeg.input(ac3_file)
-                        stream = ffmpeg.output(stream, ac3_file, acodec='libmp3lame', map_metadata=0)
+                        stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -569,15 +569,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'ac3 to ogg':
+        elif self.convert_audio_choice == 'ac3 to ogg':
                 ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
                 if ac3_files:
                     print("Conversion in progress ...")
                     for ac3_file in ac3_files:
-                        ac3_file = os.path.splitext(ac3_file)[0] + '.ogg'
+                        ogg_file = os.path.splitext(ac3_file)[0] + '.ogg'
                     try:
                         stream = ffmpeg.input(ac3_file)
-                        stream = ffmpeg.output(stream, ac3_file, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -587,15 +587,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'ac3 to opus':
+        elif self.convert_audio_choice == 'ac3 to opus':
                 ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
                 if ac3_files:
                     print("Conversion in progress ...")
                     for ac3_file in ac3_files:
-                        ac3_file = os.path.splitext(ac3_file)[0] + '.opus'
+                        opus_file = os.path.splitext(ac3_file)[0] + '.opus'
                     try:
                         stream = ffmpeg.input(ac3_file)
-                        stream = ffmpeg.output(stream, ac3_file, acodec='libopus', map_metadata=0)
+                        stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -605,15 +605,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'ac3 to m4a':
+        elif self.convert_audio_choice == 'ac3 to m4a':
                 ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
                 if ac3_files:
                     print("Conversion in progress ...")
                     for ac3_file in ac3_files:
-                        ac3_file = os.path.splitext(ac3_file)[0] + '.m4a'
+                        m4a_file = os.path.splitext(ac3_file)[0] + '.m4a'
                     try:
                         stream = ffmpeg.input(ac3_file)
-                        stream = ffmpeg.output(stream, ac3_file, acodec='alac', map_metadata=0)
+                        stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -623,15 +623,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'aac to wav':
+        elif self.convert_audio_choice == 'aac to wav':
                 aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
                 if aac_files:
                     print("Conversion in progress ...")
                     for aac_file in aac_files:
-                        aac_file = os.path.splitext(aac_file)[0] + '.aac'
+                        wav_file = os.path.splitext(aac_file)[0] + '.wav'
                     try:
                         stream = ffmpeg.input(aac_file)
-                        stream = ffmpeg.output(stream, aac_file, map_metadata=0)
+                        stream = ffmpeg.output(stream, wav_file, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -641,15 +641,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'aac to ac3':
+        elif self.convert_audio_choice == 'aac to ac3':
                 aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
                 if aac_files:
                     print("Conversion in progress ...")
                     for aac_file in aac_files:
-                        aac_file = os.path.splitext(aac_file)[0] + '.ac3'
+                        ac3_file = os.path.splitext(aac_file)[0] + '.ac3'
                     try:
                         stream = ffmpeg.input(aac_file)
-                        stream = ffmpeg.output(stream, aac_file, acodec='ac3', map_metadata=0)
+                        stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -659,15 +659,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'aac to mp3':
+        elif self.convert_audio_choice == 'aac to mp3':
                 aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
                 if aac_files:
                     print("Conversion in progress ...")
                     for aac_file in aac_files:
-                        aac_file = os.path.splitext(aac_file)[0] + '.aac'
+                        mp3_file = os.path.splitext(aac_file)[0] + '.mp3'
                     try:
                         stream = ffmpeg.input(aac_file)
-                        stream = ffmpeg.output(stream, aac_file, acodec='libmp3lame', map_metadata=0)
+                        stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -677,15 +677,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'aac to ogg':
+        elif self.convert_audio_choice == 'aac to ogg':
                 aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
                 if aac_files:
                     print("Conversion in progress ...")
                     for aac_file in aac_files:
-                        aac_file = os.path.splitext(aac_file)[0] + '.ogg'
+                        ogg_file = os.path.splitext(aac_file)[0] + '.ogg'
                     try:
                         stream = ffmpeg.input(aac_file)
-                        stream = ffmpeg.output(stream, aac_file, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -695,15 +695,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'aac to opus':
+        elif self.convert_audio_choice == 'aac to opus':
                 aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
                 if aac_files:
                     print("Conversion in progress ...")
                     for aac_file in aac_files:
-                        aac_file = os.path.splitext(aac_file)[0] + '.opus'
+                        opus_file = os.path.splitext(aac_file)[0] + '.opus'
                     try:
                         stream = ffmpeg.input(aac_file)
-                        stream = ffmpeg.output(stream, aac_file, acodec='libopus', map_metadata=0)
+                        stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -713,15 +713,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'aac to m4a':
+        elif self.convert_audio_choice == 'aac to m4a':
                 aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
                 if aac_files:
                     print("Conversion in progress ...")
                     for aac_file in aac_files:
-                        aac_file = os.path.splitext(aac_file)[0] + '.m4a'
+                        m4a_file = os.path.splitext(aac_file)[0] + '.m4a'
                     try:
                         stream = ffmpeg.input(aac_file)
-                        stream = ffmpeg.output(stream, aac_file, acodec='alac', map_metadata=0)
+                        stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -731,15 +731,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'flac to wav':
+        elif self.convert_audio_choice == 'flac to wav':
                 flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
                 if flac_files:
                     print("Conversion in progress ...")
                     for flac_file in flac_files:
-                        flac_file = os.path.splitext(flac_file)[0] + '.flac'
+                        wav_file = os.path.splitext(flac_file)[0] + '.wav'
                     try:
                         stream = ffmpeg.input(flac_file)
-                        stream = ffmpeg.output(stream, flac_file, map_metadata=0)
+                        stream = ffmpeg.output(stream, wav_file, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -749,15 +749,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'flac to ac3':
+        elif self.convert_audio_choice == 'flac to ac3':
                 flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
                 if flac_files:
                     print("Conversion in progress ...")
                     for flac_file in flac_files:
-                        flac_file = os.path.splitext(flac_file)[0] + '.ac3'
+                        ac3_file = os.path.splitext(flac_file)[0] + '.ac3'
                     try:
                         stream = ffmpeg.input(flac_file)
-                        stream = ffmpeg.output(stream, flac_file, acodec='ac3', map_metadata=0)
+                        stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -767,33 +767,33 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'flac to mp3':
+        elif self.convert_audio_choice == 'flac to mp3':
                 flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
                 if flac_files:
                     print("Conversion in progress ...")
                     for flac_file in flac_files:
-                        flac_file = os.path.splitext(flac_file)[0] + '.flac'
+                        mp3_file = os.path.splitext(flac_file)[0] + '.mp3'
                     try:
                         stream = ffmpeg.input(flac_file)
-                        stream = ffmpeg.output(stream, flac_file, acodec='libmp3lame', map_metadata=0)
+                        stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
                         QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
                         return
-                    encov = "flac"
+                    encov = "mp3"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'flac to ogg':
+        elif self.convert_audio_choice == 'flac to ogg':
                 flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
                 if flac_files:
                     print("Conversion in progress ...")
                     for flac_file in flac_files:
-                        flac_file = os.path.splitext(flac_file)[0] + '.ogg'
+                        ogg_file = os.path.splitext(flac_file)[0] + '.ogg'
                     try:
                         stream = ffmpeg.input(flac_file)
-                        stream = ffmpeg.output(stream, flac_file, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -803,15 +803,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'flac to opus':
+        elif self.convert_audio_choice == 'flac to opus':
                 flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
                 if flac_files:
                     print("Conversion in progress ...")
                     for flac_file in flac_files:
-                        flac_file = os.path.splitext(flac_file)[0] + '.opus'
+                        opus_file = os.path.splitext(flac_file)[0] + '.opus'
                     try:
                         stream = ffmpeg.input(flac_file)
-                        stream = ffmpeg.output(stream, flac_file, acodec='libopus', map_metadata=0)
+                        stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -821,15 +821,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'flac to m4a':
+        elif self.convert_audio_choice == 'flac to m4a':
                 flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
                 if flac_files:
                     print("Conversion in progress ...")
                     for flac_file in flac_files:
-                        flac_file = os.path.splitext(flac_file)[0] + '.m4a'
+                        m4a_file = os.path.splitext(flac_file)[0] + '.m4a'
                     try:
                         stream = ffmpeg.input(flac_file)
-                        stream = ffmpeg.output(stream, flac_file, acodec='alac', map_metadata=0)
+                        stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -839,15 +839,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'flac to aac':
+        elif self.convert_audio_choice == 'flac to aac':
                 flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
                 if flac_files:
                     print("Conversion in progress ...")
                     for flac_file in flac_files:
-                        flac_file = os.path.splitext(flac_file)[0] + '.aac'
+                        aac_file = os.path.splitext(flac_file)[0] + '.aac'
                     try:
                         stream = ffmpeg.input(flac_file)
-                        stream = ffmpeg.output(stream, flac_file, acodec='aac', map_metadata=0)
+                        stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -857,15 +857,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'opus to wav':
+        elif self.convert_audio_choice == 'opus to wav':
                 opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
                 if opus_files:
                     print("Conversion in progress ...")
                     for opus_file in opus_files:
-                        opus_file = os.path.splitext(opus_file)[0] + '.opus'
+                        wav_file = os.path.splitext(opus_file)[0] + '.wav'
                     try:
                         stream = ffmpeg.input(opus_file)
-                        stream = ffmpeg.output(stream, opus_file, map_metadata=0)
+                        stream = ffmpeg.output(stream, wav_file, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -875,15 +875,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'opus to ac3':
+        elif self.convert_audio_choice == 'opus to ac3':
                 opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
                 if opus_files:
                     print("Conversion in progress ...")
                     for opus_file in opus_files:
-                        opus_file = os.path.splitext(opus_file)[0] + '.ac3'
+                        ac3_file = os.path.splitext(opus_file)[0] + '.ac3'
                     try:
                         stream = ffmpeg.input(opus_file)
-                        stream = ffmpeg.output(stream, opus_file, acodec='ac3', map_metadata=0)
+                        stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -893,15 +893,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'opus to mp3':
+        elif self.convert_audio_choice == 'opus to mp3':
                 opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
                 if opus_files:
                     print("Conversion in progress ...")
                     for opus_file in opus_files:
-                        opus_file = os.path.splitext(opus_file)[0] + '.opus'
+                        mp3_file = os.path.splitext(opus_file)[0] + '.mp3'
                     try:
                         stream = ffmpeg.input(opus_file)
-                        stream = ffmpeg.output(stream, opus_file, acodec='libmp3lame', map_metadata=0)
+                        stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -911,15 +911,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'opus to ogg':
+        elif self.convert_audio_choice == 'opus to ogg':
                 opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
                 if opus_files:
                     print("Conversion in progress ...")
                     for opus_file in opus_files:
-                        opus_file = os.path.splitext(opus_file)[0] + '.ogg'
+                        ogg_file = os.path.splitext(opus_file)[0] + '.ogg'
                     try:
                         stream = ffmpeg.input(opus_file)
-                        stream = ffmpeg.output(stream, opus_file, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -929,15 +929,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'opus to m4a':
+        elif self.convert_audio_choice == 'opus to m4a':
                 opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
                 if opus_files:
                     print("Conversion in progress ...")
                     for opus_file in opus_files:
-                        opus_file = os.path.splitext(opus_file)[0] + '.m4a'
+                        m4a_file = os.path.splitext(opus_file)[0] + '.m4a'
                     try:
                         stream = ffmpeg.input(opus_file)
-                        stream = ffmpeg.output(stream, opus_file, acodec='alac', map_metadata=0)
+                        stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -947,15 +947,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'opus to aac':
+        elif self.convert_audio_choice == 'opus to aac':
                 opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
                 if opus_files:
                     print("Conversion in progress ...")
                     for opus_file in opus_files:
-                        opus_file = os.path.splitext(opus_file)[0] + '.aac'
+                        aac_file = os.path.splitext(opus_file)[0] + '.aac'
                     try:
                         stream = ffmpeg.input(opus_file)
-                        stream = ffmpeg.output(stream, opus_file, acodec='aac', map_metadata=0)
+                        stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -965,18 +965,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'm4a to wav':
-                m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
-                if m4a_files:
-                    print("Conversion in progress ...")
+        elif self.convert_audio_choice == 'm4a to wav':
                 m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
                 if m4a_files:
                     print("Conversion in progress ...")
                     for m4a_file in m4a_files:
-                        m4a_file = os.path.splitext(m4a_file)[0] + '.m4a'
+                        wav_file = os.path.splitext(m4a_file)[0] + '.wav'
                     try:
                         stream = ffmpeg.input(m4a_file)
-                        stream = ffmpeg.output(stream, m4a_file, map_metadata=0)
+                        stream = ffmpeg.output(stream, wav_file, map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -986,15 +983,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'm4a to ac3':
+        elif self.convert_audio_choice == 'm4a to ac3':
                 m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
                 if m4a_files:
                     print("Conversion in progress ...")
                     for m4a_file in m4a_files:
-                        m4a_file = os.path.splitext(m4a_file)[0] + '.ac3'
+                        ac3_file = os.path.splitext(m4a_file)[0] + '.ac3'
                     try:
                         stream = ffmpeg.input(m4a_file)
-                        stream = ffmpeg.output(stream, m4a_file, acodec='ac3', map_metadata=0)
+                        stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -1004,15 +1001,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'm4a to mp3':
+        elif self.convert_audio_choice == 'm4a to mp3':
                 m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
                 if m4a_files:
                     print("Conversion in progress ...")
                     for m4a_file in m4a_files:
-                        m4a_file = os.path.splitext(m4a_file)[0] + '.m4a'
+                        mp3_file = os.path.splitext(m4a_file)[0] + '.mp3'
                     try:
                         stream = ffmpeg.input(m4a_file)
-                        stream = ffmpeg.output(stream, m4a_file, acodec='libmp3lame', map_metadata=0)
+                        stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -1022,15 +1019,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'm4a to ogg':
+        elif self.convert_audio_choice == 'm4a to ogg':
                 m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
                 if m4a_files:
                     print("Conversion in progress ...")
                     for m4a_file in m4a_files:
-                        m4a_file = os.path.splitext(m4a_file)[0] + '.ogg'
+                        ogg_file = os.path.splitext(m4a_file)[0] + '.ogg'
                     try:
                         stream = ffmpeg.input(m4a_file)
-                        stream = ffmpeg.output(stream, m4a_file, acodec='libvorbis', map_metadata=0)
+                        stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -1040,15 +1037,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'm4a to opus':
+        elif self.convert_audio_choice == 'm4a to opus':
                 m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
                 if m4a_files:
                     print("Conversion in progress ...")
                     for m4a_file in m4a_files:
-                        m4a_file = os.path.splitext(m4a_file)[0] + '.opus'
+                        opus_file = os.path.splitext(m4a_file)[0] + '.opus'
                     try:
                         stream = ffmpeg.input(m4a_file)
-                        stream = ffmpeg.output(stream, m4a_file, acodec='libopus', map_metadata=0)
+                        stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
@@ -1058,15 +1055,15 @@ class AudioTab(QWidget):
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
-        elif self.convertaudio_choice == 'm4a to aac':
+        elif self.convert_audio_choice == 'm4a to aac':
                 m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
                 if m4a_files:
                     print("Conversion in progress ...")
                     for m4a_file in m4a_files:
-                        m4a_file = os.path.splitext(m4a_file)[0] + '.aac'
+                        aac_file = os.path.splitext(m4a_file)[0] + '.aac'
                     try:
                         stream = ffmpeg.input(m4a_file)
-                        stream = ffmpeg.output(stream, m4a_file, acodec='aac', map_metadata=0)
+                        stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
                         ffmpeg.run(stream, quiet=True)
                         print("Conversion OK")
                     except ffmpeg.Error as e:
