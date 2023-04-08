@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+#a ajouter pop-up pour la convertion reussi
+# installer
+# enlever le sub process
 import os
 import subprocess
 import shutil
