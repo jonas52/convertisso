@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-# a ajouter pop-up pour la convertion reussi
-# installer
-# enlever le sub process
-# option pour sans ffmpeg avec yt_dlp
+# a ajouter pop-up pour la convertion reussi --bon
+# installer -- a faire
+# enlever le sub process -- bon 
+# option pour sans ffmpeg avec yt_dlp --a faire
 import os
 from urllib import request
 import subprocess
