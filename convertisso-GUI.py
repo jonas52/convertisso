@@ -1,20 +1,65 @@
 #!/usr/bin/env python3
-#a ajouter pop-up pour la convertion reussi
+# a ajouter pop-up pour la convertion reussi
 # installer
 # enlever le sub process
-#option pour sans ffmpeg avec yt_dlp
+# option pour sans ffmpeg avec yt_dlp
 import os
+from urllib import request
 import subprocess
 import shutil
 import glob
 import yt_dlp
 import ffmpeg
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QTabWidget, QWidget, QLabel, QPushButton, QLineEdit, QComboBox, QFileDialog, QMessageBox, QMainWindow, QDesktopWidget, QVBoxLayout, QScrollBar
+from PyQt5.QtWidgets import QApplication, QTabWidget, QWidget, QLabel, QPushButton, QLineEdit, QComboBox, QFileDialog, QMessageBox, QMainWindow, QDesktopWidget, QVBoxLayout, QScrollBar, QProgressBar
+from PyQt5.QtGui import QColor
+import requests
 import sys
 from pydub import AudioSegment
 from urllib import request
+
+def convertisso(): 
+    print("\n")
+    print("\033[33m   ██████╗ ██████╗ ███╗   ██╗██╗   ██╗███████╗██████╗ ████████╗██╗███████╗███████╗ ██████╗  \033[0m")
+    print("\033[33m  ██╔════╝██╔═══██╗████╗  ██║██║   ██║██╔════╝██╔══██╗╚══██╔══╝██║██╔════╝██╔════╝██╔═══██╗ \033[0m")
+    print("\033[33m  ██║     ██║   ██║██╔██╗ ██║██║   ██║█████╗  ██████╔╝   ██║   ██║███████╗███████╗██║   ██║ \033[0m")
+    print("\033[33m  ██║     ██║   ██║██║╚██╗██║╚██╗ ██╔╝██╔══╝  ██╔══██╗   ██║   ██║╚════██║╚════██║██║   ██║ \033[0m")
+    print("\033[33m  ╚██████╗╚██████╔╝██║ ╚████║ ╚████╔╝ ███████╗██║  ██║   ██║   ██║███████║███████║╚██████╔╝ \033[0m")
+    print("\033[33m   ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚══════╝╚══════╝ ╚═════╝  \033[0m")
+    print("\033[33m                                                       +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+  \033[0m")
+    print("\033[33m                                                       |b| |y| |J| |o| |n| |a| |s| |5| |2|  \033[0m")
+    print("\033[33m                                                       +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+  \033[0m")
+    print("\n")
+        
+convertisso()
+
+def show_success_message():
+    message_box = QMessageBox()
+    message_box.setWindowTitle("Successful conversion")
+    message_box.setText("The conversion was successful")
+    message_box.setIcon(QMessageBox.Information)
+    message_box.setStandardButtons(QMessageBox.Ok)
+    message_box.exec_()
+
+def show_download_success_message():
+    message_box = QMessageBox()
+    message_box.setWindowTitle("Successful download")
+    message_box.setText("The download was successful.")
+    message_box.setIcon(QMessageBox.Information)
+    message_box.addButton(QMessageBox.Ok)
+    message_box.exec_()
+
+def internet_check(host='https://google.com'):
+    '''
+    Check if the user have an Internet connection by connecting to google.com over https
+    '''
+    try:
+        request.urlopen(host, timeout=4)
+        return True
+    except:
+        return False
+
 class DownloaderTab(QWidget):
     def __init__(self):
         super().__init__()
@@ -28,38 +73,38 @@ class DownloaderTab(QWidget):
 
         self.link_label = QLabel(self)
         self.link_label.setText('Enter video link:')        
-        self.link_label.move(50, 50)
+        self.link_label.move(50, 100)
         
         self.link_input = QLineEdit(self)
-        self.link_input.move(250, 50)
+        self.link_input.move(250, 100)
         self.link_input.resize(300, 30)
         self.link_input.text()
 
         self.name_label = QLabel(self)
         self.name_label.setText('Enter the name of the file:')
-        self.name_label.move(50, 100)
+        self.name_label.move(50, 150)
 
         self.name_input = QLineEdit(self)
-        self.name_input.move(250, 100)
+        self.name_input.move(250, 150)
         self.name_input.resize(300, 30)
         self.name_input.text()
 
         self.destination_label = QLabel(self)
         self.destination_label.setText('Enter destination folder:')
-        self.destination_label.move(50, 300)
+        self.destination_label.move(50, 350)
 
         self.destination_input = QLineEdit(self)
-        self.destination_input.move(250, 300)
+        self.destination_input.move(250, 350)
         self.destination_input.resize(300, 30)
         self.destination_input.text()
 
         self.choose_destination_button = QPushButton('Choose Folder', self)
-        self.choose_destination_button.move(550, 300)
+        self.choose_destination_button.move(550, 350)
         self.choose_destination_button.clicked.connect(self.choose_folder)
 
         self.download_label = QLabel(self)
         self.download_label.setText('Choose download option:')
-        self.download_label.move(50, 150)
+        self.download_label.move(50, 200)
 
         self.download_choice = QComboBox(self)
         self.download_choice.addItem('Please choice')
@@ -71,9 +116,21 @@ class DownloaderTab(QWidget):
         self.download_choice.setEditable(True)        
         self.download_choice.resize(200, 30)
         self.download_choice.currentIndexChanged.connect(self.setDownloadOption)
+    
+        self.internet_txt_label = QLabel(self)
+        self.internet_txt_label.setText('Internet check : ')
+        self.internet_txt_label.move(475, 20)
+
+        self.internet_label = QLabel(self)
+        self.internet_label.setFixedSize(20, 20)
+        self.internet_label.move(600, 20)
+        self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.check_internet_connection)
+        self.timer.start(1000)
 
         self.download_button = QPushButton('Download', self)
-        self.download_button.move(300, 350)
+        self.download_button.move(350, 400)
         self.download_button.clicked.connect(self.download_video)
 
 
@@ -83,67 +140,96 @@ class DownloaderTab(QWidget):
 
     def setDownloadOption(self, index):
         self.download_option_user = self.download_choice.itemText(index)
+    
+    def check_internet_connection(self):
+        try:
+            response = requests.get('http://www.google.com', timeout=5)
+            if response.status_code == 200:
+                self.internet_label.setStyleSheet("background-color: green; border-radius: 10px;")
+            else:
+                self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
+        except:
+            self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
+    
+
 
     def download_video(self):
-        if self.download_option_user == 'Video Only':
-            ydl_opts = {
-                'format': 'best',
-                'addmetadata': True,
-                'outtmpl': self.name_input.text()
-            }
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([self.link_input.text()])
-            for extension in ["*.mp4", "*.mkv", "*.webm", "*.flv"]:
-                for filename in glob.glob(extension):
-                    shutil.move(filename, self.destination_input.text())
-        elif self.download_option_user == 'Video + Subtitles':
-            ydl_opts = {
-                'format': 'bv+ba',
-                'addmetadata': True,
-                'outtmpl': self.destination_input.text() + '/%(title)s.%(ext)s',
-                'allsubtitles': True,
-                'writeautomaticsub': True
-            }
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([self.link_input.text()])                        
-            for extension in ["*.mp4", "*.mkv", "*.webm", "*.flv", "*.srt", "*.ass", "*.vtt", "*.lrc"]:
-                for filename in glob.glob(extension):
-                    shutil.move(filename, self.destination_input.text())
-        if self.download_option_user == 'Audio Only':
-            ydl_opts = {
-                'format': 'bestaudio/best',
-                'postprocessors': [{
-                    'key': 'FFmpegExtractAudio',
-                    'preferredcodec': 'flac',
-                    'preferredquality': 'lossless',
-                }],
-                'addmetadata': True,
-                'outtmpl': self.name_input.text() + '.%(ext)s'
-            }
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([self.link_input.text()])
-            for extension in ["*.mp3", "*.aac", "*.flac", "*.m4a", "*.ogg", "*.wav", "*.opus", "*.vorbis"]:
-                for filename in glob.glob(extension):
-                    shutil.move(filename, self.destination_input.text())
-        elif self.download_option_user == 'Subtitles Only':
-            ydl_opts = {
-                'skip_download': True,
-                'addmetadata': True,
-                'outtmpl': self.destination_input.text() + '/%(title)s.%(ext)s',
-                'allsubtitles': True,
-                'writeautomaticsub': True
-            }          
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                info_dict = ydl.extract_info(self.link_input.text(), download=False)
-                filename = ydl.prepare_filename(info_dict)
-                ydl.process_info(info_dict)
-            for extension in ["*.srt", "*.ass", "*.vtt", "*.lrc"]:
-                for filename in glob.glob(extension):
-                    shutil.move(filename, self.destination_input.text())
-        else:
-                        print("Please enter a number between 1 and 4")
+        try:
+            if internet_check() == True:
+                if self.download_option_user == 'Video Only':
+                    ydl_opts = {
+                        'format': 'best',
+                        'addmetadata': True,
+                        'outtmpl': self.name_input.text()
+                    }
+                    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                        ydl.download([self.link_input.text()])
+                    for extension in ["*.mp4", "*.mkv", "*.webm", "*.flv"]:
+                        for filename in glob.glob(extension):
+                            shutil.move(filename, self.destination_input.text())
+                    show_download_success_message()
+                elif self.download_option_user == 'Video + Subtitles':
+                    ydl_opts = {
+                        'format': 'bv+ba',
+                        'addmetadata': True,
+                        'outtmpl': self.destination_input.text() + '/%(title)s.%(ext)s',
+                        'allsubtitles': True,
+                        'writeautomaticsub': True
+                    }
+                    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                        ydl.download([self.link_input.text()])                        
+                    for extension in ["*.mp4", "*.mkv", "*.webm", "*.flv", "*.srt", "*.ass", "*.vtt", "*.lrc"]:
+                        for filename in glob.glob(extension):
+                            shutil.move(filename, self.destination_input.text())
+                    show_download_success_message()
+                if self.download_option_user == 'Audio Only':
+                    ydl_opts = {
+                        'format': 'bestaudio/best',
+                        'postprocessors': [{
+                            'key': 'FFmpegExtractAudio',
+                            'preferredcodec': 'flac',
+                            'preferredquality': 'lossless',
+                        }],
+                        'addmetadata': True,
+                        'outtmpl': self.name_input.text() + '.%(ext)s'
+                    }
+                    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                        ydl.download([self.link_input.text()])
+                    for extension in ["*.mp3", "*.aac", "*.flac", "*.m4a", "*.ogg", "*.wav", "*.opus", "*.vorbis"]:
+                        for filename in glob.glob(extension):
+                            shutil.move(filename, self.destination_input.text())
+                    show_download_success_message()
+                elif self.download_option_user == 'Subtitles Only':
+                    ydl_opts = {
+                        'skip_download': True,
+                        'addmetadata': True,
+                        'outtmpl': self.destination_input.text() + '/%(title)s.%(ext)s',
+                        'allsubtitles': True,
+                        'writeautomaticsub': True
+                    }          
+                    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                        info_dict = ydl.extract_info(self.link_input.text(), download=False)
+                        filename = ydl.prepare_filename(info_dict)
+                        ydl.process_info(info_dict)
+                    for extension in ["*.srt", "*.ass", "*.vtt", "*.lrc"]:
+                        for filename in glob.glob(extension):
+                            shutil.move(filename, self.destination_input.text())
+                    show_download_success_message()
+                else:
+                    QMessageBox.critical(None, "Error", "An unexpected error has occurred")
+            else:
+                QMessageBox.critical(None, "Error", "No internet connextion please check your connection")
+        except Exception as e:
+            error_message = "Une erreur s'est produite lors du téléchargement : {}".format(str(e))
+            message_box = QMessageBox()
+            message_box.setWindowTitle("Erreur de téléchargement")
+            message_box.setText(error_message)
+            message_box.setIcon(QMessageBox.Warning)
+            message_box.addButton(QMessageBox.Ok)
+            message_box.exec_()
 
 class AudioTab(QWidget):
+
     def __init__(self):
         super().__init__()
 
@@ -192,15 +278,14 @@ class AudioTab(QWidget):
     def setaudioOption(self, index):
         self.convert_audio_choice = self.convertaudio_choice.itemText(index)
 
-    
-
     def convertaudio(self):
+
         if self.convert_audio_choice == 'mp3 to ogg':
-                mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
-                if mp3_files:
-                    print("Conversion in progress ...")
-                    for mp3_file in mp3_files:
-                        ogg_file = os.path.splitext(mp3_file)[0] + '.ogg'
+            mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
+            if mp3_files:
+                print("Conversion in progress ...")
+                for mp3_file in mp3_files:
+                    ogg_file = os.path.splitext(mp3_file)[0] + '.ogg'
                     try:
                         stream = ffmpeg.input(mp3_file)
                         stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
@@ -210,24 +295,26 @@ class AudioTab(QWidget):
                         QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
                         return
                     encov = "ogg"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
+            else:
+                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                return
+            show_success_message()
         elif self.convert_audio_choice == 'mp3 to aac':
                 mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
                 if mp3_files:
                     print("Conversion in progress ...")
                     for mp3_file in mp3_files:
                         aac_file = os.path.splitext(mp3_file)[0] + '.aac'
-                    try:
-                        stream = ffmpeg.input(mp3_file)
-                        stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
-                        return
-                    encov = "aac"
+                        try:
+                            stream = ffmpeg.input(mp3_file)
+                            stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
+                            return
+                        encov = "aac"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -237,15 +324,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for mp3_file in mp3_files:
                         wav_file = os.path.splitext(mp3_file)[0] + '.wav'
-                    try:
-                        stream = ffmpeg.input(mp3_file)
-                        stream = ffmpeg.output(stream, wav_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
-                        return
-                    encov = "aac"
+                        try:
+                            stream = ffmpeg.input(mp3_file)
+                            stream = ffmpeg.output(stream, wav_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
+                            return
+                        encov = "aac"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -255,15 +343,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for mp3_file in mp3_files:
                         ac3_file = os.path.splitext(mp3_file)[0] + '.ac3'
-                    try:
-                        stream = ffmpeg.input(mp3_file)
-                        stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
-                        return
-                    encov = "ac3"
+                        try:
+                            stream = ffmpeg.input(mp3_file)
+                            stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
+                            return
+                        encov = "ac3"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -273,15 +362,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for mp3_file in mp3_files:
                         opus_file = os.path.splitext(mp3_file)[0] + '.opus'
-                    try:
-                        stream = ffmpeg.input(mp3_file)
-                        stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
-                        return
-                    encov = "opus"
+                        try:
+                            stream = ffmpeg.input(mp3_file)
+                            stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
+                            return
+                        encov = "opus"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -291,15 +381,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for mp3_file in mp3_files:
                         m4a_file = os.path.splitext(mp3_file)[0] + '.m4a'
-                    try:
-                        stream = ffmpeg.input(mp3_file)
-                        stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
-                        return
-                    encov = "m4a"
+                        try:
+                            stream = ffmpeg.input(mp3_file)
+                            stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
+                            return
+                        encov = "m4a"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -309,15 +400,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for wav_file in wav_files:
                         ogg_file = os.path.splitext(wav_file)[0] + '.ogg'
-                    try:
-                        stream = ffmpeg.input(wav_file)
-                        stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
-                        return
-                    encov = "ogg"
+                        try:
+                            stream = ffmpeg.input(wav_file)
+                            stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
+                            return
+                        encov = "ogg"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -327,15 +419,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for wav_file in wav_files:
                         aac_file = os.path.splitext(wav_file)[0] + '.aac'
-                    try:
-                        stream = ffmpeg.input(wav_file)
-                        stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
-                        return
-                    encov = "aac"
+                        try:
+                            stream = ffmpeg.input(wav_file)
+                            stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
+                            return
+                        encov = "aac"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -345,15 +438,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for wav_file in wav_files:
                         mp3_file = os.path.splitext(wav_file)[0] + '.mp3'
-                    try:
-                        stream = ffmpeg.input(wav_file)
-                        stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
-                        return
-                    encov = "aac"
+                        try:
+                            stream = ffmpeg.input(wav_file)
+                            stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
+                            return
+                        encov = "aac"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -363,15 +457,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for wav_file in wav_files:
                         ac3_file = os.path.splitext(wav_file)[0] + '.ac3'
-                    try:
-                        stream = ffmpeg.input(wav_file)
-                        stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
-                        return
-                    encov = "ac3"
+                        try:
+                            stream = ffmpeg.input(wav_file)
+                            stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
+                            return
+                        encov = "ac3"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -381,15 +476,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for wav_file in wav_files:
                         opus_file = os.path.splitext(wav_file)[0] + '.opus'
-                    try:
-                        stream = ffmpeg.input(wav_file)
-                        stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
-                        return
-                    encov = "opus"
+                        try:
+                            stream = ffmpeg.input(wav_file)
+                            stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
+                            return
+                        encov = "opus"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -399,15 +495,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for wav_file in wav_files:
                         m4a_file = os.path.splitext(wav_file)[0] + '.m4a'
-                    try:
-                        stream = ffmpeg.input(wav_file)
-                        stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
-                        return
-                    encov = "m4a"
+                        try:
+                            stream = ffmpeg.input(wav_file)
+                            stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
+                            return
+                        encov = "m4a"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -417,15 +514,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for ogg_file in ogg_files:
                         wav_file = os.path.splitext(ogg_file)[0] + '.wav'
-                    try:
-                        stream = ffmpeg.input(ogg_file)
-                        stream = ffmpeg.output(stream, wav_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
-                        return
-                    encov = "ogg"
+                        try:
+                            stream = ffmpeg.input(ogg_file)
+                            stream = ffmpeg.output(stream, wav_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
+                            return
+                        encov = "ogg"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -435,15 +533,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for ogg_file in ogg_files:
                         aac_file = os.path.splitext(ogg_file)[0] + '.aac'
-                    try:
-                        stream = ffmpeg.input(ogg_file)
-                        stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
-                        return
-                    encov = "aac"
+                        try:
+                            stream = ffmpeg.input(ogg_file)
+                            stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
+                            return
+                        encov = "aac"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -453,15 +552,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for ogg_file in ogg_files:
                         mp3_file = os.path.splitext(ogg_file)[0] + '.mp3'
-                    try:
-                        stream = ffmpeg.input(ogg_file)
-                        stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
-                        return
-                    encov = "aac"
+                        try:
+                            stream = ffmpeg.input(ogg_file)
+                            stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
+                            return
+                        encov = "aac"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -471,15 +571,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for ogg_file in ogg_files:
                         ac3_file = os.path.splitext(ogg_file)[0] + '.ac3'
-                    try:
-                        stream = ffmpeg.input(ogg_file)
-                        stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
-                        return
-                    encov = "ac3"
+                        try:
+                            stream = ffmpeg.input(ogg_file)
+                            stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
+                            return
+                        encov = "ac3"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -489,15 +590,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for ogg_file in ogg_files:
                         opus_file = os.path.splitext(ogg_file)[0] + '.opus'
-                    try:
-                        stream = ffmpeg.input(ogg_file)
-                        stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
-                        return
-                    encov = "opus"
+                        try:
+                            stream = ffmpeg.input(ogg_file)
+                            stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
+                            return
+                        encov = "opus"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -507,15 +609,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for ogg_file in ogg_files:
                         m4a_file = os.path.splitext(ogg_file)[0] + '.m4a'
-                    try:
-                        stream = ffmpeg.input(ogg_file)
-                        stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
-                        return
-                    encov = "m4a"
+                        try:
+                            stream = ffmpeg.input(ogg_file)
+                            stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
+                            return
+                        encov = "m4a"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -525,15 +628,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for ac3_file in ac3_files:
                         wav_file = os.path.splitext(ac3_file)[0] + '.wav'
-                    try:
-                        stream = ffmpeg.input(ac3_file)
-                        stream = ffmpeg.output(stream, wav_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
-                        return
-                    encov = "ac3"
+                        try:
+                            stream = ffmpeg.input(ac3_file)
+                            stream = ffmpeg.output(stream, wav_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
+                            return
+                        encov = "ac3"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -543,15 +647,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for ac3_file in ac3_files:
                         aac_file = os.path.splitext(ac3_file)[0] + '.aac'
-                    try:
-                        stream = ffmpeg.input(ac3_file)
-                        stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
-                        return
-                    encov = "aac"
+                        try:
+                            stream = ffmpeg.input(ac3_file)
+                            stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
+                            return
+                        encov = "aac"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -561,15 +666,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for ac3_file in ac3_files:
                         mp3_file = os.path.splitext(ac3_file)[0] + '.mp3'
-                    try:
-                        stream = ffmpeg.input(ac3_file)
-                        stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
-                        return
-                    encov = "aac"
+                        try:
+                            stream = ffmpeg.input(ac3_file)
+                            stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
+                            return
+                        encov = "aac"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -579,15 +685,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for ac3_file in ac3_files:
                         ogg_file = os.path.splitext(ac3_file)[0] + '.ogg'
-                    try:
-                        stream = ffmpeg.input(ac3_file)
-                        stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
-                        return
-                    encov = "ogg"
+                        try:
+                            stream = ffmpeg.input(ac3_file)
+                            stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
+                            return
+                        encov = "ogg"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -597,15 +704,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for ac3_file in ac3_files:
                         opus_file = os.path.splitext(ac3_file)[0] + '.opus'
-                    try:
-                        stream = ffmpeg.input(ac3_file)
-                        stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
-                        return
-                    encov = "opus"
+                        try:
+                            stream = ffmpeg.input(ac3_file)
+                            stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
+                            return
+                        encov = "opus"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -615,15 +723,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for ac3_file in ac3_files:
                         m4a_file = os.path.splitext(ac3_file)[0] + '.m4a'
-                    try:
-                        stream = ffmpeg.input(ac3_file)
-                        stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
-                        return
-                    encov = "m4a"
+                        try:
+                            stream = ffmpeg.input(ac3_file)
+                            stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
+                            return
+                        encov = "m4a"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -633,15 +742,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for aac_file in aac_files:
                         wav_file = os.path.splitext(aac_file)[0] + '.wav'
-                    try:
-                        stream = ffmpeg.input(aac_file)
-                        stream = ffmpeg.output(stream, wav_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
-                        return
-                    encov = "aac"
+                        try:
+                            stream = ffmpeg.input(aac_file)
+                            stream = ffmpeg.output(stream, wav_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
+                            return
+                        encov = "aac"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -651,15 +761,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for aac_file in aac_files:
                         ac3_file = os.path.splitext(aac_file)[0] + '.ac3'
-                    try:
-                        stream = ffmpeg.input(aac_file)
-                        stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
-                        return
-                    encov = "ac3"
+                        try:
+                            stream = ffmpeg.input(aac_file)
+                            stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
+                            return
+                        encov = "ac3"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -669,15 +780,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for aac_file in aac_files:
                         mp3_file = os.path.splitext(aac_file)[0] + '.mp3'
-                    try:
-                        stream = ffmpeg.input(aac_file)
-                        stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
-                        return
-                    encov = "aac"
+                        try:
+                            stream = ffmpeg.input(aac_file)
+                            stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
+                            return
+                        encov = "aac"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -687,15 +799,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for aac_file in aac_files:
                         ogg_file = os.path.splitext(aac_file)[0] + '.ogg'
-                    try:
-                        stream = ffmpeg.input(aac_file)
-                        stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
-                        return
-                    encov = "ogg"
+                        try:
+                            stream = ffmpeg.input(aac_file)
+                            stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
+                            return
+                        encov = "ogg"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -705,15 +818,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for aac_file in aac_files:
                         opus_file = os.path.splitext(aac_file)[0] + '.opus'
-                    try:
-                        stream = ffmpeg.input(aac_file)
-                        stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
-                        return
-                    encov = "opus"
+                        try:
+                            stream = ffmpeg.input(aac_file)
+                            stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
+                            return
+                        encov = "opus"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -723,15 +837,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for aac_file in aac_files:
                         m4a_file = os.path.splitext(aac_file)[0] + '.m4a'
-                    try:
-                        stream = ffmpeg.input(aac_file)
-                        stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
-                        return
-                    encov = "m4a"
+                        try:
+                            stream = ffmpeg.input(aac_file)
+                            stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
+                            return
+                        encov = "m4a"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -741,15 +856,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for flac_file in flac_files:
                         wav_file = os.path.splitext(flac_file)[0] + '.wav'
-                    try:
-                        stream = ffmpeg.input(flac_file)
-                        stream = ffmpeg.output(stream, wav_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
-                        return
-                    encov = "flac"
+                        try:
+                            stream = ffmpeg.input(flac_file)
+                            stream = ffmpeg.output(stream, wav_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
+                            return
+                        encov = "flac"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -759,15 +875,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for flac_file in flac_files:
                         ac3_file = os.path.splitext(flac_file)[0] + '.ac3'
-                    try:
-                        stream = ffmpeg.input(flac_file)
-                        stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
-                        return
-                    encov = "ac3"
+                        try:
+                            stream = ffmpeg.input(flac_file)
+                            stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
+                            return
+                        encov = "ac3"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -777,15 +894,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for flac_file in flac_files:
                         mp3_file = os.path.splitext(flac_file)[0] + '.mp3'
-                    try:
-                        stream = ffmpeg.input(flac_file)
-                        stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
-                        return
-                    encov = "mp3"
+                        try:
+                            stream = ffmpeg.input(flac_file)
+                            stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
+                            return
+                        encov = "mp3"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -795,15 +913,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for flac_file in flac_files:
                         ogg_file = os.path.splitext(flac_file)[0] + '.ogg'
-                    try:
-                        stream = ffmpeg.input(flac_file)
-                        stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
-                        return
-                    encov = "ogg"
+                        try:
+                            stream = ffmpeg.input(flac_file)
+                            stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
+                            return
+                        encov = "ogg"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -813,15 +932,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for flac_file in flac_files:
                         opus_file = os.path.splitext(flac_file)[0] + '.opus'
-                    try:
-                        stream = ffmpeg.input(flac_file)
-                        stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
-                        return
-                    encov = "opus"
+                        try:
+                            stream = ffmpeg.input(flac_file)
+                            stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
+                            return
+                        encov = "opus"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -831,15 +951,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for flac_file in flac_files:
                         m4a_file = os.path.splitext(flac_file)[0] + '.m4a'
-                    try:
-                        stream = ffmpeg.input(flac_file)
-                        stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
-                        return
-                    encov = "m4a"
+                        try:
+                            stream = ffmpeg.input(flac_file)
+                            stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
+                            return
+                        encov = "m4a"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -849,15 +970,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for flac_file in flac_files:
                         aac_file = os.path.splitext(flac_file)[0] + '.aac'
-                    try:
-                        stream = ffmpeg.input(flac_file)
-                        stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
-                        return
-                    encov = "aac"
+                        try:
+                            stream = ffmpeg.input(flac_file)
+                            stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
+                            return
+                        encov = "aac"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -867,15 +989,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for opus_file in opus_files:
                         wav_file = os.path.splitext(opus_file)[0] + '.wav'
-                    try:
-                        stream = ffmpeg.input(opus_file)
-                        stream = ffmpeg.output(stream, wav_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
-                        return
-                    encov = "opus"
+                        try:
+                            stream = ffmpeg.input(opus_file)
+                            stream = ffmpeg.output(stream, wav_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
+                            return
+                        encov = "opus"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -885,15 +1008,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for opus_file in opus_files:
                         ac3_file = os.path.splitext(opus_file)[0] + '.ac3'
-                    try:
-                        stream = ffmpeg.input(opus_file)
-                        stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
-                        return
-                    encov = "ac3"
+                        try:
+                            stream = ffmpeg.input(opus_file)
+                            stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
+                            return
+                        encov = "ac3"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -903,15 +1027,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for opus_file in opus_files:
                         mp3_file = os.path.splitext(opus_file)[0] + '.mp3'
-                    try:
-                        stream = ffmpeg.input(opus_file)
-                        stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
-                        return
-                    encov = "opus"
+                        try:
+                            stream = ffmpeg.input(opus_file)
+                            stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
+                            return
+                        encov = "opus"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -921,15 +1046,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for opus_file in opus_files:
                         ogg_file = os.path.splitext(opus_file)[0] + '.ogg'
-                    try:
-                        stream = ffmpeg.input(opus_file)
-                        stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
-                        return
-                    encov = "ogg"
+                        try:
+                            stream = ffmpeg.input(opus_file)
+                            stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
+                            return
+                        encov = "ogg"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -939,15 +1065,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for opus_file in opus_files:
                         m4a_file = os.path.splitext(opus_file)[0] + '.m4a'
-                    try:
-                        stream = ffmpeg.input(opus_file)
-                        stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
-                        return
-                    encov = "m4a"
+                        try:
+                            stream = ffmpeg.input(opus_file)
+                            stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
+                            return
+                        encov = "m4a"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -957,15 +1084,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for opus_file in opus_files:
                         aac_file = os.path.splitext(opus_file)[0] + '.aac'
-                    try:
-                        stream = ffmpeg.input(opus_file)
-                        stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
-                        return
-                    encov = "aac"
+                        try:
+                            stream = ffmpeg.input(opus_file)
+                            stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
+                            return
+                        encov = "aac"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -975,15 +1103,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for m4a_file in m4a_files:
                         wav_file = os.path.splitext(m4a_file)[0] + '.wav'
-                    try:
-                        stream = ffmpeg.input(m4a_file)
-                        stream = ffmpeg.output(stream, wav_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
-                        return
-                    encov = "m4a"
+                        try:
+                            stream = ffmpeg.input(m4a_file)
+                            stream = ffmpeg.output(stream, wav_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
+                            return
+                        encov = "m4a"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -993,15 +1122,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for m4a_file in m4a_files:
                         ac3_file = os.path.splitext(m4a_file)[0] + '.ac3'
-                    try:
-                        stream = ffmpeg.input(m4a_file)
-                        stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
-                        return
-                    encov = "ac3"
+                        try:
+                            stream = ffmpeg.input(m4a_file)
+                            stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
+                            return
+                        encov = "ac3"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1011,15 +1141,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for m4a_file in m4a_files:
                         mp3_file = os.path.splitext(m4a_file)[0] + '.mp3'
-                    try:
-                        stream = ffmpeg.input(m4a_file)
-                        stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
-                        return
-                    encov = "m4a"
+                        try:
+                            stream = ffmpeg.input(m4a_file)
+                            stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
+                            return
+                        encov = "m4a"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1029,15 +1160,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for m4a_file in m4a_files:
                         ogg_file = os.path.splitext(m4a_file)[0] + '.ogg'
-                    try:
-                        stream = ffmpeg.input(m4a_file)
-                        stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
-                        return
-                    encov = "ogg"
+                        try:
+                            stream = ffmpeg.input(m4a_file)
+                            stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
+                            return
+                        encov = "ogg"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1047,15 +1179,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for m4a_file in m4a_files:
                         opus_file = os.path.splitext(m4a_file)[0] + '.opus'
-                    try:
-                        stream = ffmpeg.input(m4a_file)
-                        stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
-                        return
-                    encov = "opus"
+                        try:
+                            stream = ffmpeg.input(m4a_file)
+                            stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
+                            return
+                        encov = "opus"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1065,15 +1198,16 @@ class AudioTab(QWidget):
                     print("Conversion in progress ...")
                     for m4a_file in m4a_files:
                         aac_file = os.path.splitext(m4a_file)[0] + '.aac'
-                    try:
-                        stream = ffmpeg.input(m4a_file)
-                        stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
-                        return
-                    encov = "aac"
+                        try:
+                            stream = ffmpeg.input(m4a_file)
+                            stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
+                            return
+                        encov = "aac"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1136,15 +1270,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mkv_file in mkv_files:
                         avi_file = os.path.splitext(mkv_file)[0] + '.avi'
-                    try:
-                        stream = ffmpeg.input(mkv_file)
-                        stream = ffmpeg.output(stream, avi_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
-                        return
-                    encov = "avi"
+                        try:
+                            stream = ffmpeg.input(mkv_file)
+                            stream = ffmpeg.output(stream, avi_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
+                            return
+                        encov = "avi"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1154,15 +1289,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mkv_file in mkv_files:
                         mov_file = os.path.splitext(mkv_file)[0] + '.mov'
-                    try:
-                        stream = ffmpeg.input(mkv_file)
-                        stream = ffmpeg.output(stream, mov_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
-                        return
-                    encov = "mov"
+                        try:
+                            stream = ffmpeg.input(mkv_file)
+                            stream = ffmpeg.output(stream, mov_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
+                            return
+                        encov = "mov"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1172,15 +1308,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mkv_file in mkv_files:
                         mp4_file = os.path.splitext(mkv_file)[0] + '.mp4'
-                    try:
-                        stream = ffmpeg.input(mkv_file)
-                        stream = ffmpeg.output(stream, mp4_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
-                        return
-                    encov = "mp4"
+                        try:
+                            stream = ffmpeg.input(mkv_file)
+                            stream = ffmpeg.output(stream, mp4_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
+                            return
+                        encov = "mp4"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1190,15 +1327,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mkv_file in mkv_files:
                         webm_file = os.path.splitext(mkv_file)[0] + '.webm'
-                    try:
-                        stream = ffmpeg.input(mkv_file)
-                        stream = ffmpeg.output(stream, webm_file, vcodec='libvpx', acodec='libvorbis', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
-                        return
-                    encov = "webm"
+                        try:
+                            stream = ffmpeg.input(mkv_file)
+                            stream = ffmpeg.output(stream, webm_file, vcodec='libvpx', acodec='libvorbis', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
+                            return
+                        encov = "webm"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1208,15 +1346,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mkv_file in mkv_files:
                         flv_file = os.path.splitext(mkv_file)[0] + '.flv'
-                    try:
-                        stream = ffmpeg.input(mkv_file)
-                        stream = ffmpeg.output(stream, flv_file, vcodec='flv', acodec='libmp3lame', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
-                        return
-                    encov = "flv"
+                        try:
+                            stream = ffmpeg.input(mkv_file)
+                            stream = ffmpeg.output(stream, flv_file, vcodec='flv', acodec='libmp3lame', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
+                            return
+                        encov = "flv"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1226,15 +1365,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mkv_file in mkv_files:
                         hevc_file = os.path.splitext(mkv_file)[0] + '.hevc'
-                    try:
-                        stream = ffmpeg.input(mkv_file)
-                        stream = ffmpeg.output(stream, hevc_file, vcodec='libx265', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
-                        return
-                    encov = "hevc"
+                        try:
+                            stream = ffmpeg.input(mkv_file)
+                            stream = ffmpeg.output(stream, hevc_file, vcodec='libx265', acodec='copy', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
+                            return
+                        encov = "hevc"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return       
@@ -1244,15 +1384,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mp4_file in mp4_files:
                         mkv_file = os.path.splitext(mp4_file)[0] + '.mkv'
-                    try:
-                        stream = ffmpeg.input(mp4_file)
-                        stream = ffmpeg.output(stream, mkv_file, vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
-                        return
-                    encov = "mkv"
+                        try:
+                            stream = ffmpeg.input(mp4_file)
+                            stream = ffmpeg.output(stream, mkv_file, vcodec='copy', acodec='copy', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
+                            return
+                        encov = "mkv"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1262,15 +1403,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mp4_file in mp4_files:
                         mov_file = os.path.splitext(mp4_file)[0] + '.mov'
-                    try:
-                        stream = ffmpeg.input(mp4_file)
-                        stream = ffmpeg.output(stream, mov_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
-                        return
-                    encov = "mov"
+                        try:
+                            stream = ffmpeg.input(mp4_file)
+                            stream = ffmpeg.output(stream, mov_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
+                            return
+                        encov = "mov"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1280,15 +1422,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mp4_file in mp4_files:
                         avi_file = os.path.splitext(mp4_file)[0] + '.avi'
-                    try:
-                        stream = ffmpeg.input(mp4_file)
-                        stream = ffmpeg.output(stream, avi_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
-                        return
-                    encov = "avi"
+                        try:
+                            stream = ffmpeg.input(mp4_file)
+                            stream = ffmpeg.output(stream, avi_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
+                            return
+                        encov = "avi"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1298,15 +1441,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mp4_file in mp4_files:
                         webm_file = os.path.splitext(mp4_file)[0] + '.webm'
-                    try:
-                        stream = ffmpeg.input(mp4_file)
-                        stream = ffmpeg.output(stream, webm_file, vcodec='libvpx', acodec='libvorbis', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
-                        return
-                    encov = "webm"
+                        try:
+                            stream = ffmpeg.input(mp4_file)
+                            stream = ffmpeg.output(stream, webm_file, vcodec='libvpx', acodec='libvorbis', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
+                            return
+                        encov = "webm"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return       
@@ -1316,16 +1460,17 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mp4_file in mp4_files:
                         flv_file = os.path.splitext(mp4_file)[0] + '.flv'
-                    try:
-                        stream = ffmpeg.input(mp4_file)
-                        stream = ffmpeg.output(stream, flv_file, vcodec='flv', acodec='libmp3lame', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                        exit
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
-                        return
-                    encov = "flv"
+                        try:
+                            stream = ffmpeg.input(mp4_file)
+                            stream = ffmpeg.output(stream, flv_file, vcodec='flv', acodec='libmp3lame', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                            exit
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
+                            return
+                        encov = "flv"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return         
@@ -1335,15 +1480,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mp4_file in mp4_files:
                         hevc_file = os.path.splitext(mp4_file)[0] + '.hevc'
-                    try:
-                        stream = ffmpeg.input(mp4_file)
-                        stream = ffmpeg.output(stream, hevc_file, vcodec='libx265', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
-                        return
-                    encov = "hevc"
+                        try:
+                            stream = ffmpeg.input(mp4_file)
+                            stream = ffmpeg.output(stream, hevc_file, vcodec='libx265', acodec='copy', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
+                            return
+                        encov = "hevc"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1353,15 +1499,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mov_file in mov_files:
                         mkv_file = os.path.splitext(mov_file)[0] + '.mkv'
-                    try:
-                        stream = ffmpeg.input(mov_file)
-                        stream = ffmpeg.output(stream, mkv_file, vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
-                        return
-                    encov = "mkv"
+                        try:
+                            stream = ffmpeg.input(mov_file)
+                            stream = ffmpeg.output(stream, mkv_file, vcodec='copy', acodec='copy', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
+                            return
+                        encov = "mkv"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1371,15 +1518,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mov_file in mov_files:
                         mp4_file = os.path.splitext(mov_file)[0] + '.mp4'
-                    try:
-                        stream = ffmpeg.input(mov_file)
-                        stream = ffmpeg.output(stream, mp4_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
-                        return
-                    encov = "mp4"
+                        try:
+                            stream = ffmpeg.input(mov_file)
+                            stream = ffmpeg.output(stream, mp4_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
+                            return
+                        encov = "mp4"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1389,15 +1537,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mov_file in mov_files:
                         avi_file = os.path.splitext(mov_file)[0] + '.avi'
-                    try:
-                        stream = ffmpeg.input(mov_file)
-                        stream = ffmpeg.output(stream, avi_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
-                        return
-                    encov = "avi"
+                        try:
+                            stream = ffmpeg.input(mov_file)
+                            stream = ffmpeg.output(stream, avi_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
+                            return
+                        encov = "avi"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1407,15 +1556,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mov_file in mov_files:
                         webm_file = os.path.splitext(mov_file)[0] + '.webm'
-                    try:
-                        stream = ffmpeg.input(mov_file)
-                        stream = ffmpeg.output(stream, webm_file, vcodec='libvpx', acodec='libvorbis', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
-                        return
-                    encov = "webm"
+                        try:
+                            stream = ffmpeg.input(mov_file)
+                            stream = ffmpeg.output(stream, webm_file, vcodec='libvpx', acodec='libvorbis', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
+                            return
+                        encov = "webm"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return          
@@ -1425,15 +1575,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mov_file in mov_files:
                         flv_file = os.path.splitext(mov_file)[0] + '.flv'
-                    try:
-                        stream = ffmpeg.input(mov_file)
-                        stream = ffmpeg.output(stream, flv_file, vcodec='flv', acodec='libmp3lame', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
-                        return
-                    encov = "flv"
+                        try:
+                            stream = ffmpeg.input(mov_file)
+                            stream = ffmpeg.output(stream, flv_file, vcodec='flv', acodec='libmp3lame', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
+                            return
+                        encov = "flv"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return          
@@ -1443,15 +1594,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for mov_file in mov_files:
                         hevc_file = os.path.splitext(mov_file)[0] + '.hevc'
-                    try:
-                        stream = ffmpeg.input(mov_file)
-                        stream = ffmpeg.output(stream, hevc_file, vcodec='libx265', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
-                        return
-                    encov = "hevc"
+                        try:
+                            stream = ffmpeg.input(mov_file)
+                            stream = ffmpeg.output(stream, hevc_file, vcodec='libx265', acodec='copy', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
+                            return
+                        encov = "hevc"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1461,15 +1613,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for avi_file in avi_files:
                         mkv_file = os.path.splitext(avi_file)[0] + '.mkv'
-                    try:
-                        stream = ffmpeg.input(avi_file)
-                        stream = ffmpeg.output(stream, mkv_file, vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
-                        return
-                    encov = "mkv"
+                        try:
+                            stream = ffmpeg.input(avi_file)
+                            stream = ffmpeg.output(stream, mkv_file, vcodec='copy', acodec='copy', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
+                            return
+                        encov = "mkv"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1479,15 +1632,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for avi_file in avi_files:
                         mp4_file = os.path.splitext(avi_file)[0] + '.mp4'
-                    try:
-                        stream = ffmpeg.input(avi_file)
-                        stream = ffmpeg.output(stream, mp4_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
-                        return
-                    encov = "mp4"
+                        try:
+                            stream = ffmpeg.input(avi_file)
+                            stream = ffmpeg.output(stream, mp4_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
+                            return
+                        encov = "mp4"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1497,15 +1651,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for avi_file in avi_files:
                         mov_file = os.path.splitext(avi_file)[0] + '.mov'
-                    try:
-                        stream = ffmpeg.input(avi_file)
-                        stream = ffmpeg.output(stream, mov_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
-                        return
-                    encov = "mov"
+                        try:
+                            stream = ffmpeg.input(avi_file)
+                            stream = ffmpeg.output(stream, mov_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
+                            return
+                        encov = "mov"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1515,15 +1670,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for avi_file in avi_files:
                         webm_file = os.path.splitext(avi_file)[0] + '.webm'
-                    try:
-                        stream = ffmpeg.input(avi_file)
-                        stream = ffmpeg.output(stream, webm_file, vcodec='libvpx', acodec='libvorbis', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
-                        return
-                    encov = "webm"
+                        try:
+                            stream = ffmpeg.input(avi_file)
+                            stream = ffmpeg.output(stream, webm_file, vcodec='libvpx', acodec='libvorbis', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
+                            return
+                        encov = "webm"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return         
@@ -1533,15 +1689,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for avi_file in avi_files:
                         flv_file = os.path.splitext(avi_file)[0] + '.flv'
-                    try:
-                        stream = ffmpeg.input(avi_file)
-                        stream = ffmpeg.output(stream, flv_file, vcodec='flv', acodec='libmp3lame', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
-                        return
-                    encov = "flv"
+                        try:
+                            stream = ffmpeg.input(avi_file)
+                            stream = ffmpeg.output(stream, flv_file, vcodec='flv', acodec='libmp3lame', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
+                            return
+                        encov = "flv"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return         
@@ -1551,15 +1708,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for avi_file in avi_files:
                         hevc_file = os.path.splitext(avi_file)[0] + '.hevc'
-                    try:
-                        stream = ffmpeg.input(avi_file)
-                        stream = ffmpeg.output(stream, hevc_file, vcodec='libx265', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
-                        return
-                    encov = "hevc"
+                        try:
+                            stream = ffmpeg.input(avi_file)
+                            stream = ffmpeg.output(stream, hevc_file, vcodec='libx265', acodec='copy', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
+                            return
+                        encov = "hevc"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1569,15 +1727,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for webm_file in webm_files:
                         avi_file = os.path.splitext(webm_file)[0] + '.avi'
-                    try:
-                        stream = ffmpeg.input(webm_file)
-                        stream = ffmpeg.output(stream, avi_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
-                        return
-                    encov = "avi"
+                        try:
+                            stream = ffmpeg.input(webm_file)
+                            stream = ffmpeg.output(stream, avi_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
+                            return
+                        encov = "avi"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1587,15 +1746,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for webm_file in webm_files:
                         mkv_file = os.path.splitext(webm_file)[0] + '.mkv'
-                    try:
-                        stream = ffmpeg.input(webm_file)
-                        stream = ffmpeg.output(stream, mkv_file, vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
-                        return
-                    encov = "hevc"
+                        try:
+                            stream = ffmpeg.input(webm_file)
+                            stream = ffmpeg.output(stream, mkv_file, vcodec='copy', acodec='copy', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
+                            return
+                        encov = "hevc"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1605,15 +1765,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for webm_file in webm_files:
                         mov_file = os.path.splitext(webm_file)[0] + '.mov'
-                    try:
-                        stream = ffmpeg.input(webm_file)
-                        stream = ffmpeg.output(stream, mov_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
-                        return
-                    encov = "mov"
+                        try:
+                            stream = ffmpeg.input(webm_file)
+                            stream = ffmpeg.output(stream, mov_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
+                            return
+                        encov = "mov"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1623,15 +1784,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for webm_file in webm_files:
                         mp4_file = os.path.splitext(webm_file)[0] + '.mp4'
-                    try:
-                        stream = ffmpeg.input(webm_file)
-                        stream = ffmpeg.output(stream, mp4_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
-                        return
-                    encov = "mp4"
+                        try:
+                            stream = ffmpeg.input(webm_file)
+                            stream = ffmpeg.output(stream, mp4_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
+                            return
+                        encov = "mp4"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return     
@@ -1641,15 +1803,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for webm_file in webm_files:
                         flv_file = os.path.splitext(webm_file)[0] + '.flv'
-                    try:
-                        stream = ffmpeg.input(webm_file)
-                        stream = ffmpeg.output(stream, flv_file, vcodec='flv', acodec='libmp3lame', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
-                        return
-                    encov = "flv"
+                        try:
+                            stream = ffmpeg.input(webm_file)
+                            stream = ffmpeg.output(stream, flv_file, vcodec='flv', acodec='libmp3lame', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
+                            return
+                        encov = "flv"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return           
@@ -1659,15 +1822,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for webm_file in webm_files:
                         hevc_file = os.path.splitext(webm_file)[0] + '.hevc'
-                    try:
-                        stream = ffmpeg.input(webm_file)
-                        stream = ffmpeg.output(stream, hevc_file, vcodec='libx265', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
-                        return
-                    encov = "hevc"
+                        try:
+                            stream = ffmpeg.input(webm_file)
+                            stream = ffmpeg.output(stream, hevc_file, vcodec='libx265', acodec='copy', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
+                            return
+                        encov = "hevc"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1677,15 +1841,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for hevc_file in hevc_files:
                         avi_file = os.path.splitext(hevc_file)[0] + '.avi'
-                    try:
-                        stream = ffmpeg.input(hevc_file)
-                        stream = ffmpeg.output(stream, avi_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
-                        return
-                    encov = "avi"
+                        try:
+                            stream = ffmpeg.input(hevc_file)
+                            stream = ffmpeg.output(stream, avi_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
+                            return
+                        encov = "avi"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1695,15 +1860,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for hevc_file in hevc_files:
                         mkv_file = os.path.splitext(hevc_file)[0] + '.mkv'
-                    try:
-                        stream = ffmpeg.input(hevc_file)
-                        stream = ffmpeg.output(stream, mkv_file, vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
-                        return
-                    encov = "hevc"
+                        try:
+                            stream = ffmpeg.input(hevc_file)
+                            stream = ffmpeg.output(stream, mkv_file, vcodec='copy', acodec='copy', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
+                            return
+                        encov = "hevc"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1713,15 +1879,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for hevc_file in hevc_files:
                         mov_file = os.path.splitext(hevc_file)[0] + '.mov'
-                    try:
-                        stream = ffmpeg.input(hevc_file)
-                        stream = ffmpeg.output(stream, mov_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
-                        return
-                    encov = "mov"
+                        try:
+                            stream = ffmpeg.input(hevc_file)
+                            stream = ffmpeg.output(stream, mov_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
+                            return
+                        encov = "mov"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1731,15 +1898,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for hevc_file in hevc_files:
                         mp4_file = os.path.splitext(hevc_file)[0] + '.mp4'
-                    try:
-                        stream = ffmpeg.input(hevc_file)
-                        stream = ffmpeg.output(stream, mp4_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
-                        return
-                    encov = "mp4"
+                        try:
+                            stream = ffmpeg.input(hevc_file)
+                            stream = ffmpeg.output(stream, mp4_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
+                            return
+                        encov = "mp4"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return        
@@ -1749,15 +1917,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for hevc_file in hevc_files:
                         flv_file = os.path.splitext(hevc_file)[0] + '.flv'
-                    try:
-                        stream = ffmpeg.input(hevc_file)
-                        stream = ffmpeg.output(stream, flv_file, vcodec='flv', acodec='libmp3lame', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
-                        return
-                    encov = "flv"
+                        try:
+                            stream = ffmpeg.input(hevc_file)
+                            stream = ffmpeg.output(stream, flv_file, vcodec='flv', acodec='libmp3lame', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
+                            return
+                        encov = "flv"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return          
@@ -1767,15 +1936,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for hevc_file in hevc_files:
                         webm_file = os.path.splitext(hevc_file)[0] + '.webm'
-                    try:
-                        stream = ffmpeg.input(hevc_file)
-                        stream = ffmpeg.output(stream, webm_file, vcodec='libvpx', acodec='libvorbis', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
-                        return
-                    encov = "webm"
+                        try:
+                            stream = ffmpeg.input(hevc_file)
+                            stream = ffmpeg.output(stream, webm_file, vcodec='libvpx', acodec='libvorbis', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
+                            return
+                        encov = "webm"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return 
@@ -1785,15 +1955,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for flv_file in flv_files:
                         avi_file = os.path.splitext(flv_file)[0] + '.avi'
-                    try:
-                        stream = ffmpeg.input(flv_file)
-                        stream = ffmpeg.output(stream, avi_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
-                        return
-                    encov = "avi"
+                        try:
+                            stream = ffmpeg.input(flv_file)
+                            stream = ffmpeg.output(stream, avi_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
+                            return
+                        encov = "avi"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1803,15 +1974,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for flv_file in flv_files:
                         mkv_file = os.path.splitext(flv_file)[0] + '.mkv'
-                    try:
-                        stream = ffmpeg.input(flv_file)
-                        stream = ffmpeg.output(stream, mkv_file, vcodec='copy', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
-                        return
-                    encov = "flv"
+                        try:
+                            stream = ffmpeg.input(flv_file)
+                            stream = ffmpeg.output(stream, mkv_file, vcodec='copy', acodec='copy', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
+                            return
+                        encov = "flv"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1821,15 +1993,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for flv_file in flv_files:
                         mov_file = os.path.splitext(flv_file)[0] + '.mov'
-                    try:
-                        stream = ffmpeg.input(flv_file)
-                        stream = ffmpeg.output(stream, mov_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
-                        return
-                    encov = "mov"
+                        try:
+                            stream = ffmpeg.input(flv_file)
+                            stream = ffmpeg.output(stream, mov_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
+                            return
+                        encov = "mov"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1839,15 +2012,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for flv_file in flv_files:
                         mp4_file = os.path.splitext(flv_file)[0] + '.mp4'
-                    try:
-                        stream = ffmpeg.input(flv_file)
-                        stream = ffmpeg.output(stream, mp4_file, vcodec='libx264', acodec='aac', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
-                        return
-                    encov = "mp4"
+                        try:
+                            stream = ffmpeg.input(flv_file)
+                            stream = ffmpeg.output(stream, mp4_file, vcodec='libx264', acodec='aac', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
+                            return
+                        encov = "mp4"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return          
@@ -1857,15 +2031,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for flv_file in flv_files:
                         hevc_file = os.path.splitext(flv_file)[0] + '.hevc'
-                    try:
-                        stream = ffmpeg.input(flv_file)
-                        stream = ffmpeg.output(stream, hevc_file, vcodec='libx265', acodec='copy', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
-                        return
-                    encov = "hevc"
+                        try:
+                            stream = ffmpeg.input(flv_file)
+                            stream = ffmpeg.output(stream, hevc_file, vcodec='libx265', acodec='copy', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
+                            return
+                        encov = "hevc"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return         
@@ -1875,15 +2050,16 @@ class VideoTab(QWidget):
                     print("Conversion in progress ...")
                     for flv_file in flv_files:
                         webm_file = os.path.splitext(flv_file)[0] + '.webm'
-                    try:
-                        stream = ffmpeg.input(flv_file)
-                        stream = ffmpeg.output(stream, webm_file, vcodec='libvpx', acodec='libvorbis', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
-                        return
-                    encov = "webm"
+                        try:
+                            stream = ffmpeg.input(flv_file)
+                            stream = ffmpeg.output(stream, webm_file, vcodec='libvpx', acodec='libvorbis', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
+                            return
+                        encov = "webm"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return 
@@ -1940,15 +2116,16 @@ class Subtitle(QWidget):
                     print("Conversion in progress ...")
                     for vtt_file in vtt_files:
                         srt_file = os.path.splitext(vtt_file)[0] + '.srt'
-                    try:
-                        stream = ffmpeg.input(vtt_file)
-                        stream = ffmpeg.output(stream, srt_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
-                        return
-                    encov = "srt"
+                        try:
+                            stream = ffmpeg.input(vtt_file)
+                            stream = ffmpeg.output(stream, srt_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
+                            return
+                        encov = "srt"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return 
@@ -1958,15 +2135,16 @@ class Subtitle(QWidget):
                     print("Conversion in progress ...")
                     for vtt_file in vtt_files:
                         ass_file = os.path.splitext(vtt_file)[0] + '.ass'
-                    try:
-                        stream = ffmpeg.input(vtt_file)
-                        stream = ffmpeg.output(stream, ass_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
-                        return
-                    encov = "ass"
+                        try:
+                            stream = ffmpeg.input(vtt_file)
+                            stream = ffmpeg.output(stream, ass_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
+                            return
+                        encov = "ass"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -1976,15 +2154,16 @@ class Subtitle(QWidget):
                     print("Conversion in progress ...")
                     for vtt_file in vtt_files:
                         lrc_file = os.path.splitext(vtt_file)[0] + '.lrc'
-                    try:
-                        stream = ffmpeg.input(vtt_file)
-                        stream = ffmpeg.output(stream, lrc_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
-                        return
-                    encov = "lrc"
+                        try:
+                            stream = ffmpeg.input(vtt_file)
+                            stream = ffmpeg.output(stream, lrc_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
+                            return
+                        encov = "lrc"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return 
@@ -1994,15 +2173,16 @@ class Subtitle(QWidget):
                     print("Conversion in progress ...")
                     for srt_file in srt_files:
                         vtt_file = os.path.splitext(srt_file)[0] + '.vtt'
-                    try:
-                        stream = ffmpeg.input(srt_file)
-                        stream = ffmpeg.output(stream, vtt_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
-                        return
-                    encov = "vtt"
+                        try:
+                            stream = ffmpeg.input(srt_file)
+                            stream = ffmpeg.output(stream, vtt_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
+                            return
+                        encov = "vtt"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -2012,15 +2192,16 @@ class Subtitle(QWidget):
                     print("Conversion in progress ...")
                     for srt_file in srt_files:
                         ass_file = os.path.splitext(srt_file)[0] + '.ass'
-                    try:
-                        stream = ffmpeg.input(srt_file)
-                        stream = ffmpeg.output(stream, ass_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
-                        return
-                    encov = "ass"
+                        try:
+                            stream = ffmpeg.input(srt_file)
+                            stream = ffmpeg.output(stream, ass_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
+                            return
+                        encov = "ass"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return 
@@ -2030,15 +2211,16 @@ class Subtitle(QWidget):
                     print("Conversion in progress ...")
                     for srt_file in srt_files:
                         lrc_file = os.path.splitext(srt_file)[0] + '.lrc'
-                    try:
-                        stream = ffmpeg.input(srt_file)
-                        stream = ffmpeg.output(stream, lrc_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
-                        return
-                    encov = "lrc"
+                        try:
+                            stream = ffmpeg.input(srt_file)
+                            stream = ffmpeg.output(stream, lrc_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
+                            return
+                        encov = "lrc"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return 
@@ -2048,15 +2230,16 @@ class Subtitle(QWidget):
                     print("Conversion in progress ...")
                     for ass_file in ass_files:
                         srt_file = os.path.splitext(ass_file)[0] + '.srt'
-                    try:
-                        stream = ffmpeg.input(ass_file)
-                        stream = ffmpeg.output(stream, srt_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
-                        return
-                    encov = "srt"
+                        try:
+                            stream = ffmpeg.input(ass_file)
+                            stream = ffmpeg.output(stream, srt_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
+                            return
+                        encov = "srt"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -2066,15 +2249,16 @@ class Subtitle(QWidget):
                     print("Conversion in progress ...")
                     for ass_file in ass_files:
                         lrc_file = os.path.splitext(ass_file)[0] + '.lrc'
-                    try:
-                        stream = ffmpeg.input(ass_file)
-                        stream = ffmpeg.output(stream, lrc_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
-                        return
-                    encov = "lrc"
+                        try:
+                            stream = ffmpeg.input(ass_file)
+                            stream = ffmpeg.output(stream, lrc_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
+                            return
+                        encov = "lrc"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -2084,15 +2268,16 @@ class Subtitle(QWidget):
                     print("Conversion in progress ...")
                     for ass_file in ass_files:
                         vtt_file = os.path.splitext(ass_file)[0] + '.vtt'
-                    try:
-                        stream = ffmpeg.input(ass_file)
-                        stream = ffmpeg.output(stream, vtt_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
-                        return
-                    encov = "vtt"
+                        try:
+                            stream = ffmpeg.input(ass_file)
+                            stream = ffmpeg.output(stream, vtt_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
+                            return
+                        encov = "vtt"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return         
@@ -2102,15 +2287,16 @@ class Subtitle(QWidget):
                     print("Conversion in progress ...")
                     for lrc_file in lrc_files:
                         srt_file = os.path.splitext(lrc_file)[0] + '.srt'
-                    try:
-                        stream = ffmpeg.input(lrc_file)
-                        stream = ffmpeg.output(stream, srt_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
-                        return
-                    encov = "srt"
+                        try:
+                            stream = ffmpeg.input(lrc_file)
+                            stream = ffmpeg.output(stream, srt_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
+                            return
+                        encov = "srt"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return 
@@ -2120,15 +2306,16 @@ class Subtitle(QWidget):
                     print("Conversion in progress ...")
                     for lrc_file in lrc_files:
                         ass_file = os.path.splitext(lrc_file)[0] + '.ass'
-                    try:
-                        stream = ffmpeg.input(lrc_file)
-                        stream = ffmpeg.output(stream, ass_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
-                        return
-                    encov = "ass"
+                        try:
+                            stream = ffmpeg.input(lrc_file)
+                            stream = ffmpeg.output(stream, ass_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
+                            return
+                        encov = "ass"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
@@ -2138,15 +2325,16 @@ class Subtitle(QWidget):
                     print("Conversion in progress ...")
                     for lrc_file in lrc_files:
                         vtt_file = os.path.splitext(lrc_file)[0] + '.vtt'
-                    try:
-                        stream = ffmpeg.input(lrc_file)
-                        stream = ffmpeg.output(stream, vtt_file, map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
-                        return
-                    encov = "vtt"
+                        try:
+                            stream = ffmpeg.input(lrc_file)
+                            stream = ffmpeg.output(stream, vtt_file, map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                            show_success_message()
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
+                            return
+                        encov = "vtt"
                 else:
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
