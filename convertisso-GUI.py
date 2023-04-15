@@ -2,6 +2,7 @@
 # a ajouter pop-up pour la convertion reussi --bon
 # installer -- a faire
 # enlever le sub process -- bon 
+# enlever les champs remplie au fur et a mesure
 # option pour sans ffmpeg avec yt_dlp --a faire
 import os
 from urllib import request
