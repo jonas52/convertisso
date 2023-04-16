@@ -237,13 +237,10 @@ class DownloaderTab(QWidget):
                     ydl_opts = {
                         'skip_download': True,
                         'addmetadata': True,
-                        'outtmpl': self.show_download_success_message()
-                        self.link_input.clear()
-                        self.name_input.clear()
-                        self.destination_input.clear()
-                        self.download_choice.setCurrentText('Please choose')
-                        self.Downloadcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                        self.repaint()
+                        'outtmpl': self.destination_input.text() + '.%(ext)s',
+                        'allsubtitles': True,
+                        'writeautomaticsub': True
+                    }
                     self.Downloadcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
                     self.repaint()          
                     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
