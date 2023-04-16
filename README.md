@@ -19,8 +19,8 @@
 [![languages](https://img.shields.io/github/languages/count/jonas52/convertisso)]()
 [![repo-size](https://img.shields.io/github/repo-size/jonas52/convertisso)]()
 
-# About my project (be careful this part is not finished)
-### The script is currently in Python and is therefore only available for Debian, Arch, Fedora.
+# About my project
+### The script is currently in Python and is therefore only available for Debian, Arch.
 ### This script can:
 - Convert your subtitle files (vtt, srt, ass, lrc). 
 - Download your favorite video from any website, with or without title, download only the audio or only the subtitles. (attention only works if you have python3 3.7 and higher)
@@ -28,11 +28,13 @@
 - Convert your audio files (mp3, wav, ogg, ac3, aac, flac, opus, vorbis, m4a).
 - Convert your photo files (png, jpg, tiff, pdf, svg, pdf, gif, heic). -> coming soon
 ## Main GUI of Convertisso
-coming soon
+
 # To run my script convertisso GUI whit QT
 #### Open terminal and type this
 ### Dowload and lauch whit : 
->     git clone https://github.com/jonas52/convertisso.git && cd convertisso && python3 convertisso.py
+>     git clone https://github.com/jonas52/convertisso.git && cd convertisso && python3 Convertisso-insaller.py
+### only lauch whit :
+>     git clone https://github.com/jonas52/convertisso.git && cd convertisso && python3 convertisso-GUI.py
 - And it's all good conversions and/or video downloads
 - To exit the program alt F4 or the cross of the right top.
 # Other
