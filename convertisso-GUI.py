@@ -254,8 +254,10 @@ class DownloaderTab(QWidget):
                     self.repaint()
                 else:
                     QMessageBox.critical(None, "Error", "An unexpected error has occurred")
+                    self.Downloadcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
             else:
                 QMessageBox.critical(None, "Error", "No internet connextion please check your connection")
+                self.Downloadcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
         except Exception as e:
             error_message = "Une erreur s'est produite lors du téléchargement : {}".format(str(e))
             message_box = QMessageBox()
@@ -327,1235 +329,1243 @@ class AudioTab(QWidget):
         self.convert_audio_choice = self.convertaudio_choice.itemText(index)
 
     def convertaudio(self):
-
-        if self.convert_audio_choice == 'mp3 to ogg':
-            mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
-            if mp3_files:
-                print("Conversion in progress ...")
-                for mp3_file in mp3_files:
-                    ogg_file = os.path.splitext(mp3_file)[0] + '.ogg'
-                    try:
-                        self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                        self.repaint()
-                        stream = ffmpeg.input(mp3_file)
-                        stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
-                        ffmpeg.run(stream, quiet=True)
-                        print("Conversion OK")
-                    except ffmpeg.Error as e:
-                        QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
+        try:
+            if self.convert_audio_choice == 'mp3 to ogg':
+                mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
+                if mp3_files:
+                    print("Conversion in progress ...")
+                    for mp3_file in mp3_files:
+                        ogg_file = os.path.splitext(mp3_file)[0] + '.ogg'
+                        try:
+                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            stream = ffmpeg.input(mp3_file)
+                            stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Conversion OK")
+                        except ffmpeg.Error as e:
+                            QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
+                            return
+                        encov = "ogg"
+                else:
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    return
+                show_success_message()
+                self.path_input.clear()
+                self.convertaudio_choice.setCurrentText('Please choose')
+                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.convert_audio_choice == 'mp3 to aac':
+                    mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
+                    if mp3_files:
+                        print("Conversion in progress ...")
+                        for mp3_file in mp3_files:
+                            aac_file = os.path.splitext(mp3_file)[0] + '.aac'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(mp3_file)
+                                stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
+                                return
+                            encov = "aac"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
-                    encov = "ogg"
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'mp3 to wav':
+                    mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
+                    if mp3_files:
+                        print("Conversion in progress ...")
+                        for mp3_file in mp3_files:
+                            wav_file = os.path.splitext(mp3_file)[0] + '.wav'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(mp3_file)
+                                stream = ffmpeg.output(stream, wav_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
+                                return
+                            encov = "aac"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'mp3 to ac3':
+                    mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
+                    if mp3_files:
+                        print("Conversion in progress ...")
+                        for mp3_file in mp3_files:
+                            ac3_file = os.path.splitext(mp3_file)[0] + '.ac3'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(mp3_file)
+                                stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
+                                return
+                            encov = "ac3"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'mp3 to opus':
+                    mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
+                    if mp3_files:
+                        print("Conversion in progress ...")
+                        for mp3_file in mp3_files:
+                            opus_file = os.path.splitext(mp3_file)[0] + '.opus'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(mp3_file)
+                                stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
+                                return
+                            encov = "opus"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'mp3 to m4a':
+                    mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
+                    if mp3_files:
+                        print("Conversion in progress ...")
+                        for mp3_file in mp3_files:
+                            m4a_file = os.path.splitext(mp3_file)[0] + '.m4a'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(mp3_file)
+                                stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
+                                return
+                            encov = "m4a"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'wav to ogg':
+                    wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
+                    if wav_files:
+                        print("Conversion in progress ...")
+                        for wav_file in wav_files:
+                            ogg_file = os.path.splitext(wav_file)[0] + '.ogg'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(wav_file)
+                                stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
+                                return
+                            encov = "ogg"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'wav to aac':
+                    wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
+                    if wav_files:
+                        print("Conversion in progress ...")
+                        for wav_file in wav_files:
+                            aac_file = os.path.splitext(wav_file)[0] + '.aac'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(wav_file)
+                                stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
+                                return
+                            encov = "aac"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'wav to mp3':
+                    wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
+                    if wav_files:
+                        print("Conversion in progress ...")
+                        for wav_file in wav_files:
+                            mp3_file = os.path.splitext(wav_file)[0] + '.mp3'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(wav_file)
+                                stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
+                                return
+                            encov = "aac"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'wav to ac3':
+                    wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
+                    if wav_files:
+                        print("Conversion in progress ...")
+                        for wav_file in wav_files:
+                            ac3_file = os.path.splitext(wav_file)[0] + '.ac3'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(wav_file)
+                                stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
+                                return
+                            encov = "ac3"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'wav to opus':
+                    wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
+                    if wav_files:
+                        print("Conversion in progress ...")
+                        for wav_file in wav_files:
+                            opus_file = os.path.splitext(wav_file)[0] + '.opus'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(wav_file)
+                                stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
+                                return
+                            encov = "opus"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'wav to m4a':
+                    wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
+                    if wav_files:
+                        print("Conversion in progress ...")
+                        for wav_file in wav_files:
+                            m4a_file = os.path.splitext(wav_file)[0] + '.m4a'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(wav_file)
+                                stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
+                                return
+                            encov = "m4a"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'ogg to wav':
+                    ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
+                    if ogg_files:
+                        print("Conversion in progress ...")
+                        for ogg_file in ogg_files:
+                            wav_file = os.path.splitext(ogg_file)[0] + '.wav'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(ogg_file)
+                                stream = ffmpeg.output(stream, wav_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
+                                return
+                            encov = "ogg"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'ogg to aac':
+                    ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
+                    if ogg_files:
+                        print("Conversion in progress ...")
+                        for ogg_file in ogg_files:
+                            aac_file = os.path.splitext(ogg_file)[0] + '.aac'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(ogg_file)
+                                stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
+                                return
+                            encov = "aac"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'ogg to mp3':
+                    ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
+                    if ogg_files:
+                        print("Conversion in progress ...")
+                        for ogg_file in ogg_files:
+                            mp3_file = os.path.splitext(ogg_file)[0] + '.mp3'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(ogg_file)
+                                stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
+                                return
+                            encov = "aac"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'ogg to ac3':
+                    ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
+                    if ogg_files:
+                        print("Conversion in progress ...")
+                        for ogg_file in ogg_files:
+                            ac3_file = os.path.splitext(ogg_file)[0] + '.ac3'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(ogg_file)
+                                stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
+                                return
+                            encov = "ac3"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'ogg to opus':
+                    ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
+                    if ogg_files:
+                        print("Conversion in progress ...")
+                        for ogg_file in ogg_files:
+                            opus_file = os.path.splitext(ogg_file)[0] + '.opus'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(ogg_file)
+                                stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
+                                return
+                            encov = "opus"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'ogg to m4a':
+                    ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
+                    if ogg_files:
+                        print("Conversion in progress ...")
+                        for ogg_file in ogg_files:
+                            m4a_file = os.path.splitext(ogg_file)[0] + '.m4a'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(ogg_file)
+                                stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
+                                return
+                            encov = "m4a"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'ac3 to wav':
+                    ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
+                    if ac3_files:
+                        print("Conversion in progress ...")
+                        for ac3_file in ac3_files:
+                            wav_file = os.path.splitext(ac3_file)[0] + '.wav'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(ac3_file)
+                                stream = ffmpeg.output(stream, wav_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
+                                return
+                            encov = "ac3"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'ac3 to aac':
+                    ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
+                    if ac3_files:
+                        print("Conversion in progress ...")
+                        for ac3_file in ac3_files:
+                            aac_file = os.path.splitext(ac3_file)[0] + '.aac'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(ac3_file)
+                                stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
+                                return
+                            encov = "aac"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'ac3 to mp3':
+                    ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
+                    if ac3_files:
+                        print("Conversion in progress ...")
+                        for ac3_file in ac3_files:
+                            mp3_file = os.path.splitext(ac3_file)[0] + '.mp3'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(ac3_file)
+                                stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
+                                return
+                            encov = "aac"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'ac3 to ogg':
+                    ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
+                    if ac3_files:
+                        print("Conversion in progress ...")
+                        for ac3_file in ac3_files:
+                            ogg_file = os.path.splitext(ac3_file)[0] + '.ogg'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(ac3_file)
+                                stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
+                                return
+                            encov = "ogg"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'ac3 to opus':
+                    ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
+                    if ac3_files:
+                        print("Conversion in progress ...")
+                        for ac3_file in ac3_files:
+                            opus_file = os.path.splitext(ac3_file)[0] + '.opus'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(ac3_file)
+                                stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
+                                return
+                            encov = "opus"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'ac3 to m4a':
+                    ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
+                    if ac3_files:
+                        print("Conversion in progress ...")
+                        for ac3_file in ac3_files:
+                            m4a_file = os.path.splitext(ac3_file)[0] + '.m4a'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(ac3_file)
+                                stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
+                                return
+                            encov = "m4a"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'aac to wav':
+                    aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
+                    if aac_files:
+                        print("Conversion in progress ...")
+                        for aac_file in aac_files:
+                            wav_file = os.path.splitext(aac_file)[0] + '.wav'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(aac_file)
+                                stream = ffmpeg.output(stream, wav_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
+                                return
+                            encov = "aac"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'aac to ac3':
+                    aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
+                    if aac_files:
+                        print("Conversion in progress ...")
+                        for aac_file in aac_files:
+                            ac3_file = os.path.splitext(aac_file)[0] + '.ac3'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(aac_file)
+                                stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
+                                return
+                            encov = "ac3"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'aac to mp3':
+                    aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
+                    if aac_files:
+                        print("Conversion in progress ...")
+                        for aac_file in aac_files:
+                            mp3_file = os.path.splitext(aac_file)[0] + '.mp3'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(aac_file)
+                                stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
+                                return
+                            encov = "aac"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'aac to ogg':
+                    aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
+                    if aac_files:
+                        print("Conversion in progress ...")
+                        for aac_file in aac_files:
+                            ogg_file = os.path.splitext(aac_file)[0] + '.ogg'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(aac_file)
+                                stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
+                                return
+                            encov = "ogg"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'aac to opus':
+                    aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
+                    if aac_files:
+                        print("Conversion in progress ...")
+                        for aac_file in aac_files:
+                            opus_file = os.path.splitext(aac_file)[0] + '.opus'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(aac_file)
+                                stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
+                                return
+                            encov = "opus"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'aac to m4a':
+                    aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
+                    if aac_files:
+                        print("Conversion in progress ...")
+                        for aac_file in aac_files:
+                            m4a_file = os.path.splitext(aac_file)[0] + '.m4a'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(aac_file)
+                                stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
+                                return
+                            encov = "m4a"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'flac to wav':
+                    flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
+                    if flac_files:
+                        print("Conversion in progress ...")
+                        for flac_file in flac_files:
+                            wav_file = os.path.splitext(flac_file)[0] + '.wav'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(flac_file)
+                                stream = ffmpeg.output(stream, wav_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
+                                return
+                            encov = "flac"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'flac to ac3':
+                    flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
+                    if flac_files:
+                        print("Conversion in progress ...")
+                        for flac_file in flac_files:
+                            ac3_file = os.path.splitext(flac_file)[0] + '.ac3'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(flac_file)
+                                stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
+                                return
+                            encov = "ac3"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'flac to mp3':
+                    flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
+                    if flac_files:
+                        print("Conversion in progress ...")
+                        for flac_file in flac_files:
+                            mp3_file = os.path.splitext(flac_file)[0] + '.mp3'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(flac_file)
+                                stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
+                                return
+                            encov = "mp3"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'flac to ogg':
+                    flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
+                    if flac_files:
+                        print("Conversion in progress ...")
+                        for flac_file in flac_files:
+                            ogg_file = os.path.splitext(flac_file)[0] + '.ogg'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(flac_file)
+                                stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
+                                return
+                            encov = "ogg"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'flac to opus':
+                    flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
+                    if flac_files:
+                        print("Conversion in progress ...")
+                        for flac_file in flac_files:
+                            opus_file = os.path.splitext(flac_file)[0] + '.opus'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(flac_file)
+                                stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
+                                return
+                            encov = "opus"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'flac to m4a':
+                    flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
+                    if flac_files:
+                        print("Conversion in progress ...")
+                        for flac_file in flac_files:
+                            m4a_file = os.path.splitext(flac_file)[0] + '.m4a'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(flac_file)
+                                stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
+                                return
+                            encov = "m4a"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'flac to aac':
+                    flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
+                    if flac_files:
+                        print("Conversion in progress ...")
+                        for flac_file in flac_files:
+                            aac_file = os.path.splitext(flac_file)[0] + '.aac'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(flac_file)
+                                stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
+                                return
+                            encov = "aac"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'opus to wav':
+                    opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
+                    if opus_files:
+                        print("Conversion in progress ...")
+                        for opus_file in opus_files:
+                            wav_file = os.path.splitext(opus_file)[0] + '.wav'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(opus_file)
+                                stream = ffmpeg.output(stream, wav_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
+                                return
+                            encov = "opus"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'opus to ac3':
+                    opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
+                    if opus_files:
+                        print("Conversion in progress ...")
+                        for opus_file in opus_files:
+                            ac3_file = os.path.splitext(opus_file)[0] + '.ac3'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(opus_file)
+                                stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
+                                return
+                            encov = "ac3"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'opus to mp3':
+                    opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
+                    if opus_files:
+                        print("Conversion in progress ...")
+                        for opus_file in opus_files:
+                            mp3_file = os.path.splitext(opus_file)[0] + '.mp3'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(opus_file)
+                                stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
+                                return
+                            encov = "opus"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'opus to ogg':
+                    opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
+                    if opus_files:
+                        print("Conversion in progress ...")
+                        for opus_file in opus_files:
+                            ogg_file = os.path.splitext(opus_file)[0] + '.ogg'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(opus_file)
+                                stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
+                                return
+                            encov = "ogg"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'opus to m4a':
+                    opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
+                    if opus_files:
+                        print("Conversion in progress ...")
+                        for opus_file in opus_files:
+                            m4a_file = os.path.splitext(opus_file)[0] + '.m4a'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(opus_file)
+                                stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
+                                return
+                            encov = "m4a"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'opus to aac':
+                    opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
+                    if opus_files:
+                        print("Conversion in progress ...")
+                        for opus_file in opus_files:
+                            aac_file = os.path.splitext(opus_file)[0] + '.aac'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(opus_file)
+                                stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
+                                return
+                            encov = "aac"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'm4a to wav':
+                    m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
+                    if m4a_files:
+                        print("Conversion in progress ...")
+                        for m4a_file in m4a_files:
+                            wav_file = os.path.splitext(m4a_file)[0] + '.wav'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(m4a_file)
+                                stream = ffmpeg.output(stream, wav_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
+                                return
+                            encov = "m4a"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'm4a to ac3':
+                    m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
+                    if m4a_files:
+                        print("Conversion in progress ...")
+                        for m4a_file in m4a_files:
+                            ac3_file = os.path.splitext(m4a_file)[0] + '.ac3'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(m4a_file)
+                                stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
+                                return
+                            encov = "ac3"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'm4a to mp3':
+                    m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
+                    if m4a_files:
+                        print("Conversion in progress ...")
+                        for m4a_file in m4a_files:
+                            mp3_file = os.path.splitext(m4a_file)[0] + '.mp3'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(m4a_file)
+                                stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
+                                return
+                            encov = "m4a"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'm4a to ogg':
+                    m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
+                    if m4a_files:
+                        print("Conversion in progress ...")
+                        for m4a_file in m4a_files:
+                            ogg_file = os.path.splitext(m4a_file)[0] + '.ogg'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(m4a_file)
+                                stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
+                                return
+                            encov = "ogg"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'm4a to opus':
+                    m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
+                    if m4a_files:
+                        print("Conversion in progress ...")
+                        for m4a_file in m4a_files:
+                            opus_file = os.path.splitext(m4a_file)[0] + '.opus'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(m4a_file)
+                                stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
+                                return
+                            encov = "opus"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            elif self.convert_audio_choice == 'm4a to aac':
+                    m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
+                    if m4a_files:
+                        print("Conversion in progress ...")
+                        for m4a_file in m4a_files:
+                            aac_file = os.path.splitext(m4a_file)[0] + '.aac'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint() 
+                                stream = ffmpeg.input(m4a_file)
+                                stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
+                                return
+                            encov = "aac"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertaudio_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
             else:
-                QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                return
-            show_success_message()
-            self.path_input.clear()
-            self.convertaudio_choice.setCurrentText('Please choose')
-            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-            self.repaint()
-        elif self.convert_audio_choice == 'mp3 to aac':
-                mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
-                if mp3_files:
-                    print("Conversion in progress ...")
-                    for mp3_file in mp3_files:
-                        aac_file = os.path.splitext(mp3_file)[0] + '.aac'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(mp3_file)
-                            stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
-                            return
-                        encov = "aac"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'mp3 to wav':
-                mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
-                if mp3_files:
-                    print("Conversion in progress ...")
-                    for mp3_file in mp3_files:
-                        wav_file = os.path.splitext(mp3_file)[0] + '.wav'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(mp3_file)
-                            stream = ffmpeg.output(stream, wav_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
-                            return
-                        encov = "aac"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'mp3 to ac3':
-                mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
-                if mp3_files:
-                    print("Conversion in progress ...")
-                    for mp3_file in mp3_files:
-                        ac3_file = os.path.splitext(mp3_file)[0] + '.ac3'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(mp3_file)
-                            stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
-                            return
-                        encov = "ac3"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'mp3 to opus':
-                mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
-                if mp3_files:
-                    print("Conversion in progress ...")
-                    for mp3_file in mp3_files:
-                        opus_file = os.path.splitext(mp3_file)[0] + '.opus'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(mp3_file)
-                            stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
-                            return
-                        encov = "opus"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'mp3 to m4a':
-                mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
-                if mp3_files:
-                    print("Conversion in progress ...")
-                    for mp3_file in mp3_files:
-                        m4a_file = os.path.splitext(mp3_file)[0] + '.m4a'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(mp3_file)
-                            stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
-                            return
-                        encov = "m4a"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'wav to ogg':
-                wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
-                if wav_files:
-                    print("Conversion in progress ...")
-                    for wav_file in wav_files:
-                        ogg_file = os.path.splitext(wav_file)[0] + '.ogg'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(wav_file)
-                            stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
-                            return
-                        encov = "ogg"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'wav to aac':
-                wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
-                if wav_files:
-                    print("Conversion in progress ...")
-                    for wav_file in wav_files:
-                        aac_file = os.path.splitext(wav_file)[0] + '.aac'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(wav_file)
-                            stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
-                            return
-                        encov = "aac"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'wav to mp3':
-                wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
-                if wav_files:
-                    print("Conversion in progress ...")
-                    for wav_file in wav_files:
-                        mp3_file = os.path.splitext(wav_file)[0] + '.mp3'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(wav_file)
-                            stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
-                            return
-                        encov = "aac"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'wav to ac3':
-                wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
-                if wav_files:
-                    print("Conversion in progress ...")
-                    for wav_file in wav_files:
-                        ac3_file = os.path.splitext(wav_file)[0] + '.ac3'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(wav_file)
-                            stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
-                            return
-                        encov = "ac3"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'wav to opus':
-                wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
-                if wav_files:
-                    print("Conversion in progress ...")
-                    for wav_file in wav_files:
-                        opus_file = os.path.splitext(wav_file)[0] + '.opus'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(wav_file)
-                            stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
-                            return
-                        encov = "opus"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'wav to m4a':
-                wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
-                if wav_files:
-                    print("Conversion in progress ...")
-                    for wav_file in wav_files:
-                        m4a_file = os.path.splitext(wav_file)[0] + '.m4a'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(wav_file)
-                            stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
-                            return
-                        encov = "m4a"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'ogg to wav':
-                ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
-                if ogg_files:
-                    print("Conversion in progress ...")
-                    for ogg_file in ogg_files:
-                        wav_file = os.path.splitext(ogg_file)[0] + '.wav'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(ogg_file)
-                            stream = ffmpeg.output(stream, wav_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
-                            return
-                        encov = "ogg"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'ogg to aac':
-                ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
-                if ogg_files:
-                    print("Conversion in progress ...")
-                    for ogg_file in ogg_files:
-                        aac_file = os.path.splitext(ogg_file)[0] + '.aac'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(ogg_file)
-                            stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
-                            return
-                        encov = "aac"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'ogg to mp3':
-                ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
-                if ogg_files:
-                    print("Conversion in progress ...")
-                    for ogg_file in ogg_files:
-                        mp3_file = os.path.splitext(ogg_file)[0] + '.mp3'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(ogg_file)
-                            stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
-                            return
-                        encov = "aac"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'ogg to ac3':
-                ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
-                if ogg_files:
-                    print("Conversion in progress ...")
-                    for ogg_file in ogg_files:
-                        ac3_file = os.path.splitext(ogg_file)[0] + '.ac3'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(ogg_file)
-                            stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
-                            return
-                        encov = "ac3"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'ogg to opus':
-                ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
-                if ogg_files:
-                    print("Conversion in progress ...")
-                    for ogg_file in ogg_files:
-                        opus_file = os.path.splitext(ogg_file)[0] + '.opus'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(ogg_file)
-                            stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
-                            return
-                        encov = "opus"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'ogg to m4a':
-                ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
-                if ogg_files:
-                    print("Conversion in progress ...")
-                    for ogg_file in ogg_files:
-                        m4a_file = os.path.splitext(ogg_file)[0] + '.m4a'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(ogg_file)
-                            stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
-                            return
-                        encov = "m4a"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'ac3 to wav':
-                ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
-                if ac3_files:
-                    print("Conversion in progress ...")
-                    for ac3_file in ac3_files:
-                        wav_file = os.path.splitext(ac3_file)[0] + '.wav'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(ac3_file)
-                            stream = ffmpeg.output(stream, wav_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
-                            return
-                        encov = "ac3"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'ac3 to aac':
-                ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
-                if ac3_files:
-                    print("Conversion in progress ...")
-                    for ac3_file in ac3_files:
-                        aac_file = os.path.splitext(ac3_file)[0] + '.aac'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(ac3_file)
-                            stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
-                            return
-                        encov = "aac"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'ac3 to mp3':
-                ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
-                if ac3_files:
-                    print("Conversion in progress ...")
-                    for ac3_file in ac3_files:
-                        mp3_file = os.path.splitext(ac3_file)[0] + '.mp3'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(ac3_file)
-                            stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
-                            return
-                        encov = "aac"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'ac3 to ogg':
-                ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
-                if ac3_files:
-                    print("Conversion in progress ...")
-                    for ac3_file in ac3_files:
-                        ogg_file = os.path.splitext(ac3_file)[0] + '.ogg'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(ac3_file)
-                            stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
-                            return
-                        encov = "ogg"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'ac3 to opus':
-                ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
-                if ac3_files:
-                    print("Conversion in progress ...")
-                    for ac3_file in ac3_files:
-                        opus_file = os.path.splitext(ac3_file)[0] + '.opus'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(ac3_file)
-                            stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
-                            return
-                        encov = "opus"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'ac3 to m4a':
-                ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
-                if ac3_files:
-                    print("Conversion in progress ...")
-                    for ac3_file in ac3_files:
-                        m4a_file = os.path.splitext(ac3_file)[0] + '.m4a'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(ac3_file)
-                            stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
-                            return
-                        encov = "m4a"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'aac to wav':
-                aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
-                if aac_files:
-                    print("Conversion in progress ...")
-                    for aac_file in aac_files:
-                        wav_file = os.path.splitext(aac_file)[0] + '.wav'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(aac_file)
-                            stream = ffmpeg.output(stream, wav_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
-                            return
-                        encov = "aac"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'aac to ac3':
-                aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
-                if aac_files:
-                    print("Conversion in progress ...")
-                    for aac_file in aac_files:
-                        ac3_file = os.path.splitext(aac_file)[0] + '.ac3'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(aac_file)
-                            stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
-                            return
-                        encov = "ac3"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'aac to mp3':
-                aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
-                if aac_files:
-                    print("Conversion in progress ...")
-                    for aac_file in aac_files:
-                        mp3_file = os.path.splitext(aac_file)[0] + '.mp3'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(aac_file)
-                            stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
-                            return
-                        encov = "aac"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'aac to ogg':
-                aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
-                if aac_files:
-                    print("Conversion in progress ...")
-                    for aac_file in aac_files:
-                        ogg_file = os.path.splitext(aac_file)[0] + '.ogg'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(aac_file)
-                            stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
-                            return
-                        encov = "ogg"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'aac to opus':
-                aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
-                if aac_files:
-                    print("Conversion in progress ...")
-                    for aac_file in aac_files:
-                        opus_file = os.path.splitext(aac_file)[0] + '.opus'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(aac_file)
-                            stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
-                            return
-                        encov = "opus"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'aac to m4a':
-                aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
-                if aac_files:
-                    print("Conversion in progress ...")
-                    for aac_file in aac_files:
-                        m4a_file = os.path.splitext(aac_file)[0] + '.m4a'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(aac_file)
-                            stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
-                            return
-                        encov = "m4a"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'flac to wav':
-                flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
-                if flac_files:
-                    print("Conversion in progress ...")
-                    for flac_file in flac_files:
-                        wav_file = os.path.splitext(flac_file)[0] + '.wav'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(flac_file)
-                            stream = ffmpeg.output(stream, wav_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
-                            return
-                        encov = "flac"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'flac to ac3':
-                flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
-                if flac_files:
-                    print("Conversion in progress ...")
-                    for flac_file in flac_files:
-                        ac3_file = os.path.splitext(flac_file)[0] + '.ac3'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(flac_file)
-                            stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
-                            return
-                        encov = "ac3"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'flac to mp3':
-                flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
-                if flac_files:
-                    print("Conversion in progress ...")
-                    for flac_file in flac_files:
-                        mp3_file = os.path.splitext(flac_file)[0] + '.mp3'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(flac_file)
-                            stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
-                            return
-                        encov = "mp3"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'flac to ogg':
-                flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
-                if flac_files:
-                    print("Conversion in progress ...")
-                    for flac_file in flac_files:
-                        ogg_file = os.path.splitext(flac_file)[0] + '.ogg'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(flac_file)
-                            stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
-                            return
-                        encov = "ogg"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'flac to opus':
-                flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
-                if flac_files:
-                    print("Conversion in progress ...")
-                    for flac_file in flac_files:
-                        opus_file = os.path.splitext(flac_file)[0] + '.opus'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(flac_file)
-                            stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
-                            return
-                        encov = "opus"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'flac to m4a':
-                flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
-                if flac_files:
-                    print("Conversion in progress ...")
-                    for flac_file in flac_files:
-                        m4a_file = os.path.splitext(flac_file)[0] + '.m4a'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(flac_file)
-                            stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
-                            return
-                        encov = "m4a"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'flac to aac':
-                flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
-                if flac_files:
-                    print("Conversion in progress ...")
-                    for flac_file in flac_files:
-                        aac_file = os.path.splitext(flac_file)[0] + '.aac'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(flac_file)
-                            stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
-                            return
-                        encov = "aac"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'opus to wav':
-                opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
-                if opus_files:
-                    print("Conversion in progress ...")
-                    for opus_file in opus_files:
-                        wav_file = os.path.splitext(opus_file)[0] + '.wav'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(opus_file)
-                            stream = ffmpeg.output(stream, wav_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
-                            return
-                        encov = "opus"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'opus to ac3':
-                opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
-                if opus_files:
-                    print("Conversion in progress ...")
-                    for opus_file in opus_files:
-                        ac3_file = os.path.splitext(opus_file)[0] + '.ac3'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(opus_file)
-                            stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
-                            return
-                        encov = "ac3"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'opus to mp3':
-                opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
-                if opus_files:
-                    print("Conversion in progress ...")
-                    for opus_file in opus_files:
-                        mp3_file = os.path.splitext(opus_file)[0] + '.mp3'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(opus_file)
-                            stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
-                            return
-                        encov = "opus"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'opus to ogg':
-                opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
-                if opus_files:
-                    print("Conversion in progress ...")
-                    for opus_file in opus_files:
-                        ogg_file = os.path.splitext(opus_file)[0] + '.ogg'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(opus_file)
-                            stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
-                            return
-                        encov = "ogg"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'opus to m4a':
-                opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
-                if opus_files:
-                    print("Conversion in progress ...")
-                    for opus_file in opus_files:
-                        m4a_file = os.path.splitext(opus_file)[0] + '.m4a'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(opus_file)
-                            stream = ffmpeg.output(stream, m4a_file, acodec='alac', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
-                            return
-                        encov = "m4a"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'opus to aac':
-                opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
-                if opus_files:
-                    print("Conversion in progress ...")
-                    for opus_file in opus_files:
-                        aac_file = os.path.splitext(opus_file)[0] + '.aac'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(opus_file)
-                            stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
-                            return
-                        encov = "aac"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'm4a to wav':
-                m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
-                if m4a_files:
-                    print("Conversion in progress ...")
-                    for m4a_file in m4a_files:
-                        wav_file = os.path.splitext(m4a_file)[0] + '.wav'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(m4a_file)
-                            stream = ffmpeg.output(stream, wav_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
-                            return
-                        encov = "m4a"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'm4a to ac3':
-                m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
-                if m4a_files:
-                    print("Conversion in progress ...")
-                    for m4a_file in m4a_files:
-                        ac3_file = os.path.splitext(m4a_file)[0] + '.ac3'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(m4a_file)
-                            stream = ffmpeg.output(stream, ac3_file, acodec='ac3', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
-                            return
-                        encov = "ac3"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'm4a to mp3':
-                m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
-                if m4a_files:
-                    print("Conversion in progress ...")
-                    for m4a_file in m4a_files:
-                        mp3_file = os.path.splitext(m4a_file)[0] + '.mp3'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(m4a_file)
-                            stream = ffmpeg.output(stream, mp3_file, acodec='libmp3lame', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
-                            return
-                        encov = "m4a"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'm4a to ogg':
-                m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
-                if m4a_files:
-                    print("Conversion in progress ...")
-                    for m4a_file in m4a_files:
-                        ogg_file = os.path.splitext(m4a_file)[0] + '.ogg'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(m4a_file)
-                            stream = ffmpeg.output(stream, ogg_file, acodec='libvorbis', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
-                            return
-                        encov = "ogg"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'm4a to opus':
-                m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
-                if m4a_files:
-                    print("Conversion in progress ...")
-                    for m4a_file in m4a_files:
-                        opus_file = os.path.splitext(m4a_file)[0] + '.opus'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(m4a_file)
-                            stream = ffmpeg.output(stream, opus_file, acodec='libopus', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
-                            return
-                        encov = "opus"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        elif self.convert_audio_choice == 'm4a to aac':
-                m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
-                if m4a_files:
-                    print("Conversion in progress ...")
-                    for m4a_file in m4a_files:
-                        aac_file = os.path.splitext(m4a_file)[0] + '.aac'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint() 
-                            stream = ffmpeg.input(m4a_file)
-                            stream = ffmpeg.output(stream, aac_file, acodec='aac', map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
-                            return
-                        encov = "aac"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertaudio_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-        else:
-            QMessageBox.critical(None, "Error", "An unexpected error has occurred") 
-            
+                QMessageBox.critical(None, "Error", "An unexpected error has occurred")
+        except Exception as e:
+            error_message = "Une erreur s'est produite lors de la converssion : {}".format(str(e))
+            message_box = QMessageBox()
+            message_box.setWindowTitle("Erreur de converssion")
+            message_box.setText(error_message)
+            message_box.setIcon(QMessageBox.Warning)
+            message_box.addButton(QMessageBox.Ok)
+            message_box.exec_()
+                
 class VideoTab(QWidget):
     def __init__(self):
         super().__init__()
@@ -1615,6 +1625,7 @@ class VideoTab(QWidget):
         self.convertuniquementvideo_choice = self.convertvideo_choice.itemText(index)
 
     def convertvideo(self):
+        try:
             if self.convertuniquementvideo_choice == 'mkv to avi':
                 mkv_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mkv"), recursive=True)
                 if mkv_files:
@@ -2668,6 +2679,14 @@ class VideoTab(QWidget):
                 self.repaint() 
             else:
                 QMessageBox.critical(None, "Error", "An unexpected error has occurred")
+        except Exception as e:
+            error_message = "Une erreur s'est produite lors de la converssion : {}".format(str(e))
+            message_box = QMessageBox()
+            message_box.setWindowTitle("Erreur de converssion")
+            message_box.setText(error_message)
+            message_box.setIcon(QMessageBox.Warning)
+            message_box.addButton(QMessageBox.Ok)
+            message_box.exec_()
 
 class Subtitle(QWidget):
     def __init__(self):
@@ -2724,301 +2743,310 @@ class Subtitle(QWidget):
         self.convert_subtitle_choice = self.convertsubtitle_choice.itemText(index)
 
     def convertsubtitle(self):
-        if self.convert_subtitle_choice == 'vtt to srt':
-                vtt_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.vtt"), recursive=True)
-                if vtt_files:
-                    print("Conversion in progress ...")
-                    for vtt_file in vtt_files:
-                        srt_file = os.path.splitext(vtt_file)[0] + '.srt'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint()
-                            stream = ffmpeg.input(vtt_file)
-                            stream = ffmpeg.output(stream, srt_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
-                            return
-                        encov = "srt"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return 
-                show_success_message()
-                self.path_input.clear()
-                self.convertsubtitle_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint() 
-        elif self.convert_subtitle_choice == 'vtt to ass':
-                vtt_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.vtt"), recursive=True)
-                if vtt_files:
-                    print("Conversion in progress ...")
-                    for vtt_file in vtt_files:
-                        ass_file = os.path.splitext(vtt_file)[0] + '.ass'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint()
-                            stream = ffmpeg.input(vtt_file)
-                            stream = ffmpeg.output(stream, ass_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
-                            return
-                        encov = "ass"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertsubtitle_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint() 
-        elif self.convert_subtitle_choice == 'vtt to lrc':
-                vtt_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.vtt"), recursive=True)
-                if vtt_files:
-                    print("Conversion in progress ...")
-                    for vtt_file in vtt_files:
-                        lrc_file = os.path.splitext(vtt_file)[0] + '.lrc'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint()
-                            stream = ffmpeg.input(vtt_file)
-                            stream = ffmpeg.output(stream, lrc_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
-                            return
-                        encov = "lrc"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return 
-                show_success_message()
-                self.path_input.clear()
-                self.convertsubtitle_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint() 
-        elif self.convert_subtitle_choice == 'srt to vtt':
-                srt_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.srt"), recursive=True)
-                if srt_files:
-                    print("Conversion in progress ...")
-                    for srt_file in srt_files:
-                        vtt_file = os.path.splitext(srt_file)[0] + '.vtt'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint()
-                            stream = ffmpeg.input(srt_file)
-                            stream = ffmpeg.output(stream, vtt_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
-                            return
-                        encov = "vtt"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertsubtitle_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint() 
-        elif self.convert_subtitle_choice == 'srt to ass':
-                srt_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.srt"), recursive=True)
-                if srt_files:
-                    print("Conversion in progress ...")
-                    for srt_file in srt_files:
-                        ass_file = os.path.splitext(srt_file)[0] + '.ass'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint()
-                            stream = ffmpeg.input(srt_file)
-                            stream = ffmpeg.output(stream, ass_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
-                            return
-                        encov = "ass"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return 
-                show_success_message()
-                self.path_input.clear()
-                self.convertsubtitle_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint() 
-        elif self.convert_subtitle_choice == 'srt to lrc':
-                srt_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.srt"), recursive=True)
-                if srt_files:
-                    print("Conversion in progress ...")
-                    for srt_file in srt_files:
-                        lrc_file = os.path.splitext(srt_file)[0] + '.lrc'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint()
-                            stream = ffmpeg.input(srt_file)
-                            stream = ffmpeg.output(stream, lrc_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
-                            return
-                        encov = "lrc"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return 
-                show_success_message()
-                self.path_input.clear()
-                self.convertsubtitle_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint() 
-        elif self.convert_subtitle_choice == 'ass to srt':
-                ass_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ass"), recursive=True)
-                if ass_files:
-                    print("Conversion in progress ...")
-                    for ass_file in ass_files:
-                        srt_file = os.path.splitext(ass_file)[0] + '.srt'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint()
-                            stream = ffmpeg.input(ass_file)
-                            stream = ffmpeg.output(stream, srt_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
-                            return
-                        encov = "srt"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-        elif self.convert_subtitle_choice == 'ass to lrc':
-                ass_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ass"), recursive=True)
-                if ass_files:
-                    print("Conversion in progress ...")
-                    for ass_file in ass_files:
-                        lrc_file = os.path.splitext(ass_file)[0] + '.lrc'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint()
-                            stream = ffmpeg.input(ass_file)
-                            stream = ffmpeg.output(stream, lrc_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
-                            return
-                        encov = "lrc"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertsubtitle_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint() 
-        elif self.convert_subtitle_choice == 'ass to vtt':
-                ass_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ass"), recursive=True)
-                if ass_files:
-                    print("Conversion in progress ...")
-                    for ass_file in ass_files:
-                        vtt_file = os.path.splitext(ass_file)[0] + '.vtt'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint()
-                            stream = ffmpeg.input(ass_file)
-                            stream = ffmpeg.output(stream, vtt_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
-                            return
-                        encov = "vtt"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return 
-                show_success_message()
-                self.path_input.clear()
-                self.convertsubtitle_choice.clear()        
-        elif self.convert_subtitle_choice == 'lrc to srt':
-                lrc_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.lrc"), recursive=True)
-                if lrc_files:
-                    print("Conversion in progress ...")
-                    for lrc_file in lrc_files:
-                        srt_file = os.path.splitext(lrc_file)[0] + '.srt'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint()
-                            stream = ffmpeg.input(lrc_file)
-                            stream = ffmpeg.output(stream, srt_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
-                            return
-                        encov = "srt"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return 
-                show_success_message()
-                self.path_input.clear()
-                self.convertsubtitle_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint() 
-        if self.convert_subtitle_choice == 'lrc to ass':
-                lrc_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.lrc"), recursive=True)
-                if lrc_files:
-                    print("Conversion in progress ...")
-                    for lrc_file in lrc_files:
-                        ass_file = os.path.splitext(lrc_file)[0] + '.ass'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint()
-                            stream = ffmpeg.input(lrc_file)
-                            stream = ffmpeg.output(stream, ass_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
-                            return
-                        encov = "ass"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertsubtitle_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint() 
-        if self.convert_subtitle_choice == 'lrc to vtt':
-                lrc_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.lrc"), recursive=True)
-                if lrc_files:
-                    print("Conversion in progress ...")
-                    for lrc_file in lrc_files:
-                        vtt_file = os.path.splitext(lrc_file)[0] + '.vtt'
-                        try:
-                            self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                            self.repaint()
-                            stream = ffmpeg.input(lrc_file)
-                            stream = ffmpeg.output(stream, vtt_file, map_metadata=0)
-                            ffmpeg.run(stream, quiet=True)
-                            print("Conversion OK")
-                        except ffmpeg.Error as e:
-                            QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
-                            return
-                        encov = "vtt"
-                else:
-                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                    return
-                show_success_message()
-                self.path_input.clear()
-                self.convertsubtitle_choice.setCurrentText('Please choose')
-                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint() 
-        else:
-            QMessageBox.critical(None, "Error", "An unexpected error has occurred")
+        try:
+            if self.convert_subtitle_choice == 'vtt to srt':
+                    vtt_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.vtt"), recursive=True)
+                    if vtt_files:
+                        print("Conversion in progress ...")
+                        for vtt_file in vtt_files:
+                            srt_file = os.path.splitext(vtt_file)[0] + '.srt'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint()
+                                stream = ffmpeg.input(vtt_file)
+                                stream = ffmpeg.output(stream, srt_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
+                                return
+                            encov = "srt"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return 
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertsubtitle_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint() 
+            elif self.convert_subtitle_choice == 'vtt to ass':
+                    vtt_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.vtt"), recursive=True)
+                    if vtt_files:
+                        print("Conversion in progress ...")
+                        for vtt_file in vtt_files:
+                            ass_file = os.path.splitext(vtt_file)[0] + '.ass'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint()
+                                stream = ffmpeg.input(vtt_file)
+                                stream = ffmpeg.output(stream, ass_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
+                                return
+                            encov = "ass"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertsubtitle_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint() 
+            elif self.convert_subtitle_choice == 'vtt to lrc':
+                    vtt_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.vtt"), recursive=True)
+                    if vtt_files:
+                        print("Conversion in progress ...")
+                        for vtt_file in vtt_files:
+                            lrc_file = os.path.splitext(vtt_file)[0] + '.lrc'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint()
+                                stream = ffmpeg.input(vtt_file)
+                                stream = ffmpeg.output(stream, lrc_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
+                                return
+                            encov = "lrc"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return 
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertsubtitle_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint() 
+            elif self.convert_subtitle_choice == 'srt to vtt':
+                    srt_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.srt"), recursive=True)
+                    if srt_files:
+                        print("Conversion in progress ...")
+                        for srt_file in srt_files:
+                            vtt_file = os.path.splitext(srt_file)[0] + '.vtt'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint()
+                                stream = ffmpeg.input(srt_file)
+                                stream = ffmpeg.output(stream, vtt_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
+                                return
+                            encov = "vtt"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertsubtitle_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint() 
+            elif self.convert_subtitle_choice == 'srt to ass':
+                    srt_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.srt"), recursive=True)
+                    if srt_files:
+                        print("Conversion in progress ...")
+                        for srt_file in srt_files:
+                            ass_file = os.path.splitext(srt_file)[0] + '.ass'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint()
+                                stream = ffmpeg.input(srt_file)
+                                stream = ffmpeg.output(stream, ass_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
+                                return
+                            encov = "ass"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return 
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertsubtitle_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint() 
+            elif self.convert_subtitle_choice == 'srt to lrc':
+                    srt_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.srt"), recursive=True)
+                    if srt_files:
+                        print("Conversion in progress ...")
+                        for srt_file in srt_files:
+                            lrc_file = os.path.splitext(srt_file)[0] + '.lrc'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint()
+                                stream = ffmpeg.input(srt_file)
+                                stream = ffmpeg.output(stream, lrc_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
+                                return
+                            encov = "lrc"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return 
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertsubtitle_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint() 
+            elif self.convert_subtitle_choice == 'ass to srt':
+                    ass_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ass"), recursive=True)
+                    if ass_files:
+                        print("Conversion in progress ...")
+                        for ass_file in ass_files:
+                            srt_file = os.path.splitext(ass_file)[0] + '.srt'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint()
+                                stream = ffmpeg.input(ass_file)
+                                stream = ffmpeg.output(stream, srt_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
+                                return
+                            encov = "srt"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+            elif self.convert_subtitle_choice == 'ass to lrc':
+                    ass_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ass"), recursive=True)
+                    if ass_files:
+                        print("Conversion in progress ...")
+                        for ass_file in ass_files:
+                            lrc_file = os.path.splitext(ass_file)[0] + '.lrc'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint()
+                                stream = ffmpeg.input(ass_file)
+                                stream = ffmpeg.output(stream, lrc_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
+                                return
+                            encov = "lrc"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertsubtitle_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint() 
+            elif self.convert_subtitle_choice == 'ass to vtt':
+                    ass_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ass"), recursive=True)
+                    if ass_files:
+                        print("Conversion in progress ...")
+                        for ass_file in ass_files:
+                            vtt_file = os.path.splitext(ass_file)[0] + '.vtt'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint()
+                                stream = ffmpeg.input(ass_file)
+                                stream = ffmpeg.output(stream, vtt_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
+                                return
+                            encov = "vtt"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return 
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertsubtitle_choice.clear()        
+            elif self.convert_subtitle_choice == 'lrc to srt':
+                    lrc_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.lrc"), recursive=True)
+                    if lrc_files:
+                        print("Conversion in progress ...")
+                        for lrc_file in lrc_files:
+                            srt_file = os.path.splitext(lrc_file)[0] + '.srt'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint()
+                                stream = ffmpeg.input(lrc_file)
+                                stream = ffmpeg.output(stream, srt_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
+                                return
+                            encov = "srt"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return 
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertsubtitle_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint() 
+            if self.convert_subtitle_choice == 'lrc to ass':
+                    lrc_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.lrc"), recursive=True)
+                    if lrc_files:
+                        print("Conversion in progress ...")
+                        for lrc_file in lrc_files:
+                            ass_file = os.path.splitext(lrc_file)[0] + '.ass'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint()
+                                stream = ffmpeg.input(lrc_file)
+                                stream = ffmpeg.output(stream, ass_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
+                                return
+                            encov = "ass"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertsubtitle_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint() 
+            if self.convert_subtitle_choice == 'lrc to vtt':
+                    lrc_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.lrc"), recursive=True)
+                    if lrc_files:
+                        print("Conversion in progress ...")
+                        for lrc_file in lrc_files:
+                            vtt_file = os.path.splitext(lrc_file)[0] + '.vtt'
+                            try:
+                                self.convertcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint()
+                                stream = ffmpeg.input(lrc_file)
+                                stream = ffmpeg.output(stream, vtt_file, map_metadata=0)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Conversion OK")
+                            except ffmpeg.Error as e:
+                                QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
+                                return
+                            encov = "vtt"
+                    else:
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message()
+                    self.path_input.clear()
+                    self.convertsubtitle_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint() 
+            else:
+                QMessageBox.critical(None, "Error", "An unexpected error has occurred")
+        except Exception as e:
+            error_message = "Une erreur s'est produite lors de la converssion : {}".format(str(e))
+            message_box = QMessageBox()
+            message_box.setWindowTitle("Erreur de converssion")
+            message_box.setText(error_message)
+            message_box.setIcon(QMessageBox.Warning)
+            message_box.addButton(QMessageBox.Ok)
+            message_box.exec_()
 
 
 
