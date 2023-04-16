@@ -5,8 +5,7 @@
 # option pour sans ffmpeg avec yt_dlp --a faire
 # enlever les champs remplie au fure et a mesure {.clear()} --bon
 import os
-from urllib import request
-import subprocess
+import sys
 import shutil
 import glob
 import yt_dlp
@@ -16,10 +15,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QTabWidget, QWidget, QLabel, QPushButton, QLineEdit, QComboBox, QFileDialog, QMessageBox, QMainWindow, QDesktopWidget, QVBoxLayout, QScrollBar, QProgressBar
 from PyQt5.QtGui import QColor, QFont
 import requests
-import sys
-from pydub import AudioSegment
 from urllib import request
-
 def convertisso(): 
     print("\n")
     print("\033[33m   ██████╗ ██████╗ ███╗   ██╗██╗   ██╗███████╗██████╗ ████████╗██╗███████╗███████╗ ██████╗  \033[0m")
@@ -162,8 +158,6 @@ class DownloaderTab(QWidget):
         except:
             self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
     
-
-
     def download_video(self):
         try:
             if internet_check() == True:
@@ -217,27 +211,6 @@ class DownloaderTab(QWidget):
                             'preferredcodec': 'flac',
                             'preferredquality': 'lossless',
                         }],
-                        'addmetadata': True,
-                        'outtmpl': self.name_input.text() + '.%(ext)s'
-                    }
-                    self.Downloadcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                    self.repaint()
-                    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                        ydl.download([self.link_input.text()])
-                    for extension in ["*.mp3", "*.aac", "*.flac", "*.m4a", "*.ogg", "*.wav", "*.opus", "*.vorbis"]:
-                        for filename in glob.glob(extension):
-                            shutil.move(filename, self.destination_input.text())
-                    show_download_success_message()
-                    self.link_input.clear()
-                    self.name_input.clear()
-                    self.destination_input.clear()
-                    self.download_choice.setCurrentText('Please choose')
-                    self.Downloadcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                    self.repaint()
-                elif self.download_option_user == 'Audio Only whitout ffmpeg': #--------------------------------------------------------------
-                    ydl_opts = {
-                        'format': 'bestaudio/best',
-                        'postprocessors': [],
                         'addmetadata': True,
                         'outtmpl': self.name_input.text() + '.%(ext)s'
                     }
