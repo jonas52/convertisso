@@ -14,7 +14,7 @@ import ffmpeg
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QTabWidget, QWidget, QLabel, QPushButton, QLineEdit, QComboBox, QFileDialog, QMessageBox, QMainWindow, QDesktopWidget, QVBoxLayout, QScrollBar, QProgressBar
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QFont
 import requests
 import sys
 from pydub import AudioSegment
@@ -112,6 +112,7 @@ class DownloaderTab(QWidget):
         self.download_choice.addItem('Video Only')
         self.download_choice.addItem('Video + Subtitles')
         self.download_choice.addItem('Audio Only')
+        self.download_choice.addItem('Audio Only whitout ffmpeg')
         self.download_choice.addItem('Subtitles Only')
         self.download_choice.move(250, 200)
         self.download_choice.setEditable(True)        
@@ -168,12 +169,12 @@ class DownloaderTab(QWidget):
             if internet_check() == True:
                 if self.download_option_user == 'Video Only':
                     ydl_opts = {
-                        'format': 'best',
+                        'format': 'bestvideo+bestaudio',
                         'addmetadata': True,
                         'outtmpl': self.name_input.text()
                     }
                     self.Downloadcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                    self.repaint() 
+                    self.repaint()
                     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                         ydl.download([self.link_input.text()])
                     for extension in ["*.mp4", "*.mkv", "*.webm", "*.flv"]:
@@ -208,7 +209,7 @@ class DownloaderTab(QWidget):
                     self.download_choice.setCurrentText('Please choose')
                     self.Downloadcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     self.repaint()
-                if self.download_option_user == 'Audio Only':
+                elif self.download_option_user == 'Audio Only':
                     ydl_opts = {
                         'format': 'bestaudio/best',
                         'postprocessors': [{
@@ -216,6 +217,27 @@ class DownloaderTab(QWidget):
                             'preferredcodec': 'flac',
                             'preferredquality': 'lossless',
                         }],
+                        'addmetadata': True,
+                        'outtmpl': self.name_input.text() + '.%(ext)s'
+                    }
+                    self.Downloadcheck_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                    self.repaint()
+                    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                        ydl.download([self.link_input.text()])
+                    for extension in ["*.mp3", "*.aac", "*.flac", "*.m4a", "*.ogg", "*.wav", "*.opus", "*.vorbis"]:
+                        for filename in glob.glob(extension):
+                            shutil.move(filename, self.destination_input.text())
+                    show_download_success_message()
+                    self.link_input.clear()
+                    self.name_input.clear()
+                    self.destination_input.clear()
+                    self.download_choice.setCurrentText('Please choose')
+                    self.Downloadcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+                elif self.download_option_user == 'Audio Only whitout ffmpeg': #--------------------------------------------------------------
+                    ydl_opts = {
+                        'format': 'bestaudio/best',
+                        'postprocessors': [],
                         'addmetadata': True,
                         'outtmpl': self.name_input.text() + '.%(ext)s'
                     }
