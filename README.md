@@ -39,7 +39,7 @@
 # To run my script convertisso GUI whit QT
 #### Open terminal and type this
 ### Dowload and lauch whit : 
->     git clone https://github.com/jonas52/convertisso.git && cd convertisso && python3 Convertisso-insaller.py
+>     git clone https://github.com/jonas52/convertisso.git && cd convertisso && python3 convertisso-installer.py
 ### only lauch whit :
 >     git clone https://github.com/jonas52/convertisso.git && cd convertisso && python3 convertisso-GUI.py
 - And it's all good conversions and/or video downloads
