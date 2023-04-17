@@ -48,9 +48,6 @@ def show_download_success_message():
     message_box.exec_()
 
 def internet_check(host='https://google.com'):
-    '''
-    Check if the user have an Internet connection by connecting to google.com over https
-    '''
     try:
         request.urlopen(host, timeout=4)
         return True
@@ -108,7 +105,6 @@ class DownloaderTab(QWidget):
         self.download_choice.addItem('Video Only')
         self.download_choice.addItem('Video + Subtitles')
         self.download_choice.addItem('Audio Only')
-        self.download_choice.addItem('Audio Only whitout ffmpeg')
         self.download_choice.addItem('Subtitles Only')
         self.download_choice.move(250, 200)
         self.download_choice.setEditable(True)        
@@ -157,7 +153,7 @@ class DownloaderTab(QWidget):
                 self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
         except:
             self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
-    
+
     def download_video(self):
         try:
             if internet_check() == True:
@@ -253,15 +249,18 @@ class DownloaderTab(QWidget):
                     self.Downloadcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     self.repaint()
                 else:
+                    self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "An unexpected error has occurred")
                     self.Downloadcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
             else:
+                self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
                 QMessageBox.critical(None, "Error", "No internet connextion please check your connection")
                 self.Downloadcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
         except Exception as e:
-            error_message = "Une erreur s'est produite lors du téléchargement : {}".format(str(e))
+            self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
+            error_message = "An error occurred during the download: {}".format(str(e))
             message_box = QMessageBox()
-            message_box.setWindowTitle("Erreur de téléchargement")
+            message_box.setWindowTitle("Download error")
             message_box.setText(error_message)
             message_box.setIcon(QMessageBox.Warning)
             message_box.addButton(QMessageBox.Ok)
@@ -344,10 +343,12 @@ class AudioTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
                             return
                         encov = "ogg"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -369,10 +370,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
                                 return
                             encov = "aac"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -394,10 +397,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
                                 return
                             encov = "aac"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -419,10 +424,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
                                 return
                             encov = "ac3"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -444,10 +451,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
                                 return
                             encov = "opus"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -469,10 +478,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {mp3_file}: {e.stderr}")
                                 return
                             encov = "m4a"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -494,10 +505,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
                                 return
                             encov = "ogg"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -519,10 +532,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
                                 return
                             encov = "aac"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -544,10 +559,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
                                 return
                             encov = "aac"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -569,10 +586,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
                                 return
                             encov = "ac3"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -594,10 +613,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
                                 return
                             encov = "opus"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -619,10 +640,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {wav_file}: {e.stderr}")
                                 return
                             encov = "m4a"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -644,10 +667,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
                                 return
                             encov = "ogg"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -669,10 +694,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
                                 return
                             encov = "aac"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -694,10 +721,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
                                 return
                             encov = "aac"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -719,10 +748,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
                                 return
                             encov = "ac3"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -744,10 +775,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
                                 return
                             encov = "opus"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -769,10 +802,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ogg_file}: {e.stderr}")
                                 return
                             encov = "m4a"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -794,10 +829,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
                                 return
                             encov = "ac3"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -819,10 +856,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
                                 return
                             encov = "aac"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -844,10 +883,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
                                 return
                             encov = "aac"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -869,10 +910,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
                                 return
                             encov = "ogg"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -894,10 +937,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
                                 return
                             encov = "opus"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -919,10 +964,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ac3_file}: {e.stderr}")
                                 return
                             encov = "m4a"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -944,10 +991,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
                                 return
                             encov = "aac"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -969,10 +1018,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
                                 return
                             encov = "ac3"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -994,10 +1045,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
                                 return
                             encov = "aac"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1019,10 +1072,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
                                 return
                             encov = "ogg"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1044,10 +1099,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
                                 return
                             encov = "opus"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1069,10 +1126,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {aac_file}: {e.stderr}")
                                 return
                             encov = "m4a"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1094,10 +1153,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
                                 return
                             encov = "flac"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1119,10 +1180,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
                                 return
                             encov = "ac3"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1144,10 +1207,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
                                 return
                             encov = "mp3"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1169,10 +1234,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
                                 return
                             encov = "ogg"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1194,10 +1261,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
                                 return
                             encov = "opus"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1219,10 +1288,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
                                 return
                             encov = "m4a"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1244,10 +1315,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {flac_file}: {e.stderr}")
                                 return
                             encov = "aac"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1269,10 +1342,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
                                 return
                             encov = "opus"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1294,10 +1369,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
                                 return
                             encov = "ac3"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1319,10 +1396,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
                                 return
                             encov = "opus"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1344,10 +1423,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
                                 return
                             encov = "ogg"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1369,10 +1450,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
                                 return
                             encov = "m4a"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1394,10 +1477,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {opus_file}: {e.stderr}")
                                 return
                             encov = "aac"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1419,10 +1504,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
                                 return
                             encov = "m4a"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1444,10 +1531,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
                                 return
                             encov = "ac3"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1469,10 +1558,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
                                 return
                             encov = "m4a"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1494,10 +1585,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
                                 return
                             encov = "ogg"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1519,10 +1612,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
                                 return
                             encov = "opus"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1544,10 +1639,12 @@ class AudioTab(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {m4a_file}: {e.stderr}")
                                 return
                             encov = "aac"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -1556,11 +1653,12 @@ class AudioTab(QWidget):
                     self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     self.repaint()
             else:
+                self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
                 QMessageBox.critical(None, "Error", "An unexpected error has occurred")
         except Exception as e:
-            error_message = "Une erreur s'est produite lors de la converssion : {}".format(str(e))
+            error_message = "An error occurred during the conversation: {}".format(str(e))
             message_box = QMessageBox()
-            message_box.setWindowTitle("Erreur de converssion")
+            message_box.setWindowTitle("Conversation error")
             message_box.setText(error_message)
             message_box.setIcon(QMessageBox.Warning)
             message_box.addButton(QMessageBox.Ok)
@@ -1640,10 +1738,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
                             return
                         encov = "avi"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -1665,10 +1765,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
                             return
                         encov = "mov"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -1690,10 +1792,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
                             return
                         encov = "mp4"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -1715,10 +1819,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
                             return
                         encov = "webm"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -1740,10 +1846,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
                             return
                         encov = "flv"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -1765,10 +1873,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mkv_file}: {e.stderr}")
                             return
                         encov = "hevc"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -1790,10 +1900,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
                             return
                         encov = "mkv"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -1815,10 +1927,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
                             return
                         encov = "mov"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -1840,10 +1954,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
                             return
                         encov = "avi"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -1865,10 +1981,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
                             return
                         encov = "webm"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -1891,10 +2009,12 @@ class VideoTab(QWidget):
                             print("Conversion OK")
                             exit
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
                             return
                         encov = "flv"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -1916,10 +2036,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mp4_file}: {e.stderr}")
                             return
                         encov = "hevc"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -1941,10 +2063,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
                             return
                         encov = "mkv"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -1966,10 +2090,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
                             return
                         encov = "mp4"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -1991,10 +2117,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
                             return
                         encov = "avi"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2016,10 +2144,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
                             return
                         encov = "webm"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2041,10 +2171,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
                             return
                         encov = "flv"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2066,10 +2198,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {mov_file}: {e.stderr}")
                             return
                         encov = "hevc"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2091,10 +2225,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
                             return
                         encov = "mkv"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2116,10 +2252,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
                             return
                         encov = "mp4"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2141,10 +2279,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
                             return
                         encov = "mov"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2166,10 +2306,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
                             return
                         encov = "webm"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2191,10 +2333,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
                             return
                         encov = "flv"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2216,10 +2360,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {avi_file}: {e.stderr}")
                             return
                         encov = "hevc"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2241,10 +2387,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
                             return
                         encov = "avi"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2266,10 +2414,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
                             return
                         encov = "hevc"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2291,10 +2441,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
                             return
                         encov = "mov"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2316,10 +2468,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
                             return
                         encov = "mp4"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2341,10 +2495,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
                             return
                         encov = "flv"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2366,10 +2522,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {webm_file}: {e.stderr}")
                             return
                         encov = "hevc"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2391,10 +2549,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
                             return
                         encov = "avi"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2416,10 +2576,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
                             return
                         encov = "hevc"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2441,10 +2603,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
                             return
                         encov = "mov"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2466,10 +2630,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
                             return
                         encov = "mp4"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2491,10 +2657,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
                             return
                         encov = "flv"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2516,10 +2684,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {hevc_file}: {e.stderr}")
                             return
                         encov = "webm"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2541,10 +2711,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
                             return
                         encov = "avi"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2566,10 +2738,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
                             return
                         encov = "flv"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2591,10 +2765,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
                             return
                         encov = "mov"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2616,10 +2792,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
                             return
                         encov = "mp4"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2641,10 +2819,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
                             return
                         encov = "hevc"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2666,10 +2846,12 @@ class VideoTab(QWidget):
                             ffmpeg.run(stream, quiet=True)
                             print("Conversion OK")
                         except ffmpeg.Error as e:
+                            self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                             QMessageBox.critical(None, "Error", f"Failed to convert {flv_file}: {e.stderr}")
                             return
                         encov = "webm"
                 else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                     return
                 show_success_message()
@@ -2678,11 +2860,12 @@ class VideoTab(QWidget):
                 self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                 self.repaint() 
             else:
+                self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
                 QMessageBox.critical(None, "Error", "An unexpected error has occurred")
         except Exception as e:
-            error_message = "Une erreur s'est produite lors de la converssion : {}".format(str(e))
+            error_message = "An error occurred during the conversation: {}".format(str(e))
             message_box = QMessageBox()
-            message_box.setWindowTitle("Erreur de converssion")
+            message_box.setWindowTitle("Conversation error")
             message_box.setText(error_message)
             message_box.setIcon(QMessageBox.Warning)
             message_box.addButton(QMessageBox.Ok)
@@ -2758,10 +2941,12 @@ class Subtitle(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
                                 return
                             encov = "srt"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return 
                     show_success_message()
@@ -2783,10 +2968,12 @@ class Subtitle(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
                                 return
                             encov = "ass"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -2808,10 +2995,12 @@ class Subtitle(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {vtt_file}: {e.stderr}")
                                 return
                             encov = "lrc"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return 
                     show_success_message()
@@ -2833,10 +3022,12 @@ class Subtitle(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
                                 return
                             encov = "vtt"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -2858,10 +3049,12 @@ class Subtitle(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
                                 return
                             encov = "ass"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return 
                     show_success_message()
@@ -2883,10 +3076,12 @@ class Subtitle(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {srt_file}: {e.stderr}")
                                 return
                             encov = "lrc"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return 
                     show_success_message()
@@ -2908,10 +3103,12 @@ class Subtitle(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
                                 return
                             encov = "srt"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
             elif self.convert_subtitle_choice == 'ass to lrc':
@@ -2928,10 +3125,12 @@ class Subtitle(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
                                 return
                             encov = "lrc"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -2953,10 +3152,12 @@ class Subtitle(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {ass_file}: {e.stderr}")
                                 return
                             encov = "vtt"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return 
                     show_success_message()
@@ -2976,10 +3177,12 @@ class Subtitle(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
                                 return
                             encov = "srt"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return 
                     show_success_message()
@@ -3001,10 +3204,12 @@ class Subtitle(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
                                 return
                             encov = "ass"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -3026,10 +3231,12 @@ class Subtitle(QWidget):
                                 ffmpeg.run(stream, quiet=True)
                                 print("Conversion OK")
                             except ffmpeg.Error as e:
+                                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                                 QMessageBox.critical(None, "Error", f"Failed to convert {lrc_file}: {e.stderr}")
                                 return
                             encov = "vtt"
                     else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                         QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
                         return
                     show_success_message()
@@ -3038,24 +3245,16 @@ class Subtitle(QWidget):
                     self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     self.repaint() 
             else:
+                self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
                 QMessageBox.critical(None, "Error", "An unexpected error has occurred")
         except Exception as e:
-            error_message = "Une erreur s'est produite lors de la converssion : {}".format(str(e))
+            error_message = "An error occurred during the conversation: {}".format(str(e))
             message_box = QMessageBox()
-            message_box.setWindowTitle("Erreur de converssion")
+            message_box.setWindowTitle("Conversation error")
             message_box.setText(error_message)
             message_box.setIcon(QMessageBox.Warning)
             message_box.addButton(QMessageBox.Ok)
             message_box.exec_()
-
-
-
-
-
-
-
-
-
 
 class MyMainWindow(QMainWindow):
     def __init__(self):
