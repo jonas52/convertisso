@@ -25,7 +25,7 @@
 - Convert your subtitle files (vtt, srt, ass, lrc). 
 - Download your favorite video from any website, with or without title, download only the audio or only the subtitles. (attention only works if you have python3 3.7 and higher)
 - Convert your video files (mkv, mp4, mov, avi, webm, hevc, flv). 
-- Convert your audio files (mp3, wav, ogg, ac3, aac, flac, opusmp3, wav, ogg, ac3, aac, flac, opus, vorbis, m4a, m4a).
+- Convert your audio files (mp3, wav, ogg, ac3, aac, flac, opus, m4a).
 - Convert your photo files (png, jpg, tiff, pdf, svg, pdf, gif, heic). -> coming soon
 ## Main GUI of Convertisso
 | Main-Downloader-Convertisso | Main-Audio-Convertisso |
