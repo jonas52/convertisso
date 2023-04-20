@@ -39,6 +39,14 @@ def show_success_message():
     message_box.setStandardButtons(QMessageBox.Ok)
     message_box.exec_()
 
+def show_success_message_compress():
+    message_box = QMessageBox()
+    message_box.setWindowTitle("Successful compression")
+    message_box.setText("The compression was successful")
+    message_box.setIcon(QMessageBox.Information)
+    message_box.setStandardButtons(QMessageBox.Ok)
+    message_box.exec_()
+
 def show_download_success_message():
     message_box = QMessageBox()
     message_box.setWindowTitle("Successful download")
@@ -278,15 +286,15 @@ class AudioTab(QWidget):
         
         self.path_label = QLabel(self)
         self.path_label.setText('Chose directory (its store your(s) file(s) to convert):')
-        self.path_label.move(50, 100)
+        self.path_label.move(50, 200)
 
         self.path_input = QLineEdit(self)
-        self.path_input.move(430, 100)
+        self.path_input.move(430, 200)
         self.path_input.resize(300, 30)
         self.path_input.text()
 
         self.choose_path_button = QPushButton('Choose Folder', self)
-        self.choose_path_button.move(730, 100)
+        self.choose_path_button.move(730, 200)
         self.choose_path_button.clicked.connect(self.choose_folder)
         self.convertaudio_choice = QComboBox(self)
         self.convertaudio_choice.addItem('Please choose')
@@ -298,7 +306,7 @@ class AudioTab(QWidget):
                                         'flac to wav', 'flac to ac3', 'flac to mp3', 'flac to ogg', 'flac to opus', 'flac to m4a', 'flac to aac',
                                         'opus to wav', 'opus to ac3', 'opus to mp3', 'opus to ogg', 'opus to m4a', 'opus to aac',
                                         'm4a to wav', 'm4a to ac3', 'm4a to mp3', 'm4a to ogg', 'm4a to opus', 'm4a to aac'])
-        self.convertaudio_choice.move(250, 200)
+        self.convertaudio_choice.move(250, 100)
         self.convertaudio_choice.resize(200, 30)
         self.convertaudio_choice.setMaxVisibleItems(5)
         self.convertaudio_choice.setEditable(True)
@@ -1676,15 +1684,15 @@ class VideoTab(QWidget):
     def initUI(self):
         self.path_label = QLabel(self)
         self.path_label.setText('Chose directory (its store your(s) file(s) to convert):')
-        self.path_label.move(50, 100)
+        self.path_label.move(50, 200)
 
         self.path_input = QLineEdit(self)
-        self.path_input.move(430, 100)
+        self.path_input.move(430, 200)
         self.path_input.resize(300, 30)
         self.path_input.text()
 
         self.choose_path_button = QPushButton('Choose Folder', self)
-        self.choose_path_button.move(730, 100)
+        self.choose_path_button.move(730, 200)
         self.choose_path_button.clicked.connect(self.choose_folder)
         self.convertvideo_choice = QComboBox(self)
         self.convertvideo_choice.addItem('Please choose')
@@ -1695,7 +1703,7 @@ class VideoTab(QWidget):
                                    'webm to avi', 'webm to mkv', 'webm to mov', 'webm to mp4', 'webm to flv', 'webm to hevc',
                                    'hevc to avi', 'hevc to mkv', 'hevc to mov', 'hevc to mp4', 'hevc to flv', 'hevc to webm',
                                    'flv to avi', 'flv to mkv', 'flv to mov', 'flv to mp4', 'flv to hevc', 'flv to webm'])
-        self.convertvideo_choice.move(250, 200)
+        self.convertvideo_choice.move(250, 100)
         self.convertvideo_choice.resize(200, 30)
         self.convertvideo_choice.setMaxVisibleItems(5)
         self.convertvideo_choice.setEditable(True)
@@ -2883,21 +2891,21 @@ class Subtitle(QWidget):
     def initUI(self):
         self.path_label = QLabel(self)
         self.path_label.setText('Chose directory (its store your(s) file(s) to convert):')
-        self.path_label.move(50, 100)
+        self.path_label.move(50, 200)
 
         self.path_input = QLineEdit(self)
-        self.path_input.move(430, 100)
+        self.path_input.move(430, 200)
         self.path_input.resize(300, 30)
         self.path_input.text()
 
         self.choose_path_button = QPushButton('Choose Folder', self)
-        self.choose_path_button.move(730, 100)
+        self.choose_path_button.move(730, 200)
         self.choose_path_button.clicked.connect(self.choose_folder)
         self.convertsubtitle_choice = QComboBox(self)
         self.convertsubtitle_choice.addItem('Please choose')
         self.convertsubtitle_choice.addItems(['vtt to srt', 'vtt to ass', 'vtt to lrc', 'srt to vtt', 'srt to ass', 'srt to lrc', 
                                             'ass to srt', 'ass to lrc', 'ass to vtt', 'lrc to srt', 'lrc to ass', 'lrc to vtt'])
-        self.convertsubtitle_choice.move(250, 200)
+        self.convertsubtitle_choice.move(250, 100)
         self.convertsubtitle_choice.resize(200, 30)
         self.convertsubtitle_choice.setMaxVisibleItems(5)
         self.convertsubtitle_choice.setEditable(True)
@@ -3190,7 +3198,7 @@ class Subtitle(QWidget):
                     self.convertsubtitle_choice.setCurrentText('Please choose')
                     self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     self.repaint() 
-            if self.convert_subtitle_choice == 'lrc to ass':
+            elif self.convert_subtitle_choice == 'lrc to ass':
                     lrc_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.lrc"), recursive=True)
                     if lrc_files:
                         print("Conversion in progress ...")
@@ -3217,7 +3225,7 @@ class Subtitle(QWidget):
                     self.convertsubtitle_choice.setCurrentText('Please choose')
                     self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                     self.repaint() 
-            if self.convert_subtitle_choice == 'lrc to vtt':
+            elif self.convert_subtitle_choice == 'lrc to vtt':
                     lrc_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.lrc"), recursive=True)
                     if lrc_files:
                         print("Conversion in progress ...")
@@ -3256,6 +3264,537 @@ class Subtitle(QWidget):
             message_box.addButton(QMessageBox.Ok)
             message_box.exec_()
 
+class Compresse_audio_Tab(QWidget):
+
+    def __init__(self):
+        super().__init__()
+
+        label = QLabel("Convertisso audio compress", self)
+        label.move(20, 20)
+        self.initUI()
+    def initUI(self):
+        
+        self.path_label = QLabel(self)
+        self.path_label.setText('Chose directory (its store your(s) file(s) to compress):')
+        self.path_label.move(50, 200)
+
+        self.path_input = QLineEdit(self)
+        self.path_input.move(450, 200)
+        self.path_input.resize(300, 30)
+        self.path_input.text()
+
+        self.compress_audio_txt_label = QLabel(self)
+        self.compress_audio_txt_label.setText('compress in progress: ')
+        self.compress_audio_txt_label.move(400, 20)
+
+        self.compress_audio_label = QLabel(self)
+        self.compress_audio_label.setFixedSize(20, 20)
+        self.compress_audio_label.move(600, 20)
+        self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+        
+        self.choose_path_button = QPushButton('Choose Folder', self)
+        self.choose_path_button.move(730, 200)
+        self.choose_path_button.clicked.connect(self.choose_folder)
+        self.compress_audio_choice = QComboBox(self)
+        self.compress_audio_choice.addItem('Please choose')
+        self.compress_audio_choice.addItems(['mp3', 'aac', 'wav', 'ac3', 'opus', 'm4a', 'flac', 'ogg'])
+        self.compress_audio_choice.move(250, 100)
+        self.compress_audio_choice.resize(200, 30)
+        self.compress_audio_choice.setMaxVisibleItems(5)
+        self.compress_audio_choice.setEditable(True)
+        self.compress_audio_choice.view().setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.compress_audio_choice.currentIndexChanged.connect(self.setaudioOption)
+
+
+        self.compress_audio_button = QPushButton('Compress', self)
+        self.compress_audio_button.move(300, 350)
+        self.compress_audio_button.clicked.connect(self.compress_audio)
+
+    def choose_folder(self):
+        folder_path = QFileDialog.getExistingDirectory(self, 'Choose Folder')
+        self.path_input.setText(folder_path)
+
+    def setaudioOption(self, index):
+        self.convert_audio_choice = self.compress_audio_choice.itemText(index)
+
+    def compress_audio(self):
+        try:
+            if self.compress_audio_choice.currentText() == 'mp3':
+                mp3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp3"), recursive=True)
+                if mp3_files:
+                    print("Compress in progress ...")
+                    for mp3_file in mp3_files:
+                        try:
+                            self.compress_audio_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            output_file = os.path.splitext(mp3_file)[0] + '_compressed.mp3'
+                            stream = ffmpeg.input(mp3_file)
+                            stream = ffmpeg.output(stream, output_file, acodec='libmp3lame', bitrate='128k')
+                            ffmpeg.run(stream, quiet=True)
+                            print("Compression OK")
+                        except ffmpeg.Error as e:
+                            self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {mp3_file}: {e.stderr}")
+                            return
+                else:
+                    self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    return
+                show_success_message_compress()
+                self.path_input.clear()
+                self.compress_audio_choice.setCurrentText('Please choose')
+                self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.compress_audio_choice.currentText() == 'aac':
+                aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
+                if aac_files:
+                    print("Compress in progress ...")
+                    for aac_file in aac_files:
+                        try:
+                            self.compress_audio_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            output_file = os.path.splitext(aac_file)[0] + '_compressed.aac'
+                            stream = ffmpeg.input(aac_file)
+                            stream = ffmpeg.output(stream, output_file, acodec='aac', bitrate='128k')
+                            ffmpeg.run(stream, quiet=True)
+                            print("Compression OK")
+                        except ffmpeg.Error as e:
+                            self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {aac_file}: {e.stderr}")
+                            return
+                show_success_message_compress()
+                self.path_input.clear()
+                self.compress_audio_choice.setCurrentText('Please choose')
+                self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.compress_audio_choice.currentText() == 'wav':
+                wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
+                if wav_files:
+                    print("Compress in progress ...")
+                    for wav_file in wav_files:
+                        try:
+                            self.compress_audio_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            output_file = os.path.splitext(wav_file)[0] + '_compressed.wav'
+                            stream = ffmpeg.input(wav_file)
+                            stream = ffmpeg.output(stream, output_file, bitrate='128k')
+                            ffmpeg.run(stream, quiet=True)
+                            print("Compression OK")
+                        except ffmpeg.Error as e:
+                            self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {wav_file}: {e.stderr}")
+                            return
+                else:
+                    self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    return
+                show_success_message_compress()
+                self.path_input.clear()
+                self.compress_audio_choice.setCurrentText('Please choose')
+                self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.compress_audio_choice.currentText() == 'ac3':
+                ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
+                if ac3_files:
+                    print("Compress in progress ...")
+                    for ac3_file in ac3_files:
+                        try:
+                            self.compress_audio_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            output_file = os.path.splitext(ac3_file)[0] + '_compressed.ac3'
+                            stream = ffmpeg.input(ac3_file)
+                            stream = ffmpeg.output(stream, output_file, acodec='ac3', bitrate='128k')
+                            ffmpeg.run(stream, quiet=True)
+                            print("Compression OK")
+                        except ffmpeg.Error as e:
+                            self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {ac3_file}: {e.stderr}")
+                            return
+                show_success_message_compress()
+                self.path_input.clear()
+                self.compress_audio_choice.setCurrentText('Please choose')
+                self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.compress_audio_choice.currentText() == 'opus':
+                opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
+                if opus_files:
+                    print("Compress in progress ...")
+                    for opus_file in opus_files:
+                        try:
+                            self.compress_audio_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            output_file = os.path.splitext(opus_file)[0] + '_compressed.opus'
+                            stream = ffmpeg.input(opus_file)
+                            stream = ffmpeg.output(stream, output_file, acodec='libopus', crf=20)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Compression OK")
+                        except ffmpeg.Error as e:
+                            self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {opus_file}: {e.stderr}")
+                            return
+                else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    return
+                show_success_message_compress()
+                self.path_input.clear()
+                self.convertsubtitle_choice.setCurrentText('Please choose')
+                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.compress_audio_choice.currentText() == 'm4a':
+                m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
+                if m4a_files:
+                    print("Compress in progress ...")
+                    for m4a_file in m4a_files:
+                        try:
+                            self.compress_audio_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            output_file = os.path.splitext(m4a_file)[0] + '_compressed.m4a'
+                            stream = ffmpeg.input(m4a_file)
+                            stream = ffmpeg.output(stream, output_file, acodec='alac', crf=20)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Compression OK")
+                        except ffmpeg.Error as e:
+                            self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {m4a_file}: {e.stderr}")
+                            return
+                else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    return
+                show_success_message_compress()
+                self.path_input.clear()
+                self.convertsubtitle_choice.setCurrentText('Please choose')
+                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.compress_audio_choice.currentText() == 'flac':
+                flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
+                if flac_files:
+                    print("Compress in progress ...")
+                    for flac_file in flac_files:
+                        try:
+                            self.compress_audio_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            output_file = os.path.splitext(flac_file)[0] + '_compressed.flac'
+                            stream = ffmpeg.input(flac_file)
+                            stream = ffmpeg.output(stream, output_file, acodec='flac', crf=20)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Compression OK")
+                        except ffmpeg.Error as e:
+                            self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {flac_file}: {e.stderr}")
+                            return
+                else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    return
+                show_success_message_compress()
+                self.path_input.clear()
+                self.convertsubtitle_choice.setCurrentText('Please choose')
+                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.compress_audio_choice.currentText() == 'ogg':
+                    ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
+                    if ogg_files:
+                        print("Compress in progress ...")
+                        for ogg_file in ogg_files:
+                            try:
+                                self.compress_audio_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint()
+                                output_file = os.path.splitext(ogg_file)[0] + '_compressed.ogg'
+                                stream = ffmpeg.input(ogg_file)
+                                stream = ffmpeg.output(stream, output_file, acodec='libvorbis', crf=20)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Compression OK")
+                            except ffmpeg.Error as e:
+                                self.compress_audio_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                                QMessageBox.critical(None, "Error", f"Failed to compress {ogg_file}: {e.stderr}")
+                                return
+                    else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message_compress()
+                    self.path_input.clear()
+                    self.convertsubtitle_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            else:
+                self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                QMessageBox.critical(None, "Error", "An unexpected error has occurred")
+        except Exception as e:
+            error_message = "An error occurred during the compression: {}".format(str(e))
+            message_box = QMessageBox()
+            message_box.setWindowTitle("Compression error")
+            message_box.setText(error_message)
+
+
+class Compresse_video_Tab(QWidget):
+
+    def __init__(self):
+        super().__init__()
+
+        label = QLabel("Convertisso video compress", self)
+        label.move(20, 20)
+        self.initUI()
+    def initUI(self):
+        
+        self.path_label = QLabel(self)
+        self.path_label.setText('Chose directory (its store your(s) file(s) to compress):')
+        self.path_label.move(50, 200)
+
+        self.path_input = QLineEdit(self)
+        self.path_input.move(450, 200)
+        self.path_input.resize(300, 30)
+        self.path_input.text()
+
+        self.compress_video_txt_label = QLabel(self)
+        self.compress_video_txt_label.setText('compress in progress: ')
+        self.compress_video_txt_label.move(400, 20)
+
+        self.compress_video_label = QLabel(self)
+        self.compress_video_label.setFixedSize(20, 20)
+        self.compress_video_label.move(600, 20)
+        self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+        
+        self.choose_path_button = QPushButton('Choose Folder', self)
+        self.choose_path_button.move(730, 200)
+        self.choose_path_button.clicked.connect(self.choose_folder)
+        self.compress_video_choice = QComboBox(self)
+        self.compress_video_choice.addItem('Please choose')
+        self.compress_video_choice.addItems(['mp4', 'aac', 'wav', 'ac3', 'opus', 'm4a', 'flac', 'ogg'])
+        self.compress_video_choice.move(250, 100)
+        self.compress_video_choice.resize(200, 30)
+        self.compress_video_choice.setMaxVisibleItems(5)
+        self.compress_video_choice.setEditable(True)
+        self.compress_video_choice.view().setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.compress_video_choice.currentIndexChanged.connect(self.setvideoOption)
+
+
+        self.compress_video_button = QPushButton('Compress', self)
+        self.compress_video_button.move(300, 350)
+        self.compress_video_button.clicked.connect(self.compress_video)
+
+    def choose_folder(self):
+        folder_path = QFileDialog.getExistingDirectory(self, 'Choose Folder')
+        self.path_input.setText(folder_path)
+
+    def setvideoOption(self, index):
+        self.convert_video_choice = self.compress_video_choice.itemText(index)
+
+    def compress_video(self):
+        try:
+            if self.compress_video_choice.currentText() == 'mp4':
+                mp4_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mp4"), recursive=True)
+                if mp4_files:
+                    print("Compress in progress ...")
+                    for mp4_file in mp4_files:
+                        try:
+                            self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            output_file = os.path.splitext(mp4_file)[0] + '_compressed.mp4'
+                            stream = ffmpeg.input(mp4_file)
+                            stream = ffmpeg.output(stream, output_file, vcodec='libx264', crf=23, preset='medium',acodec='aac', bitrate='128k' )
+                            ffmpeg.run(stream, quiet=True)
+                            print("Compression OK")
+                        except ffmpeg.Error as e:
+                            self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {mp4_file}: {e.stderr}")
+                            return
+                else:
+                    self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    return
+                show_success_message_compress()
+                self.path_input.clear()
+                self.compress_video_choice.setCurrentText('Please choose')
+                self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.compress_video_choice.currentText() == 'aac':
+                aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
+                if aac_files:
+                    print("Compress in progress ...")
+                    for aac_file in aac_files:
+                        try:
+                            self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            output_file = os.path.splitext(aac_file)[0] + '_compressed.aac'
+                            stream = ffmpeg.input(aac_file)
+                            stream = ffmpeg.output(stream, output_file, acodec='aac', bitrate='128k')
+                            ffmpeg.run(stream, quiet=True)
+                            print("Compression OK")
+                        except ffmpeg.Error as e:
+                            self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {aac_file}: {e.stderr}")
+                            return
+                show_success_message_compress()
+                self.path_input.clear()
+                self.compress_video_choice.setCurrentText('Please choose')
+                self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.compress_video_choice.currentText() == 'wav':
+                wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
+                if wav_files:
+                    print("Compress in progress ...")
+                    for wav_file in wav_files:
+                        try:
+                            self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            output_file = os.path.splitext(wav_file)[0] + '_compressed.wav'
+                            stream = ffmpeg.input(wav_file)
+                            stream = ffmpeg.output(stream, output_file, bitrate='128k')
+                            ffmpeg.run(stream, quiet=True)
+                            print("Compression OK")
+                        except ffmpeg.Error as e:
+                            self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {wav_file}: {e.stderr}")
+                            return
+                else:
+                    self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    return
+                show_success_message_compress()
+                self.path_input.clear()
+                self.compress_video_choice.setCurrentText('Please choose')
+                self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.compress_video_choice.currentText() == 'ac3':
+                ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
+                if ac3_files:
+                    print("Compress in progress ...")
+                    for ac3_file in ac3_files:
+                        try:
+                            self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            output_file = os.path.splitext(ac3_file)[0] + '_compressed.ac3'
+                            stream = ffmpeg.input(ac3_file)
+                            stream = ffmpeg.output(stream, output_file, acodec='ac3', bitrate='128k')
+                            ffmpeg.run(stream, quiet=True)
+                            print("Compression OK")
+                        except ffmpeg.Error as e:
+                            self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {ac3_file}: {e.stderr}")
+                            return
+                show_success_message_compress()
+                self.path_input.clear()
+                self.compress_video_choice.setCurrentText('Please choose')
+                self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.compress_video_choice.currentText() == 'opus':
+                opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
+                if opus_files:
+                    print("Compress in progress ...")
+                    for opus_file in opus_files:
+                        try:
+                            self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            output_file = os.path.splitext(opus_file)[0] + '_compressed.opus'
+                            stream = ffmpeg.input(opus_file)
+                            stream = ffmpeg.output(stream, output_file, acodec='libopus', crf=20)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Compression OK")
+                        except ffmpeg.Error as e:
+                            self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {opus_file}: {e.stderr}")
+                            return
+                else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    return
+                show_success_message_compress()
+                self.path_input.clear()
+                self.convertsubtitle_choice.setCurrentText('Please choose')
+                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.compress_video_choice.currentText() == 'm4a':
+                m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
+                if m4a_files:
+                    print("Compress in progress ...")
+                    for m4a_file in m4a_files:
+                        try:
+                            self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            output_file = os.path.splitext(m4a_file)[0] + '_compressed.m4a'
+                            stream = ffmpeg.input(m4a_file)
+                            stream = ffmpeg.output(stream, output_file, acodec='alac', crf=20)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Compression OK")
+                        except ffmpeg.Error as e:
+                            self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {m4a_file}: {e.stderr}")
+                            return
+                else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    return
+                show_success_message_compress()
+                self.path_input.clear()
+                self.convertsubtitle_choice.setCurrentText('Please choose')
+                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.compress_video_choice.currentText() == 'flac':
+                flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
+                if flac_files:
+                    print("Compress in progress ...")
+                    for flac_file in flac_files:
+                        try:
+                            self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                            self.repaint()
+                            output_file = os.path.splitext(flac_file)[0] + '_compressed.flac'
+                            stream = ffmpeg.input(flac_file)
+                            stream = ffmpeg.output(stream, output_file, acodec='flac', crf=20)
+                            ffmpeg.run(stream, quiet=True)
+                            print("Compression OK")
+                        except ffmpeg.Error as e:
+                            self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {flac_file}: {e.stderr}")
+                            return
+                else:
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                    return
+                show_success_message_compress()
+                self.path_input.clear()
+                self.convertsubtitle_choice.setCurrentText('Please choose')
+                self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                self.repaint()
+            elif self.compress_video_choice.currentText() == 'ogg':
+                    ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
+                    if ogg_files:
+                        print("Compress in progress ...")
+                        for ogg_file in ogg_files:
+                            try:
+                                self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
+                                self.repaint()
+                                output_file = os.path.splitext(ogg_file)[0] + '_compressed.ogg'
+                                stream = ffmpeg.input(ogg_file)
+                                stream = ffmpeg.output(stream, output_file, acodec='libvorbis', crf=20)
+                                ffmpeg.run(stream, quiet=True)
+                                print("Compression OK")
+                            except ffmpeg.Error as e:
+                                self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                                QMessageBox.critical(None, "Error", f"Failed to compress {ogg_file}: {e.stderr}")
+                                return
+                    else:
+                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
+                        return
+                    show_success_message_compress()
+                    self.path_input.clear()
+                    self.convertsubtitle_choice.setCurrentText('Please choose')
+                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                    self.repaint()
+            else:
+                self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
+                QMessageBox.critical(None, "Error", "An unexpected error has occurred")
+        except Exception as e:
+            error_message = "An error occurred during the compression: {}".format(str(e))
+            message_box = QMessageBox()
+            message_box.setWindowTitle("Compression error")
+            message_box.setText(error_message)
+
+
+
 class MyMainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -3270,20 +3809,19 @@ class MyMainWindow(QMainWindow):
         layout = QVBoxLayout()
 
         self.tabs = QTabWidget(self)
-        # Premier onglet
         self.downloader_tab = DownloaderTab()
         self.tabs.addTab(self.downloader_tab, "Downloader")
-        # Deuxième onglet
         self.audio_tab = AudioTab()
         self.tabs.addTab(self.audio_tab, "Audio")
-        # Troisième onglet
         self.video_tab = VideoTab()
         self.tabs.addTab(self.video_tab, "Video")
-        self.video_tab = Subtitle()
-        self.tabs.addTab(self.video_tab, "Subtitle")
-        # Ajout du QTabWidget au layout
+        self.subtitle_tab = Subtitle()
+        self.tabs.addTab(self.subtitle_tab, "Subtitle")
+        self.compress_audio_tab = Compresse_audio_Tab()
+        self.tabs.addTab(self.compress_audio_tab, "Compress Audio")
+        self.compress_video_tab = Compresse_video_Tab()
+        self.tabs.addTab(self.compress_video_tab, "Compress Video")
         layout.addWidget(self.tabs)
-        # Création d'un widget principal pour contenir le layout
         main_widget = QWidget()
         main_widget.setLayout(layout)
         self.setCentralWidget(main_widget)
