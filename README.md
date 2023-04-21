@@ -37,7 +37,7 @@
 |---------|---------|
 | ![Main-Video-Convertisso](https://user-images.githubusercontent.com/83141023/232312685-b643b8bc-4e2a-4b3b-9530-eaebcee60ae6.png) | ![Main-Subtitle-Convertisso](https://user-images.githubusercontent.com/83141023/232312739-60f9acdc-27c9-4657-9feb-e33b3ba6ce6c.png)
 
-# To run my script Convertisso GUI whit QT
+# To run my script Convertisso GUI(PyQt)
 ## Install all dependencies:
 ### Install Python on your device please check: _[Python website](https://www.python.org/downloads/)_
 ## Open terminal and type this
