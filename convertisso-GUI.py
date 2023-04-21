@@ -3282,12 +3282,21 @@ class MyMainWindow(QMainWindow):
         self.tabs.addTab(self.video_tab, "Video")
         self.subtitle_tab = Subtitle()
         self.tabs.addTab(self.subtitle_tab, "Subtitle")
-        main_widget = QWidget()
-        main_widget.setLayout(layout)
-        self.setCentralWidget(main_widget)
+        
+        # Ajouter le QTabWidget au layout
+        layout.addWidget(self.tabs)
+
+        # Créer un QWidget et assigner le layout
+        widget = QWidget()
+        widget.setLayout(layout)
+
+        # Définir le QWidget comme widget central de la QMainWindow
+        self.setCentralWidget(widget)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MyMainWindow()
     window.show()
     sys.exit(app.exec_())
+
