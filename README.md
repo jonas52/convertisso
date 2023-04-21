@@ -7,18 +7,42 @@
      ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚══════╝╚══════╝ ╚═════╝    
                                       Script to convert files
 </pre>
-[![MadeBy](https://img.shields.io/badge/Made%20by-Jonas%20Petitpierre-informational)](https://github.com/jonas52)
-[![Codename](https://img.shields.io/badge/Codename-jonas52-informational)](https://github.com/jonas52)
-[![wakatime](https://wakatime.com/badge/user/d4c095b3-d1eb-41c8-9c0b-d8a14eb14fbe.svg)](https://wakatime.com/@d4c095b3-d1eb-41c8-9c0b-d8a14eb14fbe)
-[![Supported OS](https://img.shields.io/badge/Supported%20OS-Linux-brightgreen)]()
-[![Supported OS](https://img.shields.io/badge/Supported%20OS-Windows-brightgreen)]()
-[![Supported OS](https://img.shields.io/badge/Supported%20OS-MacOs-brightgreen)]()
-[![Licence](https://img.shields.io/badge/License-GNU%20GPL--3.0-important)](https://github.com/jonas52/convertisso/blob/BETA/LICENSE)
-[![last-commit](https://img.shields.io/github/last-commit/jonas52/convertisso)]()
-[![total](https://img.shields.io/github/downloads/jonas52/convertisso/total)]()
-[![watchers](https://img.shields.io/github/watchers/jonas52/convertisso)]()
-[![languages](https://img.shields.io/github/languages/count/jonas52/convertisso)]()
-[![repo-size](https://img.shields.io/github/repo-size/jonas52/convertisso)]()
+
+<!--  [ Authors ] -->
+<p align="center">
+    <a href="https://github.com/jonas52">
+        <img src="https://img.shields.io/badge/Made%20by-Jonas%20Petitpierre%20(jonas52)-important?style=for-the-badge" alt="Made by">
+    </a>
+    <a href="https://github.com/PentestSociety">
+        <img src="https://img.shields.io/badge/Owner-©%20PSociety™%20(jonas52)-important?style=for-the-badge" alt="Owner">
+    </a>
+</p>
+
+<!--  [ Informations about this repositorie ] -->
+<p align="center">
+    <a href="https://github.com/jonas52/convertisso/stargazers">
+        <img src="https://img.shields.io/github/stars/jonas52/convertisso?style=for-the-badge&color=success" alt="Stars">
+    </a>
+    <a href="https://github.com/jonas52/convertisso/watchers">
+        <img src="https://img.shields.io/github/watchers/jonas52/convertisso?color=cyan&style=for-the-badge&color=success" alt="Watchers">
+    </a>
+    <a href="https://github.com/jonas52/convertisso/issues">
+        <img src="https://img.shields.io/github/last-commit/jonas52/convertisso?color=cyan&style=for-the-badge&color=success" alt="Last commit">
+    </a>
+
+</p>
+
+<!--  [ More informations ] -->
+<p align="center">
+    <img src="https://img.shields.io/badge/Release%20status-In%20Development-informational?style=for-the-badge" alt="Release status">
+    <img src="https://img.shields.io/badge/Supported%20OS-Linux-informational?style=for-the-badge" alt="Supported OS">
+    <img src="https://img.shields.io/badge/Supported%20OS-Windows-informational?style=for-the-badge" alt="Supported OS">
+    <img src="https://img.shields.io/badge/Supported%20OS-MacOs-informational?style=for-the-badge" alt="Supported OS">
+    <img src="https://img.shields.io/github/repo-size/jonas52/convertisso?color=informational&style=for-the-badge" alt="Repo size">
+    <a href="https://github.com/jonas52/convertisso/blob/test_v1/LICENSE">
+        <img src="https://img.shields.io/github/license/jonas52/convertisso?color=informational&style=for-the-badge" alt="Repo License" >
+    </a>
+</p>
 
 ---
 
