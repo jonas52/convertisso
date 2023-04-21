@@ -3562,7 +3562,7 @@ class Compresse_video_Tab(QWidget):
         self.choose_path_button.clicked.connect(self.choose_folder)
         self.compress_video_choice = QComboBox(self)
         self.compress_video_choice.addItem('Please choose')
-        self.compress_video_choice.addItems(['mp4', 'aac', 'wav', 'ac3', 'opus', 'm4a', 'flac', 'ogg'])
+        self.compress_video_choice.addItems(['mp4', 'mkv', 'mov', 'avi', 'webm', 'hevc', 'flv'])
         self.compress_video_choice.move(250, 100)
         self.compress_video_choice.resize(200, 30)
         self.compress_video_choice.setMaxVisibleItems(5)
@@ -3594,7 +3594,7 @@ class Compresse_video_Tab(QWidget):
                             self.repaint()
                             output_file = os.path.splitext(mp4_file)[0] + '_compressed.mp4'
                             stream = ffmpeg.input(mp4_file)
-                            stream = ffmpeg.output(stream, output_file, vcodec='libx264', crf=23, preset='medium',acodec='aac', bitrate='128k' )
+                            stream = ffmpeg.output(stream, output_file, vcodec='libx264', crf=20, preset='medium', acodec='aac', bitrate='128k' )
                             ffmpeg.run(stream, quiet=True)
                             print("Compression OK")
                         except ffmpeg.Error as e:
@@ -3610,44 +3610,44 @@ class Compresse_video_Tab(QWidget):
                 self.compress_video_choice.setCurrentText('Please choose')
                 self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
                 self.repaint()
-            elif self.compress_video_choice.currentText() == 'aac':
-                aac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.aac"), recursive=True)
-                if aac_files:
+            elif self.compress_video_choice.currentText() == 'mkv':
+                mkv_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mkv"), recursive=True)
+                if mkv_files:
                     print("Compress in progress ...")
-                    for aac_file in aac_files:
+                    for mkv_file in mkv_files:
                         try:
                             self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
                             self.repaint()
-                            output_file = os.path.splitext(aac_file)[0] + '_compressed.aac'
-                            stream = ffmpeg.input(aac_file)
-                            stream = ffmpeg.output(stream, output_file, acodec='aac', bitrate='128k')
+                            output_file = os.path.splitext(mkv_file)[0] + '_compressed.mkv'
+                            stream = ffmpeg.input(mkv_file)
+                            stream = ffmpeg.output(stream, output_file, vcodec='libx264', crf=20, preset='medium', acodec='aac', bitrate='128k' )
                             ffmpeg.run(stream, quiet=True)
                             print("Compression OK")
                         except ffmpeg.Error as e:
                             self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                            QMessageBox.critical(None, "Error", f"Failed to compress {aac_file}: {e.stderr}")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {mkv_file}: {e.stderr}")
                             return
                 show_success_message_compress()
                 self.path_input.clear()
                 self.compress_video_choice.setCurrentText('Please choose')
                 self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
                 self.repaint()
-            elif self.compress_video_choice.currentText() == 'wav':
-                wav_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.wav"), recursive=True)
-                if wav_files:
+            elif self.compress_video_choice.currentText() == 'mov':
+                mov_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.mov"), recursive=True)
+                if mov_files:
                     print("Compress in progress ...")
-                    for wav_file in wav_files:
+                    for mov_file in mov_files:
                         try:
                             self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
                             self.repaint()
-                            output_file = os.path.splitext(wav_file)[0] + '_compressed.wav'
-                            stream = ffmpeg.input(wav_file)
-                            stream = ffmpeg.output(stream, output_file, bitrate='128k')
+                            output_file = os.path.splitext(mov_file)[0] + '_compressed.mov'
+                            stream = ffmpeg.input(mov_file)
+                            stream = ffmpeg.output(stream, output_file, vcodec='libx264', crf=20, preset='medium', acodec='aac', bitrate='128k' )
                             ffmpeg.run(stream, quiet=True)
                             print("Compression OK")
                         except ffmpeg.Error as e:
                             self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                            QMessageBox.critical(None, "Error", f"Failed to compress {wav_file}: {e.stderr}")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {mov_file}: {e.stderr}")
                             return
                 else:
                     self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
@@ -3658,44 +3658,44 @@ class Compresse_video_Tab(QWidget):
                 self.compress_video_choice.setCurrentText('Please choose')
                 self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
                 self.repaint()
-            elif self.compress_video_choice.currentText() == 'ac3':
-                ac3_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ac3"), recursive=True)
-                if ac3_files:
+            elif self.compress_video_choice.currentText() == 'avi':
+                avi_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.avi"), recursive=True)
+                if avi_files:
                     print("Compress in progress ...")
-                    for ac3_file in ac3_files:
+                    for avi_file in avi_files:
                         try:
                             self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
                             self.repaint()
-                            output_file = os.path.splitext(ac3_file)[0] + '_compressed.ac3'
-                            stream = ffmpeg.input(ac3_file)
-                            stream = ffmpeg.output(stream, output_file, acodec='ac3', bitrate='128k')
+                            output_file = os.path.splitext(avi_file)[0] + '_compressed.avi'
+                            stream = ffmpeg.input(avi_file)
+                            stream = ffmpeg.output(stream, output_file, vcodec='libx264', crf=20, preset='medium', acodec='aac', bitrate='128k' )
                             ffmpeg.run(stream, quiet=True)
                             print("Compression OK")
                         except ffmpeg.Error as e:
                             self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                            QMessageBox.critical(None, "Error", f"Failed to compress {ac3_file}: {e.stderr}")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {avi_file}: {e.stderr}")
                             return
                 show_success_message_compress()
                 self.path_input.clear()
                 self.compress_video_choice.setCurrentText('Please choose')
                 self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
                 self.repaint()
-            elif self.compress_video_choice.currentText() == 'opus':
-                opus_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.opus"), recursive=True)
-                if opus_files:
+            elif self.compress_video_choice.currentText() == 'webm':
+                webm_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.webm"), recursive=True)
+                if webm_files:
                     print("Compress in progress ...")
-                    for opus_file in opus_files:
+                    for webm_file in webm_files:
                         try:
                             self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
                             self.repaint()
-                            output_file = os.path.splitext(opus_file)[0] + '_compressed.opus'
-                            stream = ffmpeg.input(opus_file)
-                            stream = ffmpeg.output(stream, output_file, acodec='libopus', crf=20)
+                            output_file = os.path.splitext(webm_file)[0] + '_compressed.webm'
+                            stream = ffmpeg.input(webm_file)
+                            stream = ffmpeg.output(stream, output_file, vcodec='libx264', crf=20, preset='medium', acodec='aac', bitrate='128k' )
                             ffmpeg.run(stream, quiet=True)
                             print("Compression OK")
                         except ffmpeg.Error as e:
                             self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                            QMessageBox.critical(None, "Error", f"Failed to compress {opus_file}: {e.stderr}")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {webm_file}: {e.stderr}")
                             return
                 else:
                     self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
@@ -3706,22 +3706,22 @@ class Compresse_video_Tab(QWidget):
                 self.convertsubtitle_choice.setCurrentText('Please choose')
                 self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
                 self.repaint()
-            elif self.compress_video_choice.currentText() == 'm4a':
-                m4a_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.m4a"), recursive=True)
-                if m4a_files:
+            elif self.compress_video_choice.currentText() == 'hevc':
+                hevc_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.hevc"), recursive=True)
+                if hevc_files:
                     print("Compress in progress ...")
-                    for m4a_file in m4a_files:
+                    for hevc_file in hevc_files:
                         try:
                             self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
                             self.repaint()
-                            output_file = os.path.splitext(m4a_file)[0] + '_compressed.m4a'
-                            stream = ffmpeg.input(m4a_file)
-                            stream = ffmpeg.output(stream, output_file, acodec='alac', crf=20)
+                            output_file = os.path.splitext(hevc_file)[0] + '_compressed.hevc'
+                            stream = ffmpeg.input(hevc_file)
+                            stream = ffmpeg.output(stream, output_file, vcodec='libx264', crf=20, preset='medium', acodec='aac', bitrate='128k' )
                             ffmpeg.run(stream, quiet=True)
                             print("Compression OK")
                         except ffmpeg.Error as e:
                             self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                            QMessageBox.critical(None, "Error", f"Failed to compress {m4a_file}: {e.stderr}")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {hevc_file}: {e.stderr}")
                             return
                 else:
                     self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
@@ -3731,23 +3731,23 @@ class Compresse_video_Tab(QWidget):
                 self.path_input.clear()
                 self.convertsubtitle_choice.setCurrentText('Please choose')
                 self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-            elif self.compress_video_choice.currentText() == 'flac':
-                flac_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flac"), recursive=True)
-                if flac_files:
+                self.repaint()            
+            elif self.compress_video_choice.currentText() == 'flv':
+                flv_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.flv"), recursive=True)
+                if flv_files:
                     print("Compress in progress ...")
-                    for flac_file in flac_files:
+                    for flv_file in flv_files:
                         try:
                             self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
                             self.repaint()
-                            output_file = os.path.splitext(flac_file)[0] + '_compressed.flac'
-                            stream = ffmpeg.input(flac_file)
-                            stream = ffmpeg.output(stream, output_file, acodec='flac', crf=20)
+                            output_file = os.path.splitext(flv_file)[0] + '_compressed.flv'
+                            stream = ffmpeg.input(flv_file)
+                            stream = ffmpeg.output(stream, output_file, vcodec='libx264', crf=20, preset='medium', acodec='aac', bitrate='128k' )
                             ffmpeg.run(stream, quiet=True)
                             print("Compression OK")
                         except ffmpeg.Error as e:
                             self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                            QMessageBox.critical(None, "Error", f"Failed to compress {flac_file}: {e.stderr}")
+                            QMessageBox.critical(None, "Error", f"Failed to compress {flv_file}: {e.stderr}")
                             return
                 else:
                     self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
@@ -3757,33 +3757,7 @@ class Compresse_video_Tab(QWidget):
                 self.path_input.clear()
                 self.convertsubtitle_choice.setCurrentText('Please choose')
                 self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                self.repaint()
-            elif self.compress_video_choice.currentText() == 'ogg':
-                    ogg_files = glob.glob(os.path.join(self.path_input.text(), "**", "*.ogg"), recursive=True)
-                    if ogg_files:
-                        print("Compress in progress ...")
-                        for ogg_file in ogg_files:
-                            try:
-                                self.compress_video_label.setStyleSheet("background-color: green; border-radius: 10px;")
-                                self.repaint()
-                                output_file = os.path.splitext(ogg_file)[0] + '_compressed.ogg'
-                                stream = ffmpeg.input(ogg_file)
-                                stream = ffmpeg.output(stream, output_file, acodec='libvorbis', crf=20)
-                                ffmpeg.run(stream, quiet=True)
-                                print("Compression OK")
-                            except ffmpeg.Error as e:
-                                self.compress_video_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                                QMessageBox.critical(None, "Error", f"Failed to compress {ogg_file}: {e.stderr}")
-                                return
-                    else:
-                        self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                        QMessageBox.critical(None, "Error", "No compatible files found in the selected directory")
-                        return
-                    show_success_message_compress()
-                    self.path_input.clear()
-                    self.convertsubtitle_choice.setCurrentText('Please choose')
-                    self.convertcheck_label.setStyleSheet("background-color: red; border-radius: 10px;")
-                    self.repaint()
+                self.repaint()            
             else:
                 self.internet_label.setStyleSheet("background-color: red; border-radius: 10px;")
                 QMessageBox.critical(None, "Error", "An unexpected error has occurred")
