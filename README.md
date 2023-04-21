@@ -27,6 +27,7 @@
 - [**About Convertisso**](#about-convertisso)
 - [**Main GUI of Convertisso**](#main-gui-of-convertisso)
 - [**Installation**](#installation-of-convertisso-guipyqt)
+- [**Credit & Copyrights**](credit-&-copyrights)
 - [**Licence**](#licence)
 - [**Other**](#other)
 
@@ -71,5 +72,13 @@ sudo pacman -S ffmpeg
 # **Other**
 > #### For problems or ideas for additions related to my code do not hesitate to contact me: petitpierre@duck.com
 > #### The Convertisso is a product of © PSociety by jonas52! Copyright (C) 2022-2023 © PSociety. All rights reserved.
+## **Credit & Copyrights**
+
+```
+             The Convertisso is a product of PSociety by Jonas Petitpierre (jonas52).
+                   Copyright (C) 2021-2023 © PSociety. All rights reserved.
+
+           This programme has been created and designed from scratch by Jonas Petitpierre.
+```
 # **Licence**
 - This program uses the license _[General Public License v3.0](https://github.com/jonas52/convertisso/blob/main/LICENSE)_.
