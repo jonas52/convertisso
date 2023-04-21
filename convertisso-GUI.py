@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-# a ajouter pop-up pour la convertion reussi --bon
-# installer -- a faire
-# enlever le sub process -- bon 
 # option pour sans ffmpeg avec yt_dlp --a faire
-# enlever les champs remplie au fure et a mesure {.clear()} --bon
 import os
 import sys
 import shutil
