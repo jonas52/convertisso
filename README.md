@@ -27,7 +27,7 @@
 - [**About Convertisso**](#about-convertisso)
 - [**Main GUI of Convertisso**](#main-gui-of-convertisso)
 - [**Installation**](#installation-of-convertisso-guipyqt)
-- [**License**](#license)
+- [**Licence**](#licence)
 - [**Other**](#other)
 
 --- 
