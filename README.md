@@ -72,11 +72,12 @@
 # **Main GUI of Convertisso**
 | Main-Downloader-Convertisso | Main-Audio-Convertisso |
 |---------|---------|
-| ![Main-Downloader-Convertisso](https://user-images.githubusercontent.com/83141023/232312519-001d4c3e-92d3-45e6-949b-aecc5ef8a18c.png) | ![Main-audio-Convertisso](https://user-images.githubusercontent.com/83141023/232312518-384f1293-1879-4d16-a17e-810261286b6a.png) 
+| ![Main-Downloader-Convertisso](https://user-images.githubusercontent.com/83141023/232312519-001d4c3e-92d3-45e6-949b-aecc5ef8a18c.png) | ![Main-audio-Convertisso](https://user-images.githubusercontent.com/83141023/233783047-ad5b047a-61ab-4b19-a58d-360138c4e4ca.png)
 
 | Main-Video-Convertisso | Main-Subtitle-Convertisso |
 |---------|---------|
-| ![Main-Video-Convertisso](https://user-images.githubusercontent.com/83141023/232312685-b643b8bc-4e2a-4b3b-9530-eaebcee60ae6.png) | ![Main-Subtitle-Convertisso](https://user-images.githubusercontent.com/83141023/232312739-60f9acdc-27c9-4657-9feb-e33b3ba6ce6c.png)
+| ![Main-Video-Convertisso](https://user-images.githubusercontent.com/83141023/233783155-93d28217-bc2e-478b-8722-ef54304854e4.png) | ![Main-Subtitle-Convertisso](https://user-images.githubusercontent.com/83141023/233783232-1ec7f6b6-dd9c-40f0-9fb8-e88357fe7a84.png)
+
 
 # **Installation of Convertisso GUI(PyQt)**
 ## Install all dependencies:
