@@ -51,6 +51,7 @@
 - [**About Convertisso**](#about-convertisso)
 - [**Main GUI of Convertisso**](#main-gui-of-convertisso)
 - [**Installation**](#installation-of-convertisso-guipyqt)
+- [**Help**](#help)
 - [**Credit & Copyrights**](credit-&-copyrights)
 - [**Licence**](#licence)
 - [**Other**](#other)
@@ -93,6 +94,19 @@ sudo pacman -S ffmpeg
 >     git clone https://github.com/jonas52/convertisso.git && cd convertisso && python3 convertisso-GUI.py
 - And it's all good conversions and/or video downloads
 - To exit the program alt F4 or the cross of the right top.
+
+# **Help**
+### Convertisso downloader
+1. Please copy and paste the URL of your video.
+2. Enter the name that the file will have once uploaded.
+3. Choose by clicking on an option in the drop-down menu.
+4. Enter where your file will be saved once uploaded.
+5. Press download to start the download, once the bonton press you will see the green led of download in progress.
+### Convertisso convert
+1. Choose by clicking on an option in the drop-down menu.
+2. Enter where your file will be saved once converted.
+3. Press convert to start the convert, once the bonton press you will see the green led of convert in progress.
+#### If you need more help please contact me : petitpierre@duck.com
 # **Other**
 > #### For problems or ideas for additions related to my code do not hesitate to contact me: petitpierre@duck.com
 > #### The Convertisso is a product of © PSociety by jonas52! Copyright (C) 2022-2023 © PSociety. All rights reserved.
