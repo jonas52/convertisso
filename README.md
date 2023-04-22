@@ -52,6 +52,8 @@
 - [**Main GUI of Convertisso**](#main-gui-of-convertisso)
 - [**Installation**](#installation-of-convertisso-guipyqt)
 - [**Help**](#help)
+   - [**Convertisso downloader**](#convertisso-downloader)
+   - [**Convertisso convert**](#convertisso-convert)
 - [**Credit & Copyrights**](credit-&-copyrights)
 - [**Licence**](#licence)
 - [**Other**](#other)
