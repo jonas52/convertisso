@@ -317,14 +317,14 @@ class AudioTab(QWidget):
         self.path_label = QLabel(self)
         self.path_label.setText('Chose directory (where are stored your(s) file(s) to convert):')
         self.path_label.move(50, 200)
-        # Crée un QLineEdit et le positionne à (250,150) avec une largeur de 300 et une hauteur de 30
+        # Crée un QLineEdit et le positionne à (470, 200) avec une largeur de 300 et une hauteur de 30
         self.path_input = QLineEdit(self)
-        self.path_input.move(430, 200)
+        self.path_input.move(470, 200)
         self.path_input.resize(300, 30)
         self.path_input.text()
-        # Crée un QPushButton avec le texte "Choose Folder" et le positionne à (550,350). Connecte le bouton à la méthode "choose_folder".
+        # Crée un QPushButton avec le texte "Choose Folder" et le positionne à (770, 200). Connecte le bouton à la méthode "choose_folder".
         self.choose_path_button = QPushButton('Choose Folder', self)
-        self.choose_path_button.move(730, 200)
+        self.choose_path_button.move(770, 200)
         self.choose_path_button.clicked.connect(self.choose_folder)
         # Crée un QComboBox avec les options ci-dessous. Connecte le QComboBox à la méthode "setaudioOption".
         self.convertaudio_choice = QComboBox(self)
@@ -343,7 +343,7 @@ class AudioTab(QWidget):
         self.convertaudio_choice.setEditable(True)
         self.convertaudio_choice.view().setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.convertaudio_choice.currentIndexChanged.connect(self.setaudioOption)
-        # Crée un QLabel avec le texte "Conversion in progress: " et le positionne à (418, 50)
+        # Crée un QLabel avec le texte "Conversion in progress: " et le positionne à (400, 20)
         self.convertcheck_txt_label = QLabel(self)
         self.convertcheck_txt_label.setText('Conversion in progress: ')
         self.convertcheck_txt_label.move(400, 20)
@@ -2652,14 +2652,14 @@ class VideoTab(QWidget):
         self.path_label = QLabel(self)
         self.path_label.setText('Chose directory (where are stored your(s) file(s) to convert):')
         self.path_label.move(50, 200)
-        # Crée un QLineEdit et le positionne à (250,150) avec une largeur de 300 et une hauteur de 30
+        # Crée un QLineEdit et le positionne à (470, 200) avec une largeur de 300 et une hauteur de 30
         self.path_input = QLineEdit(self)
-        self.path_input.move(430, 200)
+        self.path_input.move(470, 200)
         self.path_input.resize(300, 30)
         self.path_input.text()
-        # Crée un QPushButton avec le texte "Choose Folder" et le positionne à (550,350). Connecte le bouton à la méthode "choose_folder".
+        # Crée un QPushButton avec le texte "Choose Folder" et le positionne à (770, 200). Connecte le bouton à la méthode "choose_folder".
         self.choose_path_button = QPushButton('Choose Folder', self)
-        self.choose_path_button.move(730, 200)
+        self.choose_path_button.move(770, 200)
         self.choose_path_button.clicked.connect(self.choose_folder)
         # Crée un QComboBox avec les options ci-dessous. Connecte le QComboBox à la méthode "setaudioOption".
         self.convertvideo_choice = QComboBox(self)
@@ -2677,7 +2677,7 @@ class VideoTab(QWidget):
         self.convertvideo_choice.setEditable(True)
         self.convertvideo_choice.view().setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.convertvideo_choice.currentIndexChanged.connect(self.setVideoOption)
-        # Crée un QLabel avec le texte "Conversion in progress: " et le positionne à (418, 50)
+        # Crée un QLabel avec le texte "Conversion in progress: " et le positionne à (400, 20)    
         self.convertcheck_txt_label = QLabel(self)
         self.convertcheck_txt_label.setText('Conversion in progress: ')
         self.convertcheck_txt_label.move(400, 20)
@@ -4662,14 +4662,14 @@ class Subtitle(QWidget):
         self.path_label = QLabel(self)
         self.path_label.setText('Chose directory (where are stored your(s) file(s) to convert):')        
         self.path_label.move(50, 200)
-        # Crée un QLineEdit et le positionne à (250,150) avec une largeur de 300 et une hauteur de 30
+        # Crée un QLineEdit et le positionne à (470, 200) avec une largeur de 300 et une hauteur de 30
         self.path_input = QLineEdit(self)
-        self.path_input.move(430, 200)
+        self.path_input.move(470, 200)
         self.path_input.resize(300, 30)
         self.path_input.text()
-        # Crée un QPushButton avec le texte "Choose Folder" et le positionne à (550,350). Connecte le bouton à la méthode "choose_folder".
+        # Crée un QPushButton avec le texte "Choose Folder" et le positionne à (770, 200). Connecte le bouton à la méthode "choose_folder".
         self.choose_path_button = QPushButton('Choose Folder', self)
-        self.choose_path_button.move(730, 200)
+        self.choose_path_button.move(770, 200)
         self.choose_path_button.clicked.connect(self.choose_folder)
         # Crée un QComboBox avec les options ci-dessous. Connecte le QComboBox à la méthode "setaudioOption".
         self.convertsubtitle_choice = QComboBox(self)
