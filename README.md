@@ -85,11 +85,17 @@
 ## Open terminal and type this
 >     pip install yt_dlp ffmpeg-python requests PyQt5
 #### And install FFmpeg in your systeme:
+- For debian
 ```
 sudo apt install ffmpeg
 ```
+- For archlinux
 ```
 sudo pacman -S ffmpeg
+```
+- For windows (Install choco for this commande (_[Choco download website](https://chocolatey.org/install)_))
+```
+choco install ffmpeg
 ```
 ##### If your are on Windows, MacOs or others distributions please check: _[FFmpeg download website](https://ffmpeg.org/download.html)_
 ## Open terminal and type this
