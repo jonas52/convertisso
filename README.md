@@ -83,7 +83,7 @@
 ## Install all dependencies:
 ### Install Python on your device please check: _[Python website](https://www.python.org/downloads/)_
 ## Open terminal and type this
->     pip install yt_dlp ffmpeg-python requests PyQt5
+>     pip install yt_dlp ffmpeg-python requests PyQt5 pygame
 #### And install FFmpeg in your systeme:
 - For debian
 ```
