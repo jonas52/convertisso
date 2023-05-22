@@ -7,11 +7,13 @@ import shutil
 import glob
 import yt_dlp
 import ffmpeg
-from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtCore import Qt, QTimer, QUrl
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QTabWidget, QWidget, QLabel, QPushButton, QLineEdit, QComboBox, QFileDialog, QMessageBox, QMainWindow, QDesktopWidget, QVBoxLayout, QScrollBar, QProgressBar
 from PyQt5.QtGui import QColor, QFont
+from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 import requests
+import pygame
 from urllib import request
 # ---------------- Print convertisso ----------------
 def convertisso(): 
@@ -2636,7 +2638,6 @@ class AudioTab(QWidget):
             message_box.setIcon(QMessageBox.Warning)
             message_box.addButton(QMessageBox.Ok)
             message_box.exec_()
-
 # ---------------- Convertisso video ----------------
 class VideoTab(QWidget):
     def __init__(self):
@@ -4646,7 +4647,6 @@ class VideoTab(QWidget):
             message_box.setIcon(QMessageBox.Warning)
             message_box.addButton(QMessageBox.Ok)
             message_box.exec_()            
-
 # ---------------- Convertisso Subtitle ----------------
 class Subtitle(QWidget):
     def __init__(self):
@@ -5281,16 +5281,111 @@ class Subtitle(QWidget):
             message_box.setIcon(QMessageBox.Warning)
             message_box.addButton(QMessageBox.Ok)
             message_box.exec_()
+# ---------------- Convertisso Audioplayer ----------------
+class Audioplayer(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.media_player = QMediaPlayer()
+
+        label = QLabel("Audio Player", self)
+        label.move(20, 20)
+
+        self.path_label = QLabel(self)
+        self.path_label.setText('Choose file to play:')        
+        self.path_label.move(50, 200)
+
+        self.path_input = QLineEdit(self)
+        self.path_input.move(185, 200)
+        self.path_input.resize(300, 30)
+
+        self.choose_path_button = QPushButton('Choose File', self)
+        self.choose_path_button.move(485, 200)
+        self.choose_path_button.clicked.connect(self.choose_folder)
+
+        self.play_button = QPushButton("Play", self)
+        self.play_button.move(100, 125)
+        self.play_button.clicked.connect(self.play)
+
+        self.pause_button = QPushButton("Pause", self)
+        self.pause_button.move(200, 125)  
+        self.pause_button.clicked.connect(self.pause)
+
+        self.stop_button = QPushButton("Stop", self)
+        self.stop_button.move(300, 125)
+        self.stop_button.clicked.connect(self.stop)        
+
+        self.progress_bar = QProgressBar(self)
+        self.progress_bar.setTextVisible(True)
+        self.progress_bar.move(20, 75)        
+        self.progress_bar.resize(500, 30)
+
+        button_layout = QVBoxLayout()
+        button_layout.addWidget(self.play_button)
+        button_layout.addWidget(self.pause_button)
+        button_layout.addWidget(self.stop_button)
+
+        main_layout = QVBoxLayout()
+        main_layout.addLayout(button_layout)
+        main_layout.addWidget(self.progress_bar)
+
+        self.timer = QTimer()
+        self.timer.setInterval(1000)  # Mise à jour de la barre de progression toutes les 1 seconde
+        self.timer.timeout.connect(self.update_progress_bar)
+
+        self.playing_position = 0
+
+    def choose_folder(self):
+        file_path, _ = QFileDialog.getOpenFileName(self, 'Choose File')
+        self.path_input.setText(file_path)
+
+    def play(self):
+        file_path = self.path_input.text()
+        if os.path.isfile(file_path):
+            if os.access(file_path, os.R_OK):
+                url = QUrl.fromLocalFile(file_path)
+                content = QMediaContent(url)
+                self.media_player.setMedia(content)
+
+                if self.playing_position > 0:
+                    self.media_player.setPosition(self.playing_position)
+
+                self.media_player.play()
+                self.timer.start()
+                self.name_label = QLabel(self)
+                self.name_label.setText('Song name: %s' % file_path)        
+                self.name_label.move(50, 250)
+            else:
+                print("Le fichier existe, mais n'est pas lisible.")
+        else:
+            print("Le fichier n'existe pas.")
+
+    def pause(self):
+        self.playing_position = self.media_player.position()
+        self.media_player.pause()
+
+    def stop(self):
+        self.media_player.stop()
+        self.playing_position = 0
+
+    def update_progress_bar(self):
+        if self.media_player.duration() > 0:
+            position = self.media_player.position() // 1000  # Convertir en secondes
+            minutes = position // 60
+            seconds = position % 60
+            total_minutes = self.media_player.duration() // 1000 // 60
+            total_seconds = (self.media_player.duration() // 1000) % 60
+            self.progress_bar.setRange(0, int(total_minutes))  # Définir la plage de valeurs
+            self.progress_bar.setFormat(f"{minutes:02d}:{seconds:02d} / {total_minutes:02d}:{total_seconds:02d}")
+            self.progress_bar.setValue(int(minutes))
+
+
 
 class MyMainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
          # Définir le titre de la fenêtre principale
         self.setWindowTitle('Convertisso')
-        # Récupérer la résolution de l'écran
-        screen_resolution = QDesktopWidget().screenGeometry()
-        # Définir la taille et la position de la fenêtre en fonction de la résolution de l'écran
-        self.setGeometry(0, 0, screen_resolution.width(), screen_resolution.height())
         # Créer un layout vertical pour les onglets
         layout = QVBoxLayout()
         # Créer un QTabWidget et ajouter les onglets
@@ -5307,6 +5402,9 @@ class MyMainWindow(QMainWindow):
         # Créer l'onglet Subtitle
         self.subtitle_tab = Subtitle()
         self.tabs.addTab(self.subtitle_tab, "Subtitle")
+
+        self.subtitle_tab = Audioplayer()
+        self.tabs.addTab(self.subtitle_tab, "Audio Player")
         
         # Ajouter le QTabWidget au layout vertical
         layout.addWidget(self.tabs)
@@ -5324,6 +5422,7 @@ if __name__ == '__main__': # Vérifier l'entrée utilisateur de la QComboBox
     app = QApplication(sys.argv)
     # Créer une instance de la fenêtre principale
     window = MyMainWindow()
+    window.resize(950, 600)
     # Afficher la fenêtre
     window.show()
     # Exécuter la boucle d'événements de l'application
