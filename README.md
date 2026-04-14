@@ -114,17 +114,17 @@ choco install ffmpeg
 1. Choose by clicking on an option in the drop-down menu.
 2. Enter where your file will be saved once converted.
 3. Press convert to start the convert, once the botton press you will see the green led of convert in progress.
-#### If you need more help please contact me : petitpierre@duck.com
+#### If you need more help please contact me : contact@bashyprojets.ch
 # **Other**
 > #### For problems or ideas for additions related to my code don't hesitate to contact me: petitpierre@duck.com
 > #### The Convertisso is a product of © PSociety by jonas52! Copyright (C) 2022-2023 © PSociety. All rights reserved.
 ## **Credit & Copyrights**
 
 ```
-             The Convertisso is a product of PSociety by Jonas Petitpierre (jonas52).
+             The Convertisso is a product of PSociety by jonas52.
                    Copyright (C) 2021-2023 © PSociety. All rights reserved.
 
-           This programme has been created and designed from scratch by Jonas Petitpierre.
+           This programme has been created and designed from scratch by jonas52.
 ```
 # **Licence**
 - This program uses the license _[General Public License v3.0](https://github.com/jonas52/convertisso/blob/main/LICENSE)_.
